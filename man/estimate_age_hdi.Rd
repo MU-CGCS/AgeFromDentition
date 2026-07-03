@@ -24,4 +24,5 @@ Estimate HDI from dental age estimate
 means <- get_means_for_scores(x = ExampleScores[1, ])
 age_est <- estimate_dental_age(means)
 estimate_age_hdi(age_est)
+
 }
