@@ -1,11 +1,11 @@
-Package: DentalAge
+Package: AgeFromDentition
 Title: Estimate Dental Age
 Version: 0.1
 Authors@R: 
     person(given = "Kevin",
            family = "Middleton",
            role = c("aut", "cre"),
-           email = "middletonk@missouri.edi",
+           email = "middletonk@missouri.edu",
            comment = c(ORCID = "0000-0003-4704-1064"))
 Description: Estimate dental age given a set of dental scores for six teeth
     following the method of Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing
@@ -17,11 +17,10 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 Depends: 
     R (>= 2.10)
-Imports: 
+Imports:
     HDInterval,
     dplyr,
-    magrittr,
-    shiny
+    magrittr
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

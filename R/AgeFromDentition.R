@@ -1,8 +1,8 @@
-#' DentalAge
+#' AgeFromDentition
 #'
 #' Estimate dental age from scores of dental development.
 #'
-#' \tabular{ll}{ Package: \tab DentalAge\cr
+#' \tabular{ll}{ Package: \tab AgeFromDentition\cr
 #'               Type: \tab Package\cr
 #'               Version: \tab 0.1\cr
 #'               Date: \tab 2021-06-25\cr
@@ -10,8 +10,8 @@
 #'               LazyLoad: \tab yes\cr
 #'               LazyData: \tab yes\cr }
 #'
-#' @name DentalAge-package
-#' @aliases DentalAge-package DentalAge
+#' @name AgeFromDentition-package
+#' @aliases AgeFromDentition-package AgeFromDentition
 #' @docType package
 #' @author Kevin M. Middleton (\url{middletonk@@missouri.edu})
 #' @keywords package

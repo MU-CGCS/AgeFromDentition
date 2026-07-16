@@ -1,4 +1,4 @@
 library(testthat)
-library(DentalAge)
+library(AgeFromDentition)
 
-test_check("DentalAge")
+test_check("AgeFromDentition")
