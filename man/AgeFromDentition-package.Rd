@@ -2,22 +2,19 @@
 % Please edit documentation in R/AgeFromDentition.R
 \docType{package}
 \name{AgeFromDentition-package}
-\alias{AgeFromDentition-package}
 \alias{AgeFromDentition}
-\title{AgeFromDentition}
+\alias{AgeFromDentition-package}
+\title{AgeFromDentition: Estimate Dental Age}
 \description{
-Estimate dental age from scores of dental development.
-}
-\details{
-\tabular{ll}{ Package: \tab AgeFromDentition\cr
-Type: \tab Package\cr
-Version: \tab 0.1\cr
-Date: \tab 2021-06-25\cr
-License: \tab MIT\cr
-LazyLoad: \tab yes\cr
-LazyData: \tab yes\cr }
+Estimate dental age given a set of dental scores for six teeth following the method of Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing of Development of the Permanent Mandibular Dentition: New Reference Values from the Fels Longitudinal Study. Anat Rec 302:1733–1753.
 }
 \author{
-Kevin M. Middleton (\url{middletonk@missouri.edu})
+\strong{Maintainer}: Kevin Middleton \email{middletonk@missouri.edu} (\href{https://orcid.org/0000-0003-4704-1064}{ORCID})
+
+Authors:
+\itemize{
+  \item Kevin Middleton \email{middletonk@missouri.edu} (\href{https://orcid.org/0000-0003-4704-1064}{ORCID})
 }
-\keyword{package}
+
+}
+\keyword{internal}
