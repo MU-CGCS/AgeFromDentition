@@ -1,23 +1,36 @@
-# Build the AgeFromDentition reference data from the Šešelj et al.
-# (2019) Fels Longitudinal Study tables.
+# Build the AgeFromDentition reference data from the Šešelj et al. (2019)
+# Fels Longitudinal Study tables.
 #
-#   Tables 2-7  (pages 3-8)  -> ages of attainment (transition analysis)
-#   Tables 8-13 (pages 9-14) -> ages given stage
+#   Tables 2-7  -> ages of attainment (transition analysis)
+#   Tables 8-13 -> ages given stage
 #
-# Only panel (a) of each table is used: the sex-specific Girls and Boys
-# columns. Panel (b), the combined-sex sample, is deliberately not
+# Only panel (a) of each table is represented: the sex-specific Girls and
+# Boys columns. Panel (b), the combined-sex sample, was deliberately not
 # transcribed, because sex is always known in the intended use.
 #
-# Parsing is position-aware rather than whitespace-splitting, because
-# Table 13a has genuinely empty cells for girls: a naive split would
-# silently shift the Low HPD / Opt / High HPD values into the ln_mu /
-# ln_sigma / mode columns. Those four rows are described in PLAN.md
-# §3.2.
+# ---------------------------------------------------------------------
+# Source of record
+# ---------------------------------------------------------------------
 #
-# Every parsed row is validated against the closed-form log-normal
-# identities relating theta/sigma to the published mode, median, mean
-# and SD columns. Those identities are exact, so any transcription
-# error is caught and localized rather than shipped.
+# This script reads two CSV files:
+#
+#   fels-attainment.csv        Tables 2-7,  162 rows
+#   fels-age-given-stage.csv   Tables 8-13, 150 rows
+#
+# **Those two files are the archive.** They were transcribed from the
+# source article's text layer by a parser that has since been removed,
+# along with the article PDF itself. There is no longer any upstream
+# artifact to regenerate them from, so treat them as read-only: this
+# script never writes to them, and nothing else should either.
+#
+# Everything else under data-raw/ is derived from them on every run and
+# can be deleted and rebuilt at will.
+#
+# The QA sections below are what makes that arrangement safe. Every row
+# is checked against closed-form log-normal identities relating the
+# parameters to the published mode, median, mean and SD columns. Those
+# identities are exact, so corruption of the archive is caught and
+# localized rather than propagated into data/.
 
 library(fs)
 library(glue)
@@ -25,21 +38,19 @@ library(cli)
 library(dplyr)
 library(tidyr)
 library(purrr)
-library(stringr)
 library(readr)
 library(tibble)
 
 project_root <- path_wd()
-txt_dir <- path(project_root, "data-raw", "pdftotext")
-out_dir <- path(project_root, "data-raw")
+raw_dir <- path(project_root, "data-raw")
 
 # ---------------------------------------------------------------------
-# Table registry
+# Stage vocabulary
 # ---------------------------------------------------------------------
 
-# Canonical stage vocabulary. "crypt" (Šešelj et al.'s stage zero) has
-# no attainment row; it is the open interval below Ci and is handled in
-# the likelihood, not in the reference tables.
+# "crypt" (Šešelj et al.'s stage zero) has no attainment row; it is the
+# open interval below Ci and is handled in the likelihood, not in the
+# reference tables.
 stage_levels_molar <- c(
   "Ci", "Cco", "Coc", "Cr1_2", "Cr3_4", "Crc", "Ri", "Cli",
   "R1_4", "R1_2", "R3_4", "Rc", "A1_2", "Ac"
@@ -48,28 +59,7 @@ stage_levels_molar <- c(
 # Single-rooted teeth omit Cli (root cleft initiation).
 stage_levels_single <- setdiff(stage_levels_molar, "Cli")
 
-tables <- tribble(
-  ~kind,          ~tooth, ~page, ~table_no,
-  "attainment",   "C",        3,  2,
-  "attainment",   "P3",       4,  3,
-  "attainment",   "P4",       5,  4,
-  "attainment",   "M1",       6,  5,
-  "attainment",   "M2",       7,  6,
-  "attainment",   "M3",       8,  7,
-  "age_given_stage", "C",     9,  8,
-  "age_given_stage", "P3",   10,  9,
-  "age_given_stage", "P4",   11, 10,
-  "age_given_stage", "M1",   12, 11,
-  "age_given_stage", "M2",   13, 12,
-  "age_given_stage", "M3",   14, 13
-)
-
-# Per-sex column names, in printed order.
-cols_attainment <- c("theta", "se_theta", "n", "mode", "median", "mean")
-cols_ags <- c(
-  "ln_mu", "ln_sigma", "mode", "median", "mean", "sd",
-  "hpd_low", "opt", "hpd_high"
-)
+teeth <- c("C", "P3", "P4", "M1", "M2", "M3")
 
 is_molar <- function(tooth) {
   return(tooth %in% c("M1", "M2", "M3"))
@@ -86,270 +76,54 @@ expected_stages <- function(tooth, kind) {
 }
 
 # ---------------------------------------------------------------------
-# Position-aware parsing
+# Read the archive
 # ---------------------------------------------------------------------
 
-# Normalize the Unicode minus (U+2212) used for M1's negative theta
-# values. Left as-is it parses to NA, or to 0 under a lax parser, which
-# would manufacture spurious ties in M1.
-normalize_minus <- function(x) {
-  return(str_replace_all(x, "−", "-"))
-}
+cli_h1("Reading reference CSVs")
 
-# Locate every whitespace-delimited token in a line together with its
-# character span.
-tokenize_with_spans <- function(line) {
-  m <- str_locate_all(line, "\\S+")[[1]]
-  if (nrow(m) == 0L) {
-    return(tibble(text = character(), start = integer(), end = integer()))
-  }
-  return(tibble(
-    text = str_sub(line, m[, "start"], m[, "end"]),
-    start = as.integer(m[, "start"]),
-    end = as.integer(m[, "end"])
-  ))
-}
-
-# Derive column bounds from rows that carry the full complement of
-# tokens. In such a row the j-th token is by construction the j-th
-# column, so no clustering heuristic is needed: the bound for column j
-# is simply the extent of the j-th token across all complete rows.
-#
-# This matters because pdftotext's column alignment drifts in the
-# narrower tables (Table 8 in particular), which defeats naive
-# overlap-based clustering.
-column_bounds_from_complete <- function(tokens, n_cols, page) {
-  complete <- keep(tokens, \(x) nrow(x) == n_cols)
-  if (length(complete) == 0L) {
-    cli_abort(
-      "No complete rows on page {page}; cannot derive column bounds."
-    )
-  }
-  starts <- map(complete, \(x) x$start) |> reduce(pmin)
-  ends <- map(complete, \(x) x$end) |> reduce(pmax)
-
-  # Bounds for adjacent columns can overlap where pdftotext's
-  # alignment drifts. That is only a problem if a token from a ragged
-  # row actually lands in the ambiguous zone, which the per-token
-  # uniqueness check downstream detects exactly. Note it and continue.
-  overlap <- which(starts[-1] <= ends[-n_cols])
-  if (length(overlap) > 0L) {
-    cli_alert_info(
-      "Page {page}: column bounds touch between column{?s} \\
-       {overlap} and the next; relying on per-token checks."
-    )
-  }
-  return(tibble(column = seq_len(n_cols), start = starts, end = ends))
-}
-
-# Parse panel (a) of one table into a wide tibble with one row per
-# stage and 2 * length(value_cols) value columns.
-parse_panel_a <- function(page, tooth, kind) {
-  file <- path(txt_dir, glue("page-{sprintf('%02d', page)}"), ext = "txt")
-  lines <- read_lines(file) |> normalize_minus()
-
-  stages <- expected_stages(tooth, kind)
-  value_cols <- if (kind == "attainment") cols_attainment else cols_ags
-  n_cols <- 2L * length(value_cols)
-
-  # Printed stage labels use "/" where canonical names use "_".
-  printed <- str_replace_all(stages, "_", "/")
-
-  # Panel (a) precedes panel (b). Take the first occurrence of each
-  # stage label at the start of a line, in printed order, and stop
-  # before the combined-sex panel.
-  # Anchor on the standalone panel header, not on the table title,
-  # which also contains the string "(b) combined".
-  panel_b_start <- str_which(lines, "^\\s*\\(b\\)\\s+Combined sex sample\\s*$")
-  if (length(panel_b_start) == 0L) {
-    cli_abort("Could not locate panel (b) header on page {page}.")
-  }
-  panel_a <- lines[seq_len(panel_b_start[1] - 1L)]
-
-  row_index <- map_int(printed, function(label) {
-    hits <- str_which(panel_a, glue("^\\s*{str_escape(label)}\\s"))
-    if (length(hits) == 0L) {
-      cli_abort("Stage {label} not found in panel (a) of page {page}.")
-    }
-    return(hits[1])
-  })
-
-  if (is.unsorted(row_index, strictly = TRUE)) {
+read_reference <- function(file, required) {
+  path_csv <- path(raw_dir, file)
+  if (!file_exists(path_csv)) {
     cli_abort(c(
-      "Stage rows on page {page} are not in the expected order.",
-      i = "Found row indices: {row_index}"
+      "Reference file {.path {file}} not found.",
+      i = "It is the source of record and cannot be regenerated."
     ))
   }
 
-  rows <- panel_a[row_index]
-
-  # Drop the stage label from each row, keep the numeric tokens.
-  tokens <- map2(rows, printed, function(line, label) {
-    spans <- tokenize_with_spans(line)
-    return(spans |> filter(text != label))
-  })
-
-  # Position matching, and the stricter column-separation requirement
-  # it depends on, are only needed when a row has missing cells.
-  # pdftotext's column alignment drifts in the narrower tables, so
-  # bounds are not always well separated -- that is harmless as long as
-  # every row is complete, since then token j is column j.
-  n_ragged <- sum(map_int(tokens, nrow) != n_cols)
-  bounds <- NULL
-
-  if (n_ragged > 0L) {
-    cli_alert_warning(
-      "Page {page}: {n_ragged} row{?s} with missing cells; assigning \\
-       tokens by column position."
-    )
-    bounds <- column_bounds_from_complete(tokens, n_cols, page)
-  }
-
-  values <- map(tokens, function(spans) {
-    # Complete rows need no position matching: token j is column j.
-    if (nrow(spans) == n_cols) {
-      return(spans$text)
-    }
-    out <- rep(NA_character_, n_cols)
-    assigned <- integer(nrow(spans))
-    for (i in seq_len(nrow(spans))) {
-      # Character overlap between this token and each column's extent.
-      # Where adjacent column bounds touch, the token belongs to the
-      # column it overlaps most; a tie is genuinely ambiguous.
-      width <- pmin(spans$end[i], bounds$end) -
-        pmax(spans$start[i], bounds$start) + 1L
-      width[width < 0L] <- 0L
-      best <- which(width == max(width) & width > 0L)
-      if (length(best) != 1L) {
-        cli_abort(c(
-          "Token {.val {spans$text[i]}} on page {page} could not be \\
-           assigned to a single column.",
-          i = "Token span {spans$start[i]}-{spans$end[i]}, \\
-               {length(best)} best-overlap candidate{?s}."
-        ))
-      }
-      assigned[i] <- best
-      out[best] <- spans$text[i]
-    }
-    if (is.unsorted(assigned, strictly = TRUE)) {
-      cli_abort(c(
-        "Token-to-column assignment is not increasing on page {page}.",
-        i = "Assigned columns: {assigned}"
-      ))
-    }
-    return(out)
-  })
-
-  wide <- do.call(rbind, values) |>
-    as_tibble(.name_repair = "minimal") |>
-    set_names(c(
-      paste0("female_", value_cols),
-      paste0("male_", value_cols)
-    )) |>
-    mutate(across(everything(), as.numeric)) |>
+  out <- read_csv(path_csv, show_col_types = FALSE) |>
     mutate(
-      tooth = tooth,
-      stage = factor(stages, levels = stages),
-      stage_index = seq_along(stages),
-      .before = 1
-    )
-
-  return(wide)
-}
-
-# The per-tooth common ln SD lives in a trailing row of the attainment
-# tables, not in the per-stage rows.
-parse_ln_sd <- function(page, tooth) {
-  file <- path(txt_dir, glue("page-{sprintf('%02d', page)}"), ext = "txt")
-  lines <- read_lines(file) |> normalize_minus()
-  # Anchor on the standalone panel header, not on the table title,
-  # which also contains the string "(b) combined".
-  panel_b_start <- str_which(lines, "^\\s*\\(b\\)\\s+Combined sex sample\\s*$")
-  panel_a <- lines[seq_len(panel_b_start[1] - 1L)]
-
-  hit <- str_which(panel_a, "^\\s*ln_SD")
-  if (length(hit) == 0L) {
-    cli_abort("No ln_SD row found in panel (a) of page {page}.")
-  }
-  nums <- tokenize_with_spans(panel_a[hit[1]]) |>
-    filter(str_detect(text, "^-?[0-9]")) |>
-    pull(text) |>
-    as.numeric()
-
-  if (length(nums) != 4L) {
-    cli_abort(c(
-      "Expected 4 numbers in the ln_SD row on page {page}, got \\
-       {length(nums)}.",
-      i = "Values: {nums}"
-    ))
-  }
-  return(tibble(
-    tooth = tooth,
-    female_ln_sd = nums[1],
-    female_se_ln_sd = nums[2],
-    male_ln_sd = nums[3],
-    male_se_ln_sd = nums[4]
-  ))
-}
-
-# ---------------------------------------------------------------------
-# Parse all tables and reshape to long format
-# ---------------------------------------------------------------------
-
-cli_h1("Parsing reference tables")
-
-attainment_wide <- tables |>
-  filter(kind == "attainment") |>
-  pmap(function(kind, tooth, page, table_no) {
-    cli_alert_info("Table {table_no} (page {page}): {tooth} attainment")
-    return(parse_panel_a(page, tooth, kind))
-  }) |>
-  list_rbind()
-
-ln_sd_wide <- tables |>
-  filter(kind == "attainment") |>
-  pmap(function(kind, tooth, page, table_no) {
-    return(parse_ln_sd(page, tooth))
-  }) |>
-  list_rbind()
-
-ags_wide <- tables |>
-  filter(kind == "age_given_stage") |>
-  pmap(function(kind, tooth, page, table_no) {
-    cli_alert_info("Table {table_no} (page {page}): {tooth} age given stage")
-    return(parse_panel_a(page, tooth, kind))
-  }) |>
-  list_rbind()
-
-pivot_by_sex <- function(wide, value_cols) {
-  out <- wide |>
-    pivot_longer(
-      cols = matches("^(female|male)_"),
-      names_to = c("sex", ".value"),
-      names_pattern = "^(female|male)_(.*)$"
+      sex = factor(sex, levels = c("female", "male")),
+      stage = factor(stage, levels = stage_levels_molar)
     ) |>
-    mutate(sex = factor(sex, levels = c("female", "male"))) |>
-    relocate(tooth, sex, stage, stage_index) |>
     arrange(tooth, sex, stage_index)
+
+  missing_cols <- setdiff(required, names(out))
+  if (length(missing_cols) > 0L) {
+    cli_abort(
+      "{.path {file}} is missing column{?s}: \\
+       {paste(missing_cols, collapse = ', ')}."
+    )
+  }
+  if (anyNA(out$stage)) {
+    cli_abort("{.path {file}} contains an unrecognized stage label.")
+  }
+
+  cli_alert_info("{.path {file}}: {nrow(out)} rows")
   return(out)
 }
 
-fels_attainment <- attainment_wide |>
-  pivot_by_sex(cols_attainment) |>
-  left_join(
-    ln_sd_wide |>
-      pivot_longer(
-        cols = matches("^(female|male)_"),
-        names_to = c("sex", ".value"),
-        names_pattern = "^(female|male)_(.*)$"
-      ) |>
-      mutate(sex = factor(sex, levels = c("female", "male"))),
-    by = c("tooth", "sex")
-  ) |>
+fels_attainment <- read_reference(
+  "fels-attainment.csv",
+  c("tooth", "sex", "stage", "stage_index", "theta", "se_theta", "n",
+    "mode", "median", "mean", "ln_sd", "se_ln_sd")
+) |>
   mutate(n = as.integer(n))
 
-fels_age_given_stage <- ags_wide |>
-  pivot_by_sex(cols_ags)
+fels_age_given_stage <- read_reference(
+  "fels-age-given-stage.csv",
+  c("tooth", "sex", "stage", "stage_index", "ln_mu", "ln_sigma", "mode",
+    "median", "mean", "sd", "hpd_low", "opt", "hpd_high")
+)
 
 # ---------------------------------------------------------------------
 # QA: closed-form log-normal identities
@@ -417,8 +191,8 @@ report_failures(
   "age-given-stage"
 )
 
-# Rows where the published parameters are absent. In Table 13a these
-# are real: girls' M3 R1/2 and A1/2 have zero-width stages (tied
+# Rows where the published parameters are absent. In Table 13a these are
+# real: girls' M3 R1/2 and A1/2 have zero-width stages (tied
 # transitions), and R3/4 and Rc are reported as HPD/Opt only.
 missing_params <- fels_age_given_stage |>
   filter(is.na(ln_mu)) |>
@@ -451,30 +225,32 @@ if (nrow(decreasing) > 0L) {
 cli_alert_success("theta is non-decreasing within every tooth and sex.")
 
 # 2. Stage sets complete.
-walk2(
-  tables$tooth, tables$kind,
-  function(tooth_i, kind_i) {
-    reference <- if (kind_i == "attainment") {
-      fels_attainment
-    } else {
-      fels_age_given_stage
-    }
-    for (sex_i in c("female", "male")) {
-      got <- reference |>
-        filter(tooth == tooth_i, sex == sex_i) |>
-        pull(stage) |>
-        as.character()
-      want <- expected_stages(tooth_i, kind_i)
-      if (!identical(got, want)) {
-        cli_abort(c(
-          "Stage set mismatch for {tooth_i} / {sex_i} / {kind_i}.",
-          i = "Got:  {paste(got, collapse = ', ')}",
-          i = "Want: {paste(want, collapse = ', ')}"
-        ))
-      }
+kinds <- expand_grid(
+  tooth = teeth,
+  kind = c("attainment", "age_given_stage")
+)
+
+pwalk(kinds, function(tooth_i, kind_i) {
+  reference <- if (kind_i == "attainment") {
+    fels_attainment
+  } else {
+    fels_age_given_stage
+  }
+  for (sex_i in c("female", "male")) {
+    got <- reference |>
+      filter(tooth == tooth_i, sex == sex_i) |>
+      pull(stage) |>
+      as.character()
+    want <- expected_stages(tooth_i, kind_i)
+    if (!identical(got, want)) {
+      cli_abort(c(
+        "Stage set mismatch for {tooth_i} / {sex_i} / {kind_i}.",
+        i = "Got:  {paste(got, collapse = ', ')}",
+        i = "Want: {paste(want, collapse = ', ')}"
+      ))
     }
   }
-)
+}, .progress = FALSE)
 cli_alert_success("Stage sets match the expected vocabulary everywhere.")
 
 # 3. Exactly two sex levels, no combined-sex leakage.
@@ -499,7 +275,7 @@ cli_alert_success("All attainment counts are non-negative integers.")
 # 5. Soft check: girls form teeth faster, so female theta should sit
 #    below male theta for most stages. M3 is the documented exception
 #    (Šešelj et al.: boys younger). A wholesale reversal would indicate
-#    the Girls and Boys column blocks were swapped during parsing.
+#    the Girls and Boys column blocks were swapped.
 sex_order <- fels_attainment |>
   select(tooth, sex, stage, theta) |>
   pivot_wider(names_from = sex, values_from = theta) |>
@@ -525,12 +301,11 @@ if (any(non_m3$prop_female_earlier < 0.5)) {
   )
 }
 
-# 6. Age summaries increase monotonically with stage within a tooth
-#    and sex: later formation stages are reached at older ages. This
-#    is the only independent check available for the four Table 13a
-#    rows that were assigned by column position and carry no
-#    log-normal parameters to reconcile (girls' M3 R3_4 and Rc), so it
-#    is what guards against a silent column shift there.
+# 6. Age summaries increase monotonically with stage within a tooth and
+#    sex: later formation stages are reached at older ages. This is the
+#    only independent check available for the four Table 13a rows that
+#    carry no log-normal parameters to reconcile (girls' M3 R3_4 and
+#    Rc), so it is what guards against a silent column shift there.
 check_monotone <- function(reference, cols, label) {
   violations <- reference |>
     arrange(tooth, sex, stage_index) |>
@@ -563,7 +338,10 @@ check_monotone(
   "age-given-stage"
 )
 
-# 7. M1's negative theta values survived Unicode-minus normalization.
+# 7. M1's theta is negative at Ci in both sexes -- the tooth begins
+#    forming before one year of age. A lost minus sign would be
+#    invisible to every other check here, because the series would still
+#    be monotone.
 m1_ci <- fels_attainment |>
   filter(tooth == "M1", stage == "Ci") |>
   select(sex, theta)
@@ -573,10 +351,10 @@ cli_alert_success(
    ({paste(m1_ci$theta, collapse = ', ')})."
 )
 
-# 8. The boys' M1 A1/2 age-given-stage parameter must be 2.2621, the
-#    value printed in both Table 11a and the worked example on p. 16.
-#    This is the value a 6/8 image misread corrupted during planning;
-#    see the rationale in extract-text-layers.R.
+# 8. The boys' M1 A1/2 age-given-stage parameter must be 2.2621. Šešelj
+#    et al. print it twice -- in Table 11a and again in the worked
+#    example on p. 16 -- so it is the one value in the tables with an
+#    independent published cross-check.
 m1_male_a12 <- fels_age_given_stage |>
   filter(tooth == "M1", sex == "male", stage == "A1_2") |>
   pull(ln_mu)
@@ -584,7 +362,7 @@ stopifnot(isTRUE(all.equal(m1_male_a12, 2.2621)))
 cli_alert_success("M1 male A1_2 ln_mu is 2.2621, as printed.")
 
 # ---------------------------------------------------------------------
-# QA: tie detection (see PLAN.md §3.3)
+# QA: tie detection
 # ---------------------------------------------------------------------
 
 cli_h1("Tie detection")
@@ -636,52 +414,6 @@ cli_alert_success(
 )
 
 # ---------------------------------------------------------------------
-# Write CSVs
-# ---------------------------------------------------------------------
-
-cli_h1("Writing CSV files")
-
-write_tooth_csv <- function(reference, kind_label) {
-  walk(unique(reference$tooth), function(tooth_i) {
-    out_file <- path(
-      out_dir,
-      glue("{kind_label}-{str_to_lower(tooth_i)}"),
-      ext = "csv"
-    )
-    reference |>
-      filter(tooth == tooth_i) |>
-      write_csv(out_file, na = "")
-    cli_alert_success("Wrote {.path {path_file(out_file)}}")
-  })
-  return(invisible(NULL))
-}
-
-write_tooth_csv(fels_attainment, "attainment")
-write_tooth_csv(fels_age_given_stage, "age-given-stage")
-
-write_csv(fels_attainment, path(out_dir, "fels-attainment.csv"), na = "")
-write_csv(
-  fels_age_given_stage,
-  path(out_dir, "fels-age-given-stage.csv"),
-  na = ""
-)
-write_csv(fels_ties, path(out_dir, "fels-ties.csv"), na = "")
-
-cli_alert_success("Wrote combined CSVs and the tie registry.")
-
-cli_h1("Summary")
-cli_alert_info(
-  "fels_attainment: {nrow(fels_attainment)} rows, \\
-   {n_distinct(fels_attainment$tooth)} teeth, 2 sexes."
-)
-cli_alert_info(
-  "fels_age_given_stage: {nrow(fels_age_given_stage)} rows, \\
-   {sum(is.na(fels_age_given_stage$ln_mu))} without log-normal \\
-   parameters."
-)
-cli_alert_info("fels_ties: {nrow(fels_ties)} tied stage pairs.")
-
-# ---------------------------------------------------------------------
 # Adapter: re-key to the AgeFromDentition vocabulary
 # ---------------------------------------------------------------------
 
@@ -691,7 +423,7 @@ cli_alert_info("fels_ties: {nrow(fels_ties)} tied stage pairs.")
 # rather than the package being rewritten around the source names.
 #
 # Stage is stored as **character**, not an ordered factor: AgeTables$Stage
-# is character and validate_score() compares against it with %in%.
+# is character and validate_score() compares against it.
 
 cli_h1("Re-keying to package vocabulary")
 
@@ -770,11 +502,10 @@ StageTies <- fels_ties |>
 # QA: the adapter must be a no-op for data already shipped
 # ---------------------------------------------------------------------
 
-# AgeTables has been shipped since v0.1. Regenerating it from the
-# extraction must reproduce it exactly, or the extraction is wrong
-# somewhere the identity checks above did not reach. This is the single
-# most informative check in the file: it ties 150 independently parsed
-# values to a dataset that predates this pipeline.
+# AgeTables has been shipped since v0.1. Regenerating it must reproduce
+# it exactly, or something has gone wrong that the identity checks above
+# did not reach. This is the single most informative check in the file:
+# it ties 150 values in the archive to a dataset that predates it.
 shipped_path <- path(project_root, "data", "AgeTables.rda")
 
 if (file_exists(shipped_path)) {
@@ -841,6 +572,38 @@ stopifnot(nrow(extra) == 12L, all(extra$Stage == "Ac"))
 cli_alert_success(
   "AttainmentTables is a strict superset of AgeTables, adding only Ac."
 )
+
+# ---------------------------------------------------------------------
+# Write derived files
+# ---------------------------------------------------------------------
+
+cli_h1("Writing derived CSVs")
+
+# Per-tooth views of the archive, for reading. Regenerated every run so
+# they cannot drift from the combined files they come from.
+#
+# The two combined files are NOT written here: they are the source of
+# record, and this script must never be able to overwrite them.
+write_tooth_csv <- function(reference, kind_label) {
+  walk(unique(reference$tooth), function(tooth_i) {
+    out_file <- path(
+      raw_dir,
+      glue("{kind_label}-{tolower(tooth_i)}"),
+      ext = "csv"
+    )
+    reference |>
+      filter(tooth == tooth_i) |>
+      write_csv(out_file, na = "")
+    cli_alert_success("Wrote {.path {path_file(out_file)}}")
+  })
+  return(invisible(NULL))
+}
+
+write_tooth_csv(fels_attainment, "attainment")
+write_tooth_csv(fels_age_given_stage, "age-given-stage")
+
+write_csv(fels_ties, path(raw_dir, "fels-ties.csv"), na = "")
+cli_alert_success("Wrote {.path fels-ties.csv} (derived tie registry).")
 
 # ---------------------------------------------------------------------
 # Write package data objects

@@ -8,55 +8,44 @@ Longitudinal Study.* Anat Rec 302:1733-1753.
 Nothing here ships with the package: `data-raw/` is listed in
 `.Rbuildignore`.
 
-## Two steps
+## Source of record
 
-Run both from the package root.
+Two files are the archive:
 
-### 1. `extract-text-layers.R` — PDF to text
+| File | Contents |
+| :-- | :-- |
+| `fels-attainment.csv` | Tables 2-7, ages of attainment, 162 rows |
+| `fels-age-given-stage.csv` | Tables 8-13, ages given stage, 150 rows |
 
-Extracts the text layer of pages 3-14 with `pdftotext -layout`, writing
-`pdftotext/page-03.txt` … `page-14.txt`.
+They were transcribed from the article's text layer by a parser that has
+since been removed, along with the article PDF. **There is no upstream
+artifact left to regenerate them from.** Treat them as read-only:
+`build-reference-data.R` never writes to them, and nothing else should.
 
-Requires the source PDF in the package root and `pdftotext` on the
-`PATH` (`brew install poppler`).
+`pdftotext/page-03.txt` … `page-14.txt` are the text layers those CSVs
+were transcribed from. Nothing reads them any more. They are kept as the
+most primary surviving record of the tables — without them, the CSVs
+cannot be checked against anything outside themselves.
 
-**You rarely need this.** The extracted text is committed, so step 2 is
-reproducible without the PDF or poppler. Re-run it only to verify the
-committed text against the PDF, in which case the twelve output files
-should come back byte-identical.
+## Building
 
-Digits are never read off rendered page images. A 6/8 misread from an
-image produced a spurious discrepancy in the boys' M1 A1/2 parameter
-during planning, which is why the pipeline goes through the text layer
-and why `build-reference-data.R` pins that specific value.
+Run `build-reference-data.R` from the package root. It needs the
+packages listed under `Config/Needs/data-raw` in `DESCRIPTION`.
 
-### 2. `build-reference-data.R` — text to datasets
-
-Parses, validates, re-keys, and writes. Needs the packages listed under
-`Config/Needs/data-raw` in `DESCRIPTION`.
-
-Parsing is position-aware rather than whitespace-splitting: Table 13a
-has genuinely empty cells for girls, and a naive split would silently
-shift the HPD/Opt values left into the parameter columns.
-
-Only panel (a) of each table is used — the sex-specific Girls and Boys
-columns. Panel (b), the combined-sex sample, is deliberately not
-transcribed, because sex is always known in the intended use.
-
-## What it writes
+Everything except the two archive files is regenerated on every run and
+can be deleted and rebuilt at will:
 
 | Output | Contents |
 | :-- | :-- |
-| `data/AgeTables.rda` | Tables 8-13, age given stage, 150 rows |
-| `data/AttainmentTables.rda` | Tables 2-7, age of attainment, 162 rows |
+| `data/AgeTables.rda` | Tables 8-13, re-keyed, 150 rows |
+| `data/AttainmentTables.rda` | Tables 2-7, re-keyed, 162 rows |
 | `data/StageTies.rda` | tied adjacent transitions, 2 rows |
 | `data/ExampleScores.rda` | re-serialized only; **contents untouched** |
-| `fels-*.csv`, `attainment-*.csv`, `age-given-stage-*.csv` | validated intermediates, in source vocabulary |
+| `fels-ties.csv` | derived tie registry |
+| `attainment-*.csv`, `age-given-stage-*.csv` | per-tooth views of the archive |
 
-The CSVs are kept because they are the checkable artifact: they carry
-every column the paper prints, including the ones the package does not
-currently use (`mode`, `median`, `mean`, `sd`, `hpd_low`, `opt`,
-`hpd_high`).
+The per-tooth files are pure duplication of the combined ones, kept for
+convenience and rewritten each run so they cannot drift.
 
 ## Vocabulary
 
@@ -84,15 +73,19 @@ sequence.
 
 ## Validation
 
-The script aborts rather than writing bad data. It checks:
+The archive can no longer be checked against an upstream source, so the
+script checks it against itself and against the package. It aborts
+rather than writing bad data:
 
-- **Closed-form log-normal identities.** Every parsed row must reconcile
-  to the published mode, median, mean, and SD columns. Those identities
-  are exact, so a transcription error is caught and localized.
+- **Closed-form log-normal identities.** Every row must reconcile to the
+  published mode, median, mean, and SD columns. Those identities are
+  exact, so corruption is caught and localized.
 - **Structural checks.** Monotone `theta`; complete stage sets; exactly
   two sex levels; valid counts; the expected sex ordering; monotone age
-  summaries; that M1's negative values survived Unicode-minus
-  normalization; and that boys' M1 A1/2 is 2.2621 as printed.
+  summaries; that M1's `Ci` theta is negative in both sexes; and that
+  boys' M1 A1/2 is 2.2621 — the one value Šešelj et al. print twice, in
+  Table 11a and again in the worked example on p. 16, so it has an
+  independent published cross-check.
 - **Tie detection.** Exactly two ties, both female M3, one interior and
   one terminal.
 - **Reproduction of `AgeTables`.** The regenerated table must be
@@ -101,11 +94,11 @@ The script aborts rather than writing bad data. It checks:
 
 That last one is the most informative check in the file. `AgeTables` has
 shipped since v0.1 and predates this pipeline, so reproducing all 150
-values from an independent parse ties the extraction to a dataset that
-was not derived from it. If it fails, do not overwrite — the shipped
-values are what every existing result was computed from.
+values ties the archive to a dataset that was not derived from it. If it
+fails, do not overwrite — the shipped values are what every existing
+result was computed from.
 
 ## Provenance
 
-The extraction pipeline was adapted from a parallel implementation of
-the same paper. It is maintained here now; the two copies will drift.
+The pipeline was adapted from a parallel implementation of the same
+paper. It is maintained here now; the two copies will drift.
