@@ -6,6 +6,7 @@
   ],
   "settings": {
     "cSpell.words": [
+      "extdata",
       "fels",
       "magrittr",
       "missingness",
@@ -14,10 +15,13 @@
       "poppler",
       "prespecified",
       "purrr",
+      "qlnorm",
       "qnorm",
       "Rbuildignore",
       "readr",
       "Repoint",
+      "repointed",
+      "repointing",
       "rlnorm",
       "rmarkdown",
       "roxygen",
@@ -30,6 +34,7 @@
       "unerupted",
       "unparameterized",
       "unscorable",
+      "unscored",
       "usethis"
     ]
   }
