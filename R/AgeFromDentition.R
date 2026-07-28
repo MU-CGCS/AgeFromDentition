@@ -1,7 +1,7 @@
 #' @keywords internal
 #'
 #' @importFrom utils data
-#' @importFrom stats var rlnorm qnorm
+#' @importFrom stats var rlnorm qnorm qlnorm
 #' @importFrom dplyr filter select mutate if_else case_when
 "_PACKAGE"
 

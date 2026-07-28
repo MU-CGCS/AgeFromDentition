@@ -12,8 +12,20 @@ age_samples(age_est, n)
 \item{n}{Number of samples}
 }
 \value{
-n samples
+n samples, or \code{n} \code{NA}s when the estimate has no finite value
 }
 \description{
 Generate sample for age estimate
+}
+\details{
+This function is \strong{stochastic}: it draws from the fitted log-normal and
+is not seeded, so results vary between runs. Call \code{\link[=set.seed]{set.seed()}} first if
+you need reproducible output.
+
+When \code{age_est} has no point estimate -- every scored tooth at terminal
+stage \code{"Ac"}, for instance -- there is no distribution to draw from and
+\code{n} \code{NA}s are returned.
+}
+\seealso{
+\code{\link[=estimate_dental_age]{estimate_dental_age()}}, \code{\link[=estimate_age_hdi]{estimate_age_hdi()}}
 }

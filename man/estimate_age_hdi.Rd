@@ -15,14 +15,31 @@ Increase this number for investigating the tails of the distribution.}
 \item{interval}{numeric width of the HD interval. Defaults to 0.5}
 }
 \value{
-numeric vector with the upper and lower bounds of the interval
+numeric vector with the lower and upper bounds of the interval,
+and the completion threshold from \code{age_est} if it had one
 }
 \description{
 Estimate HDI from dental age estimate
 }
+\details{
+This is a genuine highest-density interval, obtained by sampling. It is
+therefore \strong{stochastic and unseeded}: two calls on the same input give
+slightly different bounds. Call \code{\link[=set.seed]{set.seed()}} first for reproducible
+output, and raise \code{n} when the tails matter.
+
+Because of that, it is never used to decide whether an estimate is
+compatible with a completion threshold. \code{\link[=estimate_dental_age]{estimate_dental_age()}} computes
+its own equal-tailed central interval analytically for that purpose, so
+the compatibility code cannot vary between runs.
+
+\code{completion_threshold} is carried through unchanged so that a caller
+plotting the interval can draw the threshold on the same axis.
+}
 \examples{
-means <- get_means_for_scores(x = ExampleScores[1, ])
-age_est <- estimate_dental_age(means)
+age_est <- estimate_dental_age(ExampleScores[1, ], verbose = FALSE)
 estimate_age_hdi(age_est)
 
+}
+\seealso{
+\code{\link[=estimate_dental_age]{estimate_dental_age()}}, \code{\link[=age_samples]{age_samples()}}
 }

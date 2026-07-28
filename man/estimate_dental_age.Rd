@@ -4,25 +4,99 @@
 \alias{estimate_dental_age}
 \title{Estimate dental age}
 \usage{
-estimate_dental_age(means, verbose = TRUE)
+estimate_dental_age(
+  scores,
+  q = 0.025,
+  method = c("predictive", "plugin"),
+  sex = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
-\item{means}{matrix (6 x 2) of means and standard deviations}
+\item{scores}{a scored row (a data frame with \code{Sex} and one column per
+tooth), or a 6 x 2 data frame of means and standard deviations as
+returned by \code{\link[=get_means_for_scores]{get_means_for_scores()}}.}
 
-\item{verbose}{boolean flag for printing diagnostic messages}
+\item{q}{lower-tail probability for the completion threshold. Defaults to
+\code{0.025}.}
+
+\item{method}{\code{"predictive"} (default) or \code{"plugin"}; passed to
+\code{\link[=ac_completion_threshold]{ac_completion_threshold()}}.}
+
+\item{sex}{\code{"F"} or \code{"M"}. Only needed when \code{scores} is a bare means data
+frame, which carries no sex of its own.}
+
+\item{verbose}{boolean flag for printing diagnostic messages.}
 }
 \value{
-numeric vector with log estimated age, log total variance, and
-estimated age
+A named numeric vector of length 5 with class \code{dental_age}:
+\code{log_age}, \code{log_total_var}, \code{dental_age}, \code{ci_lower}, \code{ci_upper}. All
+five are \code{NA_real_} when no tooth supplies a usable estimate.
+Terminal-stage information is attached as an attribute; retrieve it
+with \code{\link[=ac_info]{ac_info()}}.
 }
 \description{
-Given a matrix of means and sds, estimate dental age following the method
-decribed in Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing of
+Estimate dental age from a set of scored teeth, following the method
+described in Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing of
 Development of the Permanent Mandibular Dentition: New Reference Values
-from the Fels Longitudinal Study. Anat Rec 302:1733–1753.
+from the Fels Longitudinal Study. Anat Rec 302:1733-1753.
 }
-\examples{
-means <- get_means_for_scores(x = ExampleScores[1, ])
-estimate_dental_age(means)
+\details{
+Teeth at the terminal stage \code{"Ac"} are excluded from the estimate and
+reported separately as a completion threshold. See Details.
+}
+\section{Terminal stages}{
+A tooth at \code{"Ac"} has completed, which says only that the individual is
+older than the completion age. It carries no finite age in stage and is
+therefore excluded from the weighted estimate. Instead, the \code{Ac} teeth
+produce a \strong{reference completion threshold} via
+\code{\link[=ac_completion_threshold]{ac_completion_threshold()}}, reported alongside the estimate.
 
+When every scored tooth is at \code{"Ac"}, there is no point estimate at all
+and the threshold is the only result. The numeric fields are \code{NA_real_}.
+Returning a fixed age in that situation -- 18, say -- would impose a
+hidden prior and map very different completion patterns onto one number.
+}
+
+\section{The interval}{
+\code{ci_lower} and \code{ci_upper} are an equal-tailed \strong{central 95\% interval},
+computed analytically with \code{\link[stats:qlnorm]{stats::qlnorm()}}. It is not a
+highest-density interval: equal-tailed log-normal quantiles are not a
+highest-density region, because the log-normal is asymmetric on the age
+scale. For an HDI, use \code{\link[=estimate_age_hdi]{estimate_age_hdi()}}, which is a separate,
+Monte Carlo, function.
+
+The compatibility code below is defined from this interval only, so that
+it is deterministic and reproducible.
+}
+
+\section{Compatibility codes}{
+\describe{
+\item{no_terminal_information}{no tooth at \code{"Ac"}; an ordinary
+estimate}
+\item{completion_threshold_only}{teeth at \code{"Ac"} but none estimable;
+no finite age estimate}
+\item{compatible}{\code{ci_lower >= threshold}}
+\item{overlap}{the threshold falls inside the interval}
+\item{discordant}{\code{ci_upper < threshold}; raises a warning}
+}
+
+\code{discordant} does not necessarily indicate a scoring error. The
+age-given-stage estimator and the attainment threshold come from related
+but different models, combined here deliberately approximately, so
+disagreement can also reflect reference-sample variation.
+}
+
+\examples{
+# An ordinary estimate
+estimate_dental_age(ExampleScores[1, ])
+
+# Every scored tooth complete: a threshold, and no point estimate
+x <- data.frame(Sex = "F", Canine = "Ac", P3 = "Ac", P4 = "Ac",
+                M1 = "Ac", M2 = "Ac", M3 = NA)
+estimate_dental_age(x)
+
+}
+\seealso{
+\code{\link[=ac_completion_threshold]{ac_completion_threshold()}}, \code{\link[=ac_info]{ac_info()}}, \code{\link[=estimate_age_hdi]{estimate_age_hdi()}}
 }

@@ -34,6 +34,13 @@ recode_score <- function(x) {
     x == "R 3/4" ~ "R.75",
     x == "Rc" ~ "R.c",
     x == "A 1/2" ~ "A.5",
+    x == "Cr5" ~ "Cr.5",
+    x == "Cr75" ~ "Cr.75",
+    x == "R25" ~ "R.25",
+    x == "R5" ~ "R.5",
+    x == "R75" ~ "R.75",
+    x == "A5" ~ "A.5",
+    x == "A.c" ~ "Ac",
     x == "Ac" ~ "Ac",
     x == "ac" ~ "Ac",
     TRUE ~ x

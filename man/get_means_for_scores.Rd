@@ -12,12 +12,15 @@ get_means_for_scores(x, verbose = TRUE)
 \item{verbose}{boolean flag for printing diagnostic messages}
 }
 \value{
-6 x 2 matrix with means and standard deviations for each tooth.
+An object of class \code{dental_scores}: a list with the 6 x 2
+\code{means} data frame, the \code{sex}, and the tooth names in each of four
+categories (estimable, terminal, missing, unparameterized). Can be
+passed directly to \code{\link[=estimate_dental_age]{estimate_dental_age()}}.
 }
 \description{
 This function expects a row with columns for "Canine", "P3", "P4", "M1",
-"M2", and "M3" that contain scores (or NA). A matrix of means and standard
-deviations for each tooth is returned.
+"M2", and "M3" that contain scores (or NA). Scores are recoded and
+validated, then reference parameters are looked up.
 }
 \examples{
 get_means_for_scores(x = ExampleScores[1, ])
@@ -26,7 +29,9 @@ get_means_for_scores(x = ExampleScores[1, ])
 x <- data.frame(Sex = "M", Canine = "R.25", P3 = "R.25",
                 P4 = "R.i", M1 = "A.5",
                 M2 = "R.25", M3 = NA)
-means <- get_means_for_scores(x)
-estimate_dental_age(means)
+estimate_dental_age(x)
 
+}
+\seealso{
+\code{\link[=estimate_dental_age]{estimate_dental_age()}}
 }

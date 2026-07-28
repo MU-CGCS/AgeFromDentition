@@ -23,17 +23,38 @@
 #' et al. (2019). Each row gives the log-normal approximation to the
 #' distribution of age *conditional on observing a tooth in a stage*.
 #'
-#' @format A data frame with 150 rows and 5 variables:
+#' @format A data frame with 150 rows and 12 variables:
 #' \describe{
 #'   \item{Sex}{character of sex: "F" or "M"}
 #'   \item{Tooth}{character ID of tooth: "Canine", "P3", "P4", "M1", "M2",
 #'     or "M3"}
 #'   \item{Stage}{character for tooth stage}
-#'   \item{log_mu}{numeric mean log age given the stage}
+#'   \item{log_mu}{numeric mean log age given the stage, on the log scale}
 #'   \item{log_sd}{numeric log-scale standard deviation}
+#'   \item{mode}{numeric mode of the fitted distribution, in years}
+#'   \item{median}{numeric median of the fitted distribution, in years}
+#'   \item{mean}{numeric mean of the fitted distribution, in years}
+#'   \item{sd}{numeric standard deviation of the fitted distribution, in
+#'     years}
+#'   \item{hpd_low}{numeric lower bound of the published 95% highest
+#'     posterior density interval, in years}
+#'   \item{opt}{numeric published optimal age estimate for the stage, in
+#'     years}
+#'   \item{hpd_high}{numeric upper bound of the published 95% highest
+#'     posterior density interval, in years}
 #' }
 #'
 #' @details
+#' Mind the mixed scales. `log_mu` and `log_sd` are on the log scale;
+#' every other numeric column is in years. The summary columns are retained
+#' under the names Šešelj et al. print, so a row can be checked against
+#' Tables 8a-13a directly.
+#'
+#' The summary columns are redundant with `log_mu` and `log_sd` for most
+#' rows -- `median = exp(log_mu)`, `mode = exp(log_mu - log_sd^2)`, and so
+#' on, and the build script verifies exactly that. They are shipped because
+#' of the rows where they are *not* redundant; see below.
+#'
 #' Note the contrast with [AttainmentTables]: here `log_mu` is the mean log
 #' age *given* that the tooth is observed in the stage, whereas in
 #' `AttainmentTables` it is the mean log age at *entering* the stage. The
@@ -44,18 +65,25 @@
 #' individual is older than the completion age, so there is no finite mean
 #' age in stage to report. Use [AttainmentTables] for `Ac`.
 #'
-#' Four rows carry `NA` parameters, all of them female M3, and they are not
-#' all the same kind of gap:
+#' # Rows without log-normal parameters
+#'
+#' Four rows have `NA` for `log_mu` and `log_sd`, all of them female M3, and
+#' they are not the same kind of gap:
 #' \describe{
 #'   \item{`R.5` and `A.5`}{zero-width stages. The fitted transition ages
 #'     are tied with the following stage (see [StageTies]), so the stage has
-#'     no width and no parameters can be estimated.}
-#'   \item{`R.75` and `R.c`}{Šešelj et al. publish an HPD interval and an
-#'     optimal age for these rows but no log-normal fit, so the parameters
-#'     needed here are unavailable.}
+#'     no width and nothing can be estimated. Every column is `NA`.}
+#'   \item{`R.75` and `R.c`}{Šešelj et al. publish no log-normal fit, but
+#'     they do publish an interval: `hpd_low`, `opt`, and `hpd_high` are
+#'     populated. Those intervals are wide -- 13.73 to 21.09 years and 14.28
+#'     to 21.92 years respectively -- which is itself informative about late
+#'     M3 development.}
 #' }
-#' A tooth scored into one of these four rows contributes nothing to the age
-#' estimate.
+#'
+#' A tooth scored into any of these four rows still contributes nothing to
+#' [estimate_dental_age()], which works from `log_mu` and `log_sd`. The two
+#' HPD-only rows are shipped so that the published information is at least
+#' reachable rather than silently absent.
 #'
 #' @source Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing of Development
 #' of the Permanent Mandibular Dentition: New Reference Values from the Fels
