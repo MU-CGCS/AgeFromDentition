@@ -9,3 +9,9 @@
 ^pkgdown$
 ^\.positai$
 ^\.claude$
+^data-raw$
+^Šešelj
+^BACKGROUND\.md$
+^EVALUATION\.md$
+^PLAN\.md$
+^TODO\.md$
