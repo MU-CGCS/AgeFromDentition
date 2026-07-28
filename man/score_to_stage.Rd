@@ -15,7 +15,16 @@ vector with numeric scores converted to character
 \description{
 Convert stage numeric score to character score
 }
+\details{
+Score 14 is apex closure and converts to \code{"Ac"}, a terminal stage. It is
+deliberately \strong{not} converted to \code{NA}: \code{NA} means the tooth was not
+scored, whereas \code{"Ac"} means it was scored and is complete. The two are
+different observations and must stay distinguishable.
+
+Score 0 (crypt) does convert to \code{NA}. It lies below the first modelled
+stage and has no reference parameters.
+}
 \examples{
-data.frame(numeric_stage = 1:14, stage = score_to_stage(c(1:14)))
+data.frame(numeric_stage = 0:14, stage = score_to_stage(0:14))
 
 }

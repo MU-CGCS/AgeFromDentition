@@ -15,8 +15,15 @@ string of recoded stage score
 \description{
 Recode scores
 }
+\details{
+\code{"Ac"} (apex closure) passes through unchanged rather than becoming \code{NA}.
+It is a terminal stage, not a missing observation; see \code{\link[=score_to_stage]{score_to_stage()}}.
+
+\code{"zero"} does become \code{NA}.
+}
 \examples{
 recode_score("zero")
 recode_score("Ci")
+recode_score("Ac")
 
 }
