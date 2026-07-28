@@ -36,14 +36,20 @@ jobs:
           needs: website
 
       - name: Check Quarto
-        run: quarto check
+        run: |
+          quarto --version
+          quarto check
+
+      - name: Test render vignettes
+        shell: bash
+        run: |
+          Rscript -e 'install.packages(".", repos = NULL, type = "source")'
+          quarto render vignettes/DA_Continuity.qmd
+          quarto render vignettes/terminal-stages.qmd
 
       - name: Build site
         shell: Rscript {0}
-        env:
-          QUARTO_LOG_LEVEL: DEBUG
         run: |
-          options(pkgdown.quiet = FALSE)
           pkgdown::build_site_github_pages(
             new_process = FALSE,
             install = TRUE
