@@ -1,5 +1,8 @@
 url: https://mu-cgcs.github.io/AgeFromDentition/
 
+template:
+  bootstrap: 5
+
 reference:
 - title: Estimating age
   desc: >
@@ -29,6 +32,7 @@ reference:
   - get_means_for_scores
   - recode_score
   - score_to_stage
+  - validate_score
 
 - title: Reference data
   desc: >
