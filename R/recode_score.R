@@ -20,6 +20,7 @@
 recode_score <- function(x) {
   dplyr::case_when(
     x == "zero" ~ NA_character_,
+    x == "C.0" ~ NA_character_,
     x == "Ci" ~ "C.i",
     x == "ci" ~ "C.i",
     x == "Cco" ~ "C.co",
