@@ -7,76 +7,89 @@ library(dplyr)
 library(tibble)
 ```
 
-Dental age estimates should increase monotonically as tooth stages
-advance. This vignette constructs example progressions for females and
-males, starting with only the canine scored and gradually adding teeth
-at developmentally appropriate stages, ending with all teeth at `Ac`
-except M3 at `A.5`.
+Dental age estimates generally increase as tooth stages advance. This
+vignette constructs fine-scale example progressions for females and
+males, starting with only the canine scored and gradually adding teeth,
+ending with all teeth at `A.c` except M3 at `A.5`. Each row advances at
+most a few teeth by a single stage — no tooth ever skips a stage.
 
 ## Female progression
 
 ``` r
 
 female <- tribble(
-  ~Sex, ~Canine, ~P3,    ~P4,    ~M1,    ~M2,    ~M3,
-  "F",  "C.oc",  NA,     NA,     NA,     NA,     NA,
-  "F",  "Cr.75", NA,     NA,     NA,     NA,     NA,
-  "F",  "Cr.c",  "C.co", NA,     NA,     NA,     NA,
-  "F",  "R.i",   "Cr.5", NA,     "Cr.c", NA,     NA,
-  "F",  "R.i",   "Cr.5", "C.co", "Cr.c", NA,     NA,
-  "F",  "R.25",  "Cr.c", "Cr.5", "R.i",  "C.co", NA,
-  "F",  "R.5",   "R.i",  "Cr.c", "Cl.i", "Cr.5", NA,
-  "F",  "R.75",  "R.25", "R.i",  "R.5",  "Cr.c", NA,
-  "F",  "R.c",   "R.5",  "R.25", "R.c",  "R.25", "C.i",
-  "F",  "A.5",   "R.75", "R.5",  "A.5",  "R.5",  "C.co",
-  "F",  "Ac",    "R.c",  "R.75", "Ac",   "R.75", "Cr.5",
-  "F",  "Ac",    "A.5",  "R.c",  "Ac",   "R.c",  "Cr.c",
-  "F",  "Ac",    "Ac",   "A.5",  "Ac",   "A.5",  "R.i",
-  "F",  "Ac",    "Ac",   "Ac",   "Ac",   "Ac",   "R.25",
-  "F",  "Ac",    "Ac",   "Ac",   "Ac",   "Ac",   "A.5",
+    ~Sex , ~Canine , ~P3     , ~P4     , ~M1    , ~M2     , ~M3     ,
+    "F"  , "C.oc"  , NA      , NA      , NA     , NA      , NA      ,
+    "F"  , "Cr.5"  , NA      , NA      , NA     , NA      , NA      ,
+    "F"  , "Cr.5"  , "C.i"   , NA      , NA     , NA      , NA      ,
+    "F"  , "Cr.5"  , "C.co"  , NA      , NA     , NA      , NA      ,
+    "F"  , "Cr.75" , "C.oc"  , NA      , NA     , NA      , NA      ,
+    "F"  , "Cr.75" , "C.oc"  , NA      , "Cr.c" , NA      , NA      ,
+    "F"  , "Cr.75" , "Cr.5"  , NA      , "R.i"  , NA      , NA      ,
+    "F"  , "Cr.75" , "Cr.5"  , NA      , "R.i"  , "C.i"   , NA      ,
+    "F"  , "Cr.75" , "Cr.5"  , "C.i"   , "Cl.i" , "C.i"   , NA      ,
+    "F"  , "Cr.c"  , "Cr.75" , "C.co"  , "R.25" , "C.co"  , NA      ,
+    "F"  , "Cr.c"  , "Cr.c"  , "C.oc"  , "R.25" , "C.oc"  , NA      ,
+    "F"  , "Cr.c"  , "Cr.c"  , "Cr.5"  , "R.5"  , "Cr.5"  , NA      ,
+    "F"  , "R.i"   , "Cr.c"  , "Cr.75" , "R.75" , "Cr.75" , NA      ,
+    "F"  , "R.i"   , "R.i"   , "Cr.c"  , "R.75" , "Cr.c"  , NA      ,
+    "F"  , "R.25"  , "R.i"   , "R.i"   , "R.75" , "R.i"   , NA      ,
+    "F"  , "R.25"  , "R.25"  , "R.i"   , "R.c"  , "Cl.i"  , NA      ,
+    "F"  , "R.5"   , "R.25"  , "R.25"  , "R.c"  , "R.25"  , NA      ,
+    "F"  , "R.5"   , "R.5"   , "R.25"  , "A.5"  , "R.25"  , NA      ,
+    "F"  , "R.75"  , "R.5"   , "R.5"   , "A.c"  , "R.5"   , NA      ,
+    "F"  , "R.75"  , "R.5"   , "R.5"   , "A.c"  , "R.5"   , "C.i"   ,
+    "F"  , "R.c"   , "R.75"  , "R.75"  , "A.c"  , "R.75"  , "C.co"  ,
+    "F"  , "A.5"   , "R.c"   , "R.c"   , "A.c"  , "R.c"   , "C.oc"  ,
+    "F"  , "A.c"   , "A.5"   , "A.5"   , "A.c"  , "A.5"   , "Cr.5"  ,
+    "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "Cr.75" ,
+    "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "Cr.c"  ,
+    "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.i"   ,
+    "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "Cl.i"  ,
+    "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.25"  ,
+    "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.5"   ,
+    "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.75"  ,
+    "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.c"   ,
+    "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "A.5"   ,
 )
 ```
 
 ``` r
 
 female_results <- purrr::map_dfr(seq_len(nrow(female)), \(i) {
-  est <- estimate_dental_age(female[i, ], verbose = FALSE)
-  info <- ac_info(est)
-  tibble(
-    row = i,
-    dental_age = est[["dental_age"]],
-    ci_lower = est[["ci_lower"]],
-    ci_upper = est[["ci_upper"]],
-    n_estimable = info$n_estimable,
-    compatibility = info$compatibility
-  )
+    est <- estimate_dental_age(female[i, ], verbose = FALSE)
+    info <- ac_info(est)
+    tibble(
+        row = i,
+        dental_age = est[["dental_age"]],
+        ci_lower = est[["ci_lower"]],
+        ci_upper = est[["ci_upper"]],
+        n_estimable = info$n_estimable,
+        compatibility = info$compatibility
+    )
 })
 
 female |>
-  mutate(row = row_number()) |>
-  left_join(female_results, by = "row") |>
-  select(-Sex, -row) |>
-  mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2)))
+    mutate(row = row_number()) |>
+    left_join(female_results, by = "row") |>
+    select(-Sex, -row) |>
+    mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2)))
 ```
 
-    # A tibble: 15 × 11
+    # A tibble: 32 × 11
        Canine P3    P4    M1    M2    M3    dental_age ci_lower ci_upper n_estimable
        <chr>  <chr> <chr> <chr> <chr> <chr>      <dbl>    <dbl>    <dbl>       <int>
      1 C.oc   <NA>  <NA>  <NA>  <NA>  <NA>        1.93     1.46     2.69           1
-     2 Cr.75  <NA>  <NA>  <NA>  <NA>  <NA>        3.52     2.62     4.99           1
-     3 Cr.c   C.co  <NA>  <NA>  <NA>  <NA>        3.01     1.63     7.53           2
-     4 R.i    Cr.5  <NA>  Cr.c  <NA>  <NA>        3.38     1.74     9.59           3
-     5 R.i    Cr.5  C.co  Cr.c  <NA>  <NA>        3.63     2.05     8.27           4
-     6 R.25   Cr.c  Cr.5  R.i   C.co  <NA>        4.6      2.68     9.84           5
-     7 R.5    R.i   Cr.c  Cl.i  Cr.5  <NA>        5.78     3.43    11.9            5
-     8 R.75   R.25  R.i   R.5   Cr.c  <NA>        7.56     5.27    11.8            5
-     9 R.c    R.5   R.25  R.c   R.25  C.i         9.47     7.79    11.8            6
-    10 A.5    R.75  R.5   A.5   R.5   C.co       10.4      8.64    12.9            6
-    11 Ac     R.c   R.75  Ac    R.75  Cr.5       11.8     10.6     13.3            4
-    12 Ac     A.5   R.c   Ac    R.c   Cr.c       13.2     11.8     14.8            4
-    13 Ac     Ac    A.5   Ac    A.5   R.i        14.2     12.5     16.1            3
-    14 Ac     Ac    Ac    Ac    Ac    R.25       15.7     12.9     19.5            1
-    15 Ac     Ac    Ac    Ac    Ac    A.5        NA       NA       NA              0
+     2 Cr.5   <NA>  <NA>  <NA>  <NA>  <NA>        2.58     1.93     3.62           1
+     3 Cr.5   C.i   <NA>  <NA>  <NA>  <NA>        2.51     2.08     3.09           2
+     4 Cr.5   C.co  <NA>  <NA>  <NA>  <NA>        2.79     2.24     3.57           2
+     5 Cr.75  C.oc  <NA>  <NA>  <NA>  <NA>        3.44     2.86     4.23           2
+     6 Cr.75  C.oc  <NA>  Cr.c  <NA>  <NA>        3.18     2.41     4.39           3
+     7 Cr.75  Cr.5  <NA>  R.i   <NA>  <NA>        3.7      3.06     4.57           3
+     8 Cr.75  Cr.5  <NA>  R.i   C.i   <NA>        3.7      3.16     4.39           4
+     9 Cr.75  Cr.5  C.i   Cl.i  C.i   <NA>        3.84     3.31     4.51           5
+    10 Cr.c   Cr.75 C.co  R.25  C.co  <NA>        4.52     3.7      5.66           5
+    # ℹ 22 more rows
     # ℹ 1 more variable: compatibility <chr>
 
 ## Male progression
@@ -84,80 +97,97 @@ female |>
 ``` r
 
 male <- tribble(
-  ~Sex, ~Canine, ~P3,    ~P4,    ~M1,    ~M2,    ~M3,
-  "M",  "C.oc",  NA,     NA,     NA,     NA,     NA,
-  "M",  "Cr.75", NA,     NA,     NA,     NA,     NA,
-  "M",  "Cr.c",  "C.co", NA,     NA,     NA,     NA,
-  "M",  "R.i",   "Cr.5", NA,     "Cr.c", NA,     NA,
-  "M",  "R.i",   "Cr.5", "C.co", "Cr.c", NA,     NA,
-  "M",  "R.25",  "Cr.c", "Cr.5", "R.i",  "C.co", NA,
-  "M",  "R.5",   "R.i",  "Cr.c", "Cl.i", "Cr.5", NA,
-  "M",  "R.75",  "R.25", "R.i",  "R.5",  "Cr.c", NA,
-  "M",  "R.c",   "R.5",  "R.25", "R.c",  "R.25", "C.i",
-  "M",  "A.5",   "R.75", "R.5",  "A.5",  "R.5",  "C.co",
-  "M",  "Ac",    "R.c",  "R.75", "Ac",   "R.75", "Cr.5",
-  "M",  "Ac",    "A.5",  "R.c",  "Ac",   "R.c",  "Cr.c",
-  "M",  "Ac",    "Ac",   "A.5",  "Ac",   "A.5",  "R.i",
-  "M",  "Ac",    "Ac",   "Ac",   "Ac",   "Ac",   "R.25",
-  "M",  "Ac",    "Ac",   "Ac",   "Ac",   "Ac",   "A.5",
+    ~Sex , ~Canine , ~P3     , ~P4     , ~M1    , ~M2     , ~M3     ,
+    "M"  , "C.oc"  , NA      , NA      , NA     , NA      , NA      ,
+    "M"  , "Cr.5"  , NA      , NA      , NA     , NA      , NA      ,
+    "M"  , "Cr.5"  , "C.i"   , NA      , NA     , NA      , NA      ,
+    "M"  , "Cr.5"  , "C.co"  , NA      , NA     , NA      , NA      ,
+    "M"  , "Cr.75" , "C.oc"  , NA      , NA     , NA      , NA      ,
+    "M"  , "Cr.75" , "C.oc"  , NA      , "Cr.c" , NA      , NA      ,
+    "M"  , "Cr.75" , "Cr.5"  , NA      , "R.i"  , NA      , NA      ,
+    "M"  , "Cr.75" , "Cr.5"  , NA      , "R.i"  , "C.i"   , NA      ,
+    "M"  , "Cr.75" , "Cr.5"  , "C.i"   , "Cl.i" , "C.i"   , NA      ,
+    "M"  , "Cr.c"  , "Cr.75" , "C.co"  , "R.25" , "C.co"  , NA      ,
+    "M"  , "Cr.c"  , "Cr.c"  , "C.oc"  , "R.25" , "C.oc"  , NA      ,
+    "M"  , "Cr.c"  , "Cr.c"  , "Cr.5"  , "R.5"  , "Cr.5"  , NA      ,
+    "M"  , "R.i"   , "Cr.c"  , "Cr.75" , "R.75" , "Cr.75" , NA      ,
+    "M"  , "R.i"   , "R.i"   , "Cr.c"  , "R.75" , "Cr.c"  , NA      ,
+    "M"  , "R.25"  , "R.i"   , "R.i"   , "R.75" , "R.i"   , NA      ,
+    "M"  , "R.25"  , "R.25"  , "R.i"   , "R.c"  , "Cl.i"  , NA      ,
+    "M"  , "R.5"   , "R.25"  , "R.25"  , "R.c"  , "R.25"  , NA      ,
+    "M"  , "R.5"   , "R.5"   , "R.25"  , "A.5"  , "R.25"  , NA      ,
+    "M"  , "R.75"  , "R.5"   , "R.5"   , "A.c"  , "R.5"   , NA      ,
+    "M"  , "R.75"  , "R.5"   , "R.5"   , "A.c"  , "R.5"   , "C.i"   ,
+    "M"  , "R.c"   , "R.75"  , "R.75"  , "A.c"  , "R.75"  , "C.co"  ,
+    "M"  , "A.5"   , "R.c"   , "R.c"   , "A.c"  , "R.c"   , "C.oc"  ,
+    "M"  , "A.c"   , "A.5"   , "A.5"   , "A.c"  , "A.5"   , "Cr.5"  ,
+    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "Cr.75" ,
+    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "Cr.c"  ,
+    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.i"   ,
+    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "Cl.i"  ,
+    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.25"  ,
+    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.5"   ,
+    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.75"  ,
+    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.c"   ,
+    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "A.5"   ,
 )
 ```
 
 ``` r
 
 male_results <- purrr::map_dfr(seq_len(nrow(male)), \(i) {
-  est <- estimate_dental_age(male[i, ], verbose = FALSE)
-  info <- ac_info(est)
-  tibble(
-    row = i,
-    dental_age = est[["dental_age"]],
-    ci_lower = est[["ci_lower"]],
-    ci_upper = est[["ci_upper"]],
-    n_estimable = info$n_estimable,
-    compatibility = info$compatibility
-  )
+    est <- estimate_dental_age(male[i, ], verbose = FALSE)
+    info <- ac_info(est)
+    tibble(
+        row = i,
+        dental_age = est[["dental_age"]],
+        ci_lower = est[["ci_lower"]],
+        ci_upper = est[["ci_upper"]],
+        n_estimable = info$n_estimable,
+        compatibility = info$compatibility
+    )
 })
 
 male |>
-  mutate(row = row_number()) |>
-  left_join(male_results, by = "row") |>
-  select(-Sex, -row) |>
-  mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2)))
+    mutate(row = row_number()) |>
+    left_join(male_results, by = "row") |>
+    select(-Sex, -row) |>
+    mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2)))
 ```
 
-    # A tibble: 15 × 11
+    # A tibble: 32 × 11
        Canine P3    P4    M1    M2    M3    dental_age ci_lower ci_upper n_estimable
        <chr>  <chr> <chr> <chr> <chr> <chr>      <dbl>    <dbl>    <dbl>       <int>
      1 C.oc   <NA>  <NA>  <NA>  <NA>  <NA>        1.97     1.49     2.71           1
-     2 Cr.75  <NA>  <NA>  <NA>  <NA>  <NA>        4.04     2.98     5.78           1
-     3 Cr.c   C.co  <NA>  <NA>  <NA>  <NA>        2.89     1.4      9.78           2
-     4 R.i    Cr.5  <NA>  Cr.c  <NA>  <NA>        3.54     1.73    11.6            3
-     5 R.i    Cr.5  C.co  Cr.c  <NA>  <NA>        3.74     2.01     9.53           4
-     6 R.25   Cr.c  Cr.5  R.i   C.co  <NA>        4.71     2.63    11.0            5
-     7 R.5    R.i   Cr.c  Cl.i  Cr.5  <NA>        6        3.42    13.4            5
-     8 R.75   R.25  R.i   R.5   Cr.c  <NA>        7.82     5.22    13.1            5
-     9 R.c    R.5   R.25  R.c   R.25  C.i         9.83     7.71    13.0            6
-    10 A.5    R.75  R.5   A.5   R.5   C.co       10.8      8.64    14              6
-    11 Ac     R.c   R.75  Ac    R.75  Cr.5       12.0     10.7     13.7            4
-    12 Ac     A.5   R.c   Ac    R.c   Cr.c       13.3     11.9     14.9            4
-    13 Ac     Ac    A.5   Ac    A.5   R.i        14.1     12.3     16.2            3
-    14 Ac     Ac    Ac    Ac    Ac    R.25       15.3     12.6     19.0            1
-    15 Ac     Ac    Ac    Ac    Ac    A.5        17.3     14.8     20.6            1
+     2 Cr.5   <NA>  <NA>  <NA>  <NA>  <NA>        2.75     2.03     3.93           1
+     3 Cr.5   C.i   <NA>  <NA>  <NA>  <NA>        2.58     2.08     3.31           2
+     4 Cr.5   C.co  <NA>  <NA>  <NA>  <NA>        2.9      2.42     3.53           2
+     5 Cr.75  C.oc  <NA>  <NA>  <NA>  <NA>        3.56     2.67     4.99           2
+     6 Cr.75  C.oc  <NA>  Cr.c  <NA>  <NA>        3.27     2.31     4.99           3
+     7 Cr.75  Cr.5  <NA>  R.i   <NA>  <NA>        3.89     3.14     4.94           3
+     8 Cr.75  Cr.5  <NA>  R.i   C.i   <NA>        3.86     3.21     4.73           4
+     9 Cr.75  Cr.5  C.i   Cl.i  C.i   <NA>        3.95     3.39     4.67           5
+    10 Cr.c   Cr.75 C.co  R.25  C.co  <NA>        4.65     3.47     6.56           5
+    # ℹ 22 more rows
     # ℹ 1 more variable: compatibility <chr>
 
 ## Notes
 
 - Rows 1–2 use only the canine. With a single tooth, the estimate tracks
   that tooth’s reference age directly.
-- M1 is added at row 4. When M1 is scored at `C.i`, it is dropped
-  because that stage is left-censored in the reference model.
-- M3 first appears at row 9. For females, late M3 stages (`R.5`, `R.75`,
-  `R.c`, `A.5`) have no published log-normal parameters and are
-  excluded.
-- From row 11 onward, some teeth reach `Ac` and shift from the age
-  estimate to the completion threshold. The `compatibility` column shows
-  whether the two agree.
-- Row 15 has all teeth `Ac` except M3 at `A.5`. For females, M3 `A.5` is
-  unparameterized, so there is no point estimate – only the completion
-  threshold. For males, M3 `A.5` has parameters and produces an
-  estimate.
+- P3 first appears at row 3, M1 at row 6 (already at `Cr.c` because it
+  develops earliest), M2 at row 8, P4 at row 9.
+- M3 first appears at row 20. For females, late M3 stages (`R.5` through
+  `A.5`) have no published log-normal parameters and are excluded from
+  the age estimate.
+- From row 19 on, M1 reaches `A.c` and shifts from the age estimate to
+  the completion threshold. The `compatibility` column shows whether the
+  two agree.
+- Rows 24–32 have all teeth at `A.c` except M3; only M3 contributes to
+  the age estimate. For females, M3 has no parameters for `R.5` through
+  `A.5`, so the final rows produce no point estimate — only the
+  completion threshold. For males, all M3 stages have parameters.
+- Row 32 has all teeth `A.c` except M3 at `A.5`.
+- Small dips in dental age occur when a new tooth is added at an early
+  stage (e.g., M3 at `C.i` in row 20) or when several teeth transition
+  to `Ac` at once (row 23 to 24).

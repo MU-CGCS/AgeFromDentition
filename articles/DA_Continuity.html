@@ -74,69 +74,82 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<p>Dental age estimates should increase monotonically as tooth stages advance. This vignette constructs example progressions for females and males, starting with only the canine scored and gradually adding teeth at developmentally appropriate stages, ending with all teeth at <code>Ac</code> except M3 at <code>A.5</code>.</p>
+<p>Dental age estimates generally increase as tooth stages advance. This vignette constructs fine-scale example progressions for females and males, starting with only the canine scored and gradually adding teeth, ending with all teeth at <code>A.c</code> except M3 at <code>A.5</code>. Each row advances at most a few teeth by a single stage — no tooth ever skips a stage.</p>
 <section class="level2"><h2 id="female-progression">Female progression<a class="anchor" aria-label="anchor" href="#female-progression"></a>
 </h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">female</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
-<span>  <span class="op">~</span><span class="va">Sex</span>, <span class="op">~</span><span class="va">Canine</span>, <span class="op">~</span><span class="va">P3</span>,    <span class="op">~</span><span class="va">P4</span>,    <span class="op">~</span><span class="va">M1</span>,    <span class="op">~</span><span class="va">M2</span>,    <span class="op">~</span><span class="va">M3</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"C.oc"</span>,  <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"Cr.75"</span>, <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"Cr.c"</span>,  <span class="st">"C.co"</span>, <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"R.i"</span>,   <span class="st">"Cr.5"</span>, <span class="cn">NA</span>,     <span class="st">"Cr.c"</span>, <span class="cn">NA</span>,     <span class="cn">NA</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"R.i"</span>,   <span class="st">"Cr.5"</span>, <span class="st">"C.co"</span>, <span class="st">"Cr.c"</span>, <span class="cn">NA</span>,     <span class="cn">NA</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"R.25"</span>,  <span class="st">"Cr.c"</span>, <span class="st">"Cr.5"</span>, <span class="st">"R.i"</span>,  <span class="st">"C.co"</span>, <span class="cn">NA</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"R.5"</span>,   <span class="st">"R.i"</span>,  <span class="st">"Cr.c"</span>, <span class="st">"Cl.i"</span>, <span class="st">"Cr.5"</span>, <span class="cn">NA</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"R.75"</span>,  <span class="st">"R.25"</span>, <span class="st">"R.i"</span>,  <span class="st">"R.5"</span>,  <span class="st">"Cr.c"</span>, <span class="cn">NA</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"R.c"</span>,   <span class="st">"R.5"</span>,  <span class="st">"R.25"</span>, <span class="st">"R.c"</span>,  <span class="st">"R.25"</span>, <span class="st">"C.i"</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"A.5"</span>,   <span class="st">"R.75"</span>, <span class="st">"R.5"</span>,  <span class="st">"A.5"</span>,  <span class="st">"R.5"</span>,  <span class="st">"C.co"</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"Ac"</span>,    <span class="st">"R.c"</span>,  <span class="st">"R.75"</span>, <span class="st">"Ac"</span>,   <span class="st">"R.75"</span>, <span class="st">"Cr.5"</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"Ac"</span>,    <span class="st">"A.5"</span>,  <span class="st">"R.c"</span>,  <span class="st">"Ac"</span>,   <span class="st">"R.c"</span>,  <span class="st">"Cr.c"</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"Ac"</span>,    <span class="st">"Ac"</span>,   <span class="st">"A.5"</span>,  <span class="st">"Ac"</span>,   <span class="st">"A.5"</span>,  <span class="st">"R.i"</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"Ac"</span>,    <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"R.25"</span>,</span>
-<span>  <span class="st">"F"</span>,  <span class="st">"Ac"</span>,    <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"A.5"</span>,</span>
+<span>    <span class="op">~</span><span class="va">Sex</span> , <span class="op">~</span><span class="va">Canine</span> , <span class="op">~</span><span class="va">P3</span>     , <span class="op">~</span><span class="va">P4</span>     , <span class="op">~</span><span class="va">M1</span>    , <span class="op">~</span><span class="va">M2</span>     , <span class="op">~</span><span class="va">M3</span>     ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"Cr.5"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"Cr.5"</span>  , <span class="st">"C.i"</span>   , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"Cr.5"</span>  , <span class="st">"C.co"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      , <span class="st">"Cr.c"</span> , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"Cr.5"</span>  , <span class="cn">NA</span>      , <span class="st">"R.i"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"Cr.5"</span>  , <span class="cn">NA</span>      , <span class="st">"R.i"</span>  , <span class="st">"C.i"</span>   , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"Cr.5"</span>  , <span class="st">"C.i"</span>   , <span class="st">"Cl.i"</span> , <span class="st">"C.i"</span>   , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"Cr.c"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"C.co"</span>  , <span class="st">"R.25"</span> , <span class="st">"C.co"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"Cr.c"</span>  , <span class="st">"Cr.c"</span>  , <span class="st">"C.oc"</span>  , <span class="st">"R.25"</span> , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"Cr.c"</span>  , <span class="st">"Cr.c"</span>  , <span class="st">"Cr.5"</span>  , <span class="st">"R.5"</span>  , <span class="st">"Cr.5"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"R.i"</span>   , <span class="st">"Cr.c"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"R.75"</span> , <span class="st">"Cr.75"</span> , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"R.i"</span>   , <span class="st">"R.i"</span>   , <span class="st">"Cr.c"</span>  , <span class="st">"R.75"</span> , <span class="st">"Cr.c"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"R.25"</span>  , <span class="st">"R.i"</span>   , <span class="st">"R.i"</span>   , <span class="st">"R.75"</span> , <span class="st">"R.i"</span>   , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"R.25"</span>  , <span class="st">"R.25"</span>  , <span class="st">"R.i"</span>   , <span class="st">"R.c"</span>  , <span class="st">"Cl.i"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"R.5"</span>   , <span class="st">"R.25"</span>  , <span class="st">"R.25"</span>  , <span class="st">"R.c"</span>  , <span class="st">"R.25"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"R.5"</span>   , <span class="st">"R.5"</span>   , <span class="st">"R.25"</span>  , <span class="st">"A.5"</span>  , <span class="st">"R.25"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"R.75"</span>  , <span class="st">"R.5"</span>   , <span class="st">"R.5"</span>   , <span class="st">"A.c"</span>  , <span class="st">"R.5"</span>   , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"R.75"</span>  , <span class="st">"R.5"</span>   , <span class="st">"R.5"</span>   , <span class="st">"A.c"</span>  , <span class="st">"R.5"</span>   , <span class="st">"C.i"</span>   ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"R.c"</span>   , <span class="st">"R.75"</span>  , <span class="st">"R.75"</span>  , <span class="st">"A.c"</span>  , <span class="st">"R.75"</span>  , <span class="st">"C.co"</span>  ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.5"</span>   , <span class="st">"R.c"</span>   , <span class="st">"R.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"R.c"</span>   , <span class="st">"C.oc"</span>  ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.5"</span>   , <span class="st">"A.5"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.5"</span>   , <span class="st">"Cr.5"</span>  ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"Cr.75"</span> ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"Cr.c"</span>  ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.i"</span>   ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"Cl.i"</span>  ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.25"</span>  ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.5"</span>   ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.75"</span>  ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.c"</span>   ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.5"</span>   ,</span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">female_results</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">female</span><span class="op">)</span><span class="op">)</span>, \<span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">female</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span>  <span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ac_info.html">ac_info</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span>    row <span class="op">=</span> <span class="va">i</span>,</span>
-<span>    dental_age <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"dental_age"</span><span class="op">]</span><span class="op">]</span>,</span>
-<span>    ci_lower <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"ci_lower"</span><span class="op">]</span><span class="op">]</span>,</span>
-<span>    ci_upper <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"ci_upper"</span><span class="op">]</span><span class="op">]</span>,</span>
-<span>    n_estimable <span class="op">=</span> <span class="va">info</span><span class="op">$</span><span class="va">n_estimable</span>,</span>
-<span>    compatibility <span class="op">=</span> <span class="va">info</span><span class="op">$</span><span class="va">compatibility</span></span>
-<span>  <span class="op">)</span></span>
+<span>    <span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">female</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>    <span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ac_info.html">ac_info</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>        row <span class="op">=</span> <span class="va">i</span>,</span>
+<span>        dental_age <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"dental_age"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>        ci_lower <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"ci_lower"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>        ci_upper <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"ci_upper"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>        n_estimable <span class="op">=</span> <span class="va">info</span><span class="op">$</span><span class="va">n_estimable</span>,</span>
+<span>        compatibility <span class="op">=</span> <span class="va">info</span><span class="op">$</span><span class="va">compatibility</span></span>
+<span>    <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">female</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">female_results</span>, by <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Sex</span>, <span class="op">-</span><span class="va">row</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dental_age</span>, <span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">female_results</span>, by <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Sex</span>, <span class="op">-</span><span class="va">row</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dental_age</span>, <span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 15 × 11
+<pre><code># A tibble: 32 × 11
    Canine P3    P4    M1    M2    M3    dental_age ci_lower ci_upper n_estimable
    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
  1 C.oc   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        1.93     1.46     2.69           1
- 2 Cr.75  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        3.52     2.62     4.99           1
- 3 Cr.c   C.co  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        3.01     1.63     7.53           2
- 4 R.i    Cr.5  &lt;NA&gt;  Cr.c  &lt;NA&gt;  &lt;NA&gt;        3.38     1.74     9.59           3
- 5 R.i    Cr.5  C.co  Cr.c  &lt;NA&gt;  &lt;NA&gt;        3.63     2.05     8.27           4
- 6 R.25   Cr.c  Cr.5  R.i   C.co  &lt;NA&gt;        4.6      2.68     9.84           5
- 7 R.5    R.i   Cr.c  Cl.i  Cr.5  &lt;NA&gt;        5.78     3.43    11.9            5
- 8 R.75   R.25  R.i   R.5   Cr.c  &lt;NA&gt;        7.56     5.27    11.8            5
- 9 R.c    R.5   R.25  R.c   R.25  C.i         9.47     7.79    11.8            6
-10 A.5    R.75  R.5   A.5   R.5   C.co       10.4      8.64    12.9            6
-11 Ac     R.c   R.75  Ac    R.75  Cr.5       11.8     10.6     13.3            4
-12 Ac     A.5   R.c   Ac    R.c   Cr.c       13.2     11.8     14.8            4
-13 Ac     Ac    A.5   Ac    A.5   R.i        14.2     12.5     16.1            3
-14 Ac     Ac    Ac    Ac    Ac    R.25       15.7     12.9     19.5            1
-15 Ac     Ac    Ac    Ac    Ac    A.5        NA       NA       NA              0
+ 2 Cr.5   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.58     1.93     3.62           1
+ 3 Cr.5   C.i   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.51     2.08     3.09           2
+ 4 Cr.5   C.co  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.79     2.24     3.57           2
+ 5 Cr.75  C.oc  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        3.44     2.86     4.23           2
+ 6 Cr.75  C.oc  &lt;NA&gt;  Cr.c  &lt;NA&gt;  &lt;NA&gt;        3.18     2.41     4.39           3
+ 7 Cr.75  Cr.5  &lt;NA&gt;  R.i   &lt;NA&gt;  &lt;NA&gt;        3.7      3.06     4.57           3
+ 8 Cr.75  Cr.5  &lt;NA&gt;  R.i   C.i   &lt;NA&gt;        3.7      3.16     4.39           4
+ 9 Cr.75  Cr.5  C.i   Cl.i  C.i   &lt;NA&gt;        3.84     3.31     4.51           5
+10 Cr.c   Cr.75 C.co  R.25  C.co  &lt;NA&gt;        4.52     3.7      5.66           5
+# ℹ 22 more rows
 # ℹ 1 more variable: compatibility &lt;chr&gt;</code></pre>
 </div>
 </div>
@@ -145,63 +158,76 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">male</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
-<span>  <span class="op">~</span><span class="va">Sex</span>, <span class="op">~</span><span class="va">Canine</span>, <span class="op">~</span><span class="va">P3</span>,    <span class="op">~</span><span class="va">P4</span>,    <span class="op">~</span><span class="va">M1</span>,    <span class="op">~</span><span class="va">M2</span>,    <span class="op">~</span><span class="va">M3</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"C.oc"</span>,  <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"Cr.75"</span>, <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"Cr.c"</span>,  <span class="st">"C.co"</span>, <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,     <span class="cn">NA</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"R.i"</span>,   <span class="st">"Cr.5"</span>, <span class="cn">NA</span>,     <span class="st">"Cr.c"</span>, <span class="cn">NA</span>,     <span class="cn">NA</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"R.i"</span>,   <span class="st">"Cr.5"</span>, <span class="st">"C.co"</span>, <span class="st">"Cr.c"</span>, <span class="cn">NA</span>,     <span class="cn">NA</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"R.25"</span>,  <span class="st">"Cr.c"</span>, <span class="st">"Cr.5"</span>, <span class="st">"R.i"</span>,  <span class="st">"C.co"</span>, <span class="cn">NA</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"R.5"</span>,   <span class="st">"R.i"</span>,  <span class="st">"Cr.c"</span>, <span class="st">"Cl.i"</span>, <span class="st">"Cr.5"</span>, <span class="cn">NA</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"R.75"</span>,  <span class="st">"R.25"</span>, <span class="st">"R.i"</span>,  <span class="st">"R.5"</span>,  <span class="st">"Cr.c"</span>, <span class="cn">NA</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"R.c"</span>,   <span class="st">"R.5"</span>,  <span class="st">"R.25"</span>, <span class="st">"R.c"</span>,  <span class="st">"R.25"</span>, <span class="st">"C.i"</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"A.5"</span>,   <span class="st">"R.75"</span>, <span class="st">"R.5"</span>,  <span class="st">"A.5"</span>,  <span class="st">"R.5"</span>,  <span class="st">"C.co"</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"Ac"</span>,    <span class="st">"R.c"</span>,  <span class="st">"R.75"</span>, <span class="st">"Ac"</span>,   <span class="st">"R.75"</span>, <span class="st">"Cr.5"</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"Ac"</span>,    <span class="st">"A.5"</span>,  <span class="st">"R.c"</span>,  <span class="st">"Ac"</span>,   <span class="st">"R.c"</span>,  <span class="st">"Cr.c"</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"Ac"</span>,    <span class="st">"Ac"</span>,   <span class="st">"A.5"</span>,  <span class="st">"Ac"</span>,   <span class="st">"A.5"</span>,  <span class="st">"R.i"</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"Ac"</span>,    <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"R.25"</span>,</span>
-<span>  <span class="st">"M"</span>,  <span class="st">"Ac"</span>,    <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"Ac"</span>,   <span class="st">"A.5"</span>,</span>
+<span>    <span class="op">~</span><span class="va">Sex</span> , <span class="op">~</span><span class="va">Canine</span> , <span class="op">~</span><span class="va">P3</span>     , <span class="op">~</span><span class="va">P4</span>     , <span class="op">~</span><span class="va">M1</span>    , <span class="op">~</span><span class="va">M2</span>     , <span class="op">~</span><span class="va">M3</span>     ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"Cr.5"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"Cr.5"</span>  , <span class="st">"C.i"</span>   , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"Cr.5"</span>  , <span class="st">"C.co"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      , <span class="st">"Cr.c"</span> , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"Cr.5"</span>  , <span class="cn">NA</span>      , <span class="st">"R.i"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"Cr.5"</span>  , <span class="cn">NA</span>      , <span class="st">"R.i"</span>  , <span class="st">"C.i"</span>   , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"Cr.5"</span>  , <span class="st">"C.i"</span>   , <span class="st">"Cl.i"</span> , <span class="st">"C.i"</span>   , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"Cr.c"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"C.co"</span>  , <span class="st">"R.25"</span> , <span class="st">"C.co"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"Cr.c"</span>  , <span class="st">"Cr.c"</span>  , <span class="st">"C.oc"</span>  , <span class="st">"R.25"</span> , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"Cr.c"</span>  , <span class="st">"Cr.c"</span>  , <span class="st">"Cr.5"</span>  , <span class="st">"R.5"</span>  , <span class="st">"Cr.5"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"R.i"</span>   , <span class="st">"Cr.c"</span>  , <span class="st">"Cr.75"</span> , <span class="st">"R.75"</span> , <span class="st">"Cr.75"</span> , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"R.i"</span>   , <span class="st">"R.i"</span>   , <span class="st">"Cr.c"</span>  , <span class="st">"R.75"</span> , <span class="st">"Cr.c"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"R.25"</span>  , <span class="st">"R.i"</span>   , <span class="st">"R.i"</span>   , <span class="st">"R.75"</span> , <span class="st">"R.i"</span>   , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"R.25"</span>  , <span class="st">"R.25"</span>  , <span class="st">"R.i"</span>   , <span class="st">"R.c"</span>  , <span class="st">"Cl.i"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"R.5"</span>   , <span class="st">"R.25"</span>  , <span class="st">"R.25"</span>  , <span class="st">"R.c"</span>  , <span class="st">"R.25"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"R.5"</span>   , <span class="st">"R.5"</span>   , <span class="st">"R.25"</span>  , <span class="st">"A.5"</span>  , <span class="st">"R.25"</span>  , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"R.75"</span>  , <span class="st">"R.5"</span>   , <span class="st">"R.5"</span>   , <span class="st">"A.c"</span>  , <span class="st">"R.5"</span>   , <span class="cn">NA</span>      ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"R.75"</span>  , <span class="st">"R.5"</span>   , <span class="st">"R.5"</span>   , <span class="st">"A.c"</span>  , <span class="st">"R.5"</span>   , <span class="st">"C.i"</span>   ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"R.c"</span>   , <span class="st">"R.75"</span>  , <span class="st">"R.75"</span>  , <span class="st">"A.c"</span>  , <span class="st">"R.75"</span>  , <span class="st">"C.co"</span>  ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.5"</span>   , <span class="st">"R.c"</span>   , <span class="st">"R.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"R.c"</span>   , <span class="st">"C.oc"</span>  ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.5"</span>   , <span class="st">"A.5"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.5"</span>   , <span class="st">"Cr.5"</span>  ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"Cr.75"</span> ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"Cr.c"</span>  ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.i"</span>   ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"Cl.i"</span>  ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.25"</span>  ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.5"</span>   ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.75"</span>  ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.c"</span>   ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.5"</span>   ,</span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">male_results</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">male</span><span class="op">)</span><span class="op">)</span>, \<span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">male</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span>  <span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ac_info.html">ac_info</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span>    row <span class="op">=</span> <span class="va">i</span>,</span>
-<span>    dental_age <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"dental_age"</span><span class="op">]</span><span class="op">]</span>,</span>
-<span>    ci_lower <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"ci_lower"</span><span class="op">]</span><span class="op">]</span>,</span>
-<span>    ci_upper <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"ci_upper"</span><span class="op">]</span><span class="op">]</span>,</span>
-<span>    n_estimable <span class="op">=</span> <span class="va">info</span><span class="op">$</span><span class="va">n_estimable</span>,</span>
-<span>    compatibility <span class="op">=</span> <span class="va">info</span><span class="op">$</span><span class="va">compatibility</span></span>
-<span>  <span class="op">)</span></span>
+<span>    <span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">male</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>    <span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ac_info.html">ac_info</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>        row <span class="op">=</span> <span class="va">i</span>,</span>
+<span>        dental_age <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"dental_age"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>        ci_lower <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"ci_lower"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>        ci_upper <span class="op">=</span> <span class="va">est</span><span class="op">[[</span><span class="st">"ci_upper"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>        n_estimable <span class="op">=</span> <span class="va">info</span><span class="op">$</span><span class="va">n_estimable</span>,</span>
+<span>        compatibility <span class="op">=</span> <span class="va">info</span><span class="op">$</span><span class="va">compatibility</span></span>
+<span>    <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">male</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">male_results</span>, by <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Sex</span>, <span class="op">-</span><span class="va">row</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dental_age</span>, <span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">male_results</span>, by <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Sex</span>, <span class="op">-</span><span class="va">row</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dental_age</span>, <span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 15 × 11
+<pre><code># A tibble: 32 × 11
    Canine P3    P4    M1    M2    M3    dental_age ci_lower ci_upper n_estimable
    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
  1 C.oc   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        1.97     1.49     2.71           1
- 2 Cr.75  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        4.04     2.98     5.78           1
- 3 Cr.c   C.co  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.89     1.4      9.78           2
- 4 R.i    Cr.5  &lt;NA&gt;  Cr.c  &lt;NA&gt;  &lt;NA&gt;        3.54     1.73    11.6            3
- 5 R.i    Cr.5  C.co  Cr.c  &lt;NA&gt;  &lt;NA&gt;        3.74     2.01     9.53           4
- 6 R.25   Cr.c  Cr.5  R.i   C.co  &lt;NA&gt;        4.71     2.63    11.0            5
- 7 R.5    R.i   Cr.c  Cl.i  Cr.5  &lt;NA&gt;        6        3.42    13.4            5
- 8 R.75   R.25  R.i   R.5   Cr.c  &lt;NA&gt;        7.82     5.22    13.1            5
- 9 R.c    R.5   R.25  R.c   R.25  C.i         9.83     7.71    13.0            6
-10 A.5    R.75  R.5   A.5   R.5   C.co       10.8      8.64    14              6
-11 Ac     R.c   R.75  Ac    R.75  Cr.5       12.0     10.7     13.7            4
-12 Ac     A.5   R.c   Ac    R.c   Cr.c       13.3     11.9     14.9            4
-13 Ac     Ac    A.5   Ac    A.5   R.i        14.1     12.3     16.2            3
-14 Ac     Ac    Ac    Ac    Ac    R.25       15.3     12.6     19.0            1
-15 Ac     Ac    Ac    Ac    Ac    A.5        17.3     14.8     20.6            1
+ 2 Cr.5   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.75     2.03     3.93           1
+ 3 Cr.5   C.i   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.58     2.08     3.31           2
+ 4 Cr.5   C.co  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.9      2.42     3.53           2
+ 5 Cr.75  C.oc  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        3.56     2.67     4.99           2
+ 6 Cr.75  C.oc  &lt;NA&gt;  Cr.c  &lt;NA&gt;  &lt;NA&gt;        3.27     2.31     4.99           3
+ 7 Cr.75  Cr.5  &lt;NA&gt;  R.i   &lt;NA&gt;  &lt;NA&gt;        3.89     3.14     4.94           3
+ 8 Cr.75  Cr.5  &lt;NA&gt;  R.i   C.i   &lt;NA&gt;        3.86     3.21     4.73           4
+ 9 Cr.75  Cr.5  C.i   Cl.i  C.i   &lt;NA&gt;        3.95     3.39     4.67           5
+10 Cr.c   Cr.75 C.co  R.25  C.co  &lt;NA&gt;        4.65     3.47     6.56           5
+# ℹ 22 more rows
 # ℹ 1 more variable: compatibility &lt;chr&gt;</code></pre>
 </div>
 </div>
@@ -209,10 +235,12 @@
 </h2>
 <ul>
 <li>Rows 1–2 use only the canine. With a single tooth, the estimate tracks that tooth’s reference age directly.</li>
-<li>M1 is added at row 4. When M1 is scored at <code>C.i</code>, it is dropped because that stage is left-censored in the reference model.</li>
-<li>M3 first appears at row 9. For females, late M3 stages (<code>R.5</code>, <code>R.75</code>, <code>R.c</code>, <code>A.5</code>) have no published log-normal parameters and are excluded.</li>
-<li>From row 11 onward, some teeth reach <code>Ac</code> and shift from the age estimate to the completion threshold. The <code>compatibility</code> column shows whether the two agree.</li>
-<li>Row 15 has all teeth <code>Ac</code> except M3 at <code>A.5</code>. For females, M3 <code>A.5</code> is unparameterized, so there is no point estimate – only the completion threshold. For males, M3 <code>A.5</code> has parameters and produces an estimate.</li>
+<li>P3 first appears at row 3, M1 at row 6 (already at <code>Cr.c</code> because it develops earliest), M2 at row 8, P4 at row 9.</li>
+<li>M3 first appears at row 20. For females, late M3 stages (<code>R.5</code> through <code>A.5</code>) have no published log-normal parameters and are excluded from the age estimate.</li>
+<li>From row 19 on, M1 reaches <code>A.c</code> and shifts from the age estimate to the completion threshold. The <code>compatibility</code> column shows whether the two agree.</li>
+<li>Rows 24–32 have all teeth at <code>A.c</code> except M3; only M3 contributes to the age estimate. For females, M3 has no parameters for <code>R.5</code> through <code>A.5</code>, so the final rows produce no point estimate — only the completion threshold. For males, all M3 stages have parameters.</li>
+<li>Row 32 has all teeth <code>A.c</code> except M3 at <code>A.5</code>.</li>
+<li>Small dips in dental age occur when a new tooth is added at an early stage (e.g., M3 at <code>C.i</code> in row 20) or when several teeth transition to <code>Ac</code> at once (row 23 to 24).</li>
 </ul></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
