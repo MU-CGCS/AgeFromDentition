@@ -1,1 +1,42 @@
 url: https://mu-cgcs.github.io/AgeFromDentition/
+
+reference:
+- title: Estimating age
+  desc: >
+    Estimate dental age from scored teeth, and interpret the result.
+  contents:
+  - estimate_dental_age
+  - print.dental_age
+  - ac_info
+
+- title: Terminal stages
+  desc: >
+    Teeth at apex closure carry no finite age in stage. They are reported
+    as a percentile of the reference distribution of age at completion.
+  contents:
+  - ac_completion_threshold
+
+- title: Intervals and sampling
+  desc: >
+    Stochastic summaries of the fitted distribution. Neither is used to
+    judge compatibility with a completion threshold.
+  contents:
+  - estimate_age_hdi
+  - age_samples
+
+- title: Preparing scores
+  contents:
+  - get_means_for_scores
+  - recode_score
+  - score_to_stage
+
+- title: Reference data
+  desc: >
+    Sex-specific values from Šešelj et al. (2019). Note that `log_mu`
+    means age *given* the stage in `AgeTables`, and age at *entering* the
+    stage in `AttainmentTables`.
+  contents:
+  - AgeTables
+  - AttainmentTables
+  - StageTies
+  - ExampleScores
