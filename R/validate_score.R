@@ -40,16 +40,18 @@ validate_score <- function(x, tooth = NULL) {
   if (length(tooth) == 1L) {
     tooth <- rep(tooth, length(x))
   } else if (length(tooth) != length(x)) {
-    stop("`tooth` must be length 1 or the same length as `x`.",
-         call. = FALSE)
+    cli::cli_abort(
+      "{.arg tooth} must be length 1 or the same length as {.arg x}."
+    )
   }
 
   known_teeth <- unique(AttainmentTables$Tooth)
   unknown <- setdiff(unique(tooth[!is.na(tooth)]), known_teeth)
   if (length(unknown) > 0L) {
-    stop("Unknown tooth name: ", paste(unknown, collapse = ", "),
-         ". Expected one of ", paste(known_teeth, collapse = ", "), ".",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Unknown tooth name: {paste(unknown, collapse = ', ')}.",
+      "i" = "Expected one of {paste(known_teeth, collapse = ', ')}."
+    ))
   }
 
   # A stage is valid for a tooth only if the pair appears in the reference

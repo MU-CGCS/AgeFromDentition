@@ -39,13 +39,13 @@ prepare_scores <- function(x, verbose = TRUE) {
 
   sex <- x[1, "Sex"]
   if (!(sex %in% c("F", "M"))) {
-    stop("Sex should be a string 'F' or 'M'.")
+    cli::cli_abort("{.arg Sex} must be {.val F} or {.val M}.")
   }
 
   Teeth <- c("Canine", "P3", "P4", "M1", "M2", "M3")
 
   # Check that all teeth columns are present
-  if (!all(Teeth %in% names(x))) stop("Teeth name mismatch in column names.")
+  if (!all(Teeth %in% names(x))) cli::cli_abort("Teeth name mismatch in column names.")
 
   means <- matrix(NA_real_, ncol = 2, nrow = 6)
   status <- character(6)
@@ -59,7 +59,7 @@ prepare_scores <- function(x, verbose = TRUE) {
     # tooth -- Cl.i on a single-rooted tooth, say -- is an error rather
     # than a row that quietly looks up to nothing.
     if (!validate_score(stage, tooth = tooth)) {
-      stop("Invalid stage \"", stage, "\" for ", tooth, ".", call. = FALSE)
+      cli::cli_abort("Invalid stage {.val {stage}} for {.val {tooth}}.")
     }
 
     if (is.na(stage)) {
@@ -95,14 +95,15 @@ prepare_scores <- function(x, verbose = TRUE) {
 
   if (verbose) {
     if (m1_dropped || is.na(x$M1)) {
-      message("M1 is stage C.i or missing, dropping from age estimation.")
+      cli::cli_inform("M1 is stage C.i or missing, dropping from age estimation.")
     }
 
     terminal <- Teeth[status == "terminal"]
     if (length(terminal) > 0L) {
-      message(glue::glue(
-        "{length(terminal)} ",
-        "{ifelse(length(terminal) == 1, 'tooth', 'teeth')} at terminal ",
+      n_terminal <- length(terminal)
+      cli::cli_inform(paste0(
+        "{n_terminal} ",
+        "{cli::qty(n_terminal)}{?tooth/teeth} at terminal ",
         "stage Ac ({paste(terminal, collapse = ', ')}); excluded from ",
         "the age estimate and used for the completion threshold."
       ))
@@ -110,10 +111,10 @@ prepare_scores <- function(x, verbose = TRUE) {
 
     for (tooth in Teeth[status == "unparameterized"]) {
       stage <- x[1, tooth]
-      message(glue::glue(
-        "{tooth} stage {stage} has no published log-normal parameters ",
-        "for {ifelse(sex == 'F', 'females', 'males')}; excluded."
-      ))
+      sex_label <- ifelse(sex == "F", "females", "males")
+      cli::cli_inform(
+        "{tooth} stage {stage} has no published log-normal parameters for {sex_label}; excluded."
+      )
     }
   }
 

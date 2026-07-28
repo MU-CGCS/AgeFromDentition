@@ -106,30 +106,32 @@ ac_completion_threshold <- function(sex, teeth, q = 0.025,
   method <- match.arg(method)
 
   if (length(sex) != 1L || is.na(sex) || !(sex %in% c("F", "M"))) {
-    stop("`sex` must be a single value, either \"F\" or \"M\".",
-         call. = FALSE)
+    cli::cli_abort(
+      "{.arg sex} must be a single value, either {.val F} or {.val M}."
+    )
   }
 
   if (!is.numeric(q) || length(q) != 1L || is.na(q) || q <= 0 || q >= 0.5) {
-    stop("`q` must be a single number in (0, 0.5).", call. = FALSE)
+    cli::cli_abort("{.arg q} must be a single number in (0, 0.5).")
   }
 
   teeth <- as.character(teeth)
   if (anyNA(teeth)) {
-    stop("`teeth` must not contain NA.", call. = FALSE)
+    cli::cli_abort("{.arg teeth} must not contain NA.")
   }
   if (anyDuplicated(teeth) > 0L) {
-    stop("`teeth` must not contain duplicates: ",
-         paste(unique(teeth[duplicated(teeth)]), collapse = ", "), ".",
-         call. = FALSE)
+    cli::cli_abort(
+      "{.arg teeth} must not contain duplicates: {paste(unique(teeth[duplicated(teeth)]), collapse = ', ')}."
+    )
   }
 
   known_teeth <- unique(AttainmentTables$Tooth)
   unknown <- setdiff(teeth, known_teeth)
   if (length(unknown) > 0L) {
-    stop("Unknown tooth name: ", paste(unknown, collapse = ", "),
-         ". Expected one of ", paste(known_teeth, collapse = ", "), ".",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Unknown tooth name: {paste(unknown, collapse = ', ')}.",
+      "i" = "Expected one of {paste(known_teeth, collapse = ', ')}."
+    ))
   }
 
   # Rows come out in AttainmentTables order rather than the order `teeth`

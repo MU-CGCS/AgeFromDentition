@@ -217,8 +217,9 @@ print.dental_age <- function(x, ...) {
 #'
 ac_info <- function(x) {
   if (!inherits(x, "dental_age")) {
-    stop("`x` must be a dental_age object from estimate_dental_age().",
-         call. = FALSE)
+    cli::cli_abort(
+      "{.arg x} must be a {.cls dental_age} object from {.fun estimate_dental_age}."
+    )
   }
   return(attr(x, "ac_info"))
 }

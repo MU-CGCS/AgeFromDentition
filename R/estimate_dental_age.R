@@ -118,11 +118,11 @@ estimate_dental_age <- function(scores, q = 0.025,
     age <- NA_real_
     vv <- NA_real_
     if (verbose) {
-      message("Warning: No age estimate")
+      cli::cli_warn("No age estimate.")
     }
   } else {
     if (n_estimable == 1L && verbose) {
-      message("Warning: Estimating from only 1 tooth.")
+      cli::cli_warn("Estimating from only 1 tooth.")
     }
 
     # Convert to precision, calculate relative precision
@@ -172,13 +172,14 @@ estimate_dental_age <- function(scores, q = 0.025,
   )
 
   if (compatibility == "discordant") {
-    warning(
-      "Nonterminal-stage estimate lies below the Ac completion ",
-      "threshold. Review scoring, sex assignment, and tooth identity; ",
-      "this may also reflect reference-sample variation or limitations ",
-      "of the separate-estimator stopgap.",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Nonterminal-stage estimate lies below the Ac completion threshold.",
+      "i" = paste(
+        "Review scoring, sex assignment, and tooth identity;",
+        "this may also reflect reference-sample variation or",
+        "limitations of the separate-estimator stopgap."
+      )
+    ))
   }
 
   info <- c(

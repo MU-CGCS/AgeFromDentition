@@ -198,7 +198,7 @@ test_that("anatomically impossible stages are rejected, not dropped", {
 
   expect_error(
     estimate_dental_age(x, verbose = FALSE),
-    "Invalid stage \"Cl.i\" for Canine"
+    "Invalid stage.*Cl\\.i.*for.*Canine"
   )
 })
 

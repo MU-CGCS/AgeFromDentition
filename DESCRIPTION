@@ -18,6 +18,7 @@ Roxygen: list(markdown = TRUE)
 Depends:
     R (>= 4.6)
 Imports:
+    cli,
     HDInterval,
     dplyr,
     glue

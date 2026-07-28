@@ -37,8 +37,8 @@ test_that("the class and attribute are attached", {
 })
 
 test_that("ac_info rejects objects it did not come from", {
-  expect_error(ac_info(1:5), "must be a dental_age object")
-  expect_error(ac_info(ExampleScores), "must be a dental_age object")
+  expect_error(ac_info(1:5), "must be a.*dental_age.*object")
+  expect_error(ac_info(ExampleScores), "must be a.*dental_age.*object")
 })
 
 test_that("the central interval is analytic and reproducible", {
