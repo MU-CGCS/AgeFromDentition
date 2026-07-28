@@ -46,11 +46,11 @@ get_means_for_scores <- function(x, verbose = TRUE) {
     # Check that stage is valid
     if (!validate_score(stage)) stop("Invalid stage name.")
 
-    means[jj, ] <- AgeTables %>%
+    means[jj, ] <- AgeTables |>
       dplyr::filter(Sex == x[1, "Sex"],
                     Tooth == tooth,
-                    Stage == stage) %>%
-      dplyr::select(log_mu, log_sd) %>%
+                    Stage == stage) |>
+      dplyr::select(log_mu, log_sd) |>
       as.numeric()
   }
 
