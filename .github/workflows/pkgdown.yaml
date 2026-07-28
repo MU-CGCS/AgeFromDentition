@@ -32,12 +32,19 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown
+          extra-packages: any::pkgdown, any::quarto
           needs: website
 
+      - name: Check Quarto
+        run: quarto check
+
       - name: Build site
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = TRUE)
         shell: Rscript {0}
+        run: |
+          pkgdown::build_site_github_pages(
+            new_process = FALSE,
+            install = TRUE
+          )
 
       - name: Deploy to GitHub pages
         if: github.event_name != 'pull_request'
