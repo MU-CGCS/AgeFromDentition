@@ -72,9 +72,12 @@
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mu-cgcs.github.io/AgeFromDentition/">AgeFromDentition</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com" class="external-link">gt</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<p>Dental age estimates generally increase as tooth stages advance. This vignette constructs fine-scale example progressions for females and males, starting with only the canine scored and gradually adding teeth, ending with all teeth at <code>A.c</code> except M3 at <code>A.5</code>. Each row advances at most a few teeth by a single stage — no tooth ever skips a stage.</p>
+<p>Dental age estimates generally increase as tooth stages advance. This vignette constructs fine-scale example progressions for females and males, starting with only the canine scored and gradually adding teeth, ending with all teeth at <code>A.c</code> except M3 at <code>A.5</code>.</p>
 <section class="level2"><h2 id="female-progression">Female progression<a class="anchor" aria-label="anchor" href="#female-progression"></a>
 </h2>
 <div class="cell">
@@ -130,33 +133,991 @@
 <span>    <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">female</span> <span class="op">|&gt;</span></span>
+<span><span class="va">Females</span> <span class="op">&lt;-</span> <span class="va">female</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">female_results</span>, by <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Sex</span>, <span class="op">-</span><span class="va">row</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dental_age</span>, <span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 32 × 11
-   Canine P3    P4    M1    M2    M3    dental_age ci_lower ci_upper n_estimable
-   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
- 1 C.oc   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        1.93     1.46     2.69           1
- 2 Cr.5   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.58     1.93     3.62           1
- 3 Cr.5   C.i   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.51     2.08     3.09           2
- 4 Cr.5   C.co  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.79     2.24     3.57           2
- 5 Cr.75  C.oc  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        3.44     2.86     4.23           2
- 6 Cr.75  C.oc  &lt;NA&gt;  Cr.c  &lt;NA&gt;  &lt;NA&gt;        3.18     2.41     4.39           3
- 7 Cr.75  Cr.5  &lt;NA&gt;  R.i   &lt;NA&gt;  &lt;NA&gt;        3.7      3.06     4.57           3
- 8 Cr.75  Cr.5  &lt;NA&gt;  R.i   C.i   &lt;NA&gt;        3.7      3.16     4.39           4
- 9 Cr.75  Cr.5  C.i   Cl.i  C.i   &lt;NA&gt;        3.84     3.31     4.51           5
-10 Cr.c   Cr.75 C.co  R.25  C.co  &lt;NA&gt;        4.52     3.7      5.66           5
-# ℹ 22 more rows
-# ℹ 1 more variable: compatibility &lt;chr&gt;</code></pre>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dental_age</span>, <span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span><span class="va">row</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Females</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://gt.rstudio.com/reference/sub_missing.html" class="external-link">sub_missing</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://gt.rstudio.com/reference/cols_label.html" class="external-link">cols_label</a></span><span class="op">(</span></span>
+<span>        row <span class="op">=</span> <span class="st">"Row"</span>,</span>
+<span>        dental_age <span class="op">=</span> <span class="st">"Age"</span>,</span>
+<span>        ci_lower <span class="op">=</span> <span class="st">"Lower"</span>,</span>
+<span>        ci_upper <span class="op">=</span> <span class="st">"Upper"</span>,</span>
+<span>        n_estimable <span class="op">=</span> <span class="st">"n"</span>,</span>
+<span>        compatibility <span class="op">=</span> <span class="st">"Compat."</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://gt.rstudio.com/reference/tab_spanner.html" class="external-link">tab_spanner</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Scores"</span>, columns <span class="op">=</span> <span class="va">Canine</span><span class="op">:</span><span class="va">M3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://gt.rstudio.com/reference/tab_spanner.html" class="external-link">tab_spanner</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"95% CI"</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div id="ckowvxszuh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ckowvxszuh table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ckowvxszuh thead, #ckowvxszuh tbody, #ckowvxszuh tfoot, #ckowvxszuh tr, #ckowvxszuh td, #ckowvxszuh th {
+  border-style: none;
+}
+
+#ckowvxszuh p {
+  margin: 0;
+  padding: 0;
+}
+
+#ckowvxszuh .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ckowvxszuh .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ckowvxszuh .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ckowvxszuh .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ckowvxszuh .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ckowvxszuh .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ckowvxszuh .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ckowvxszuh .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ckowvxszuh .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ckowvxszuh .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ckowvxszuh .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ckowvxszuh .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ckowvxszuh .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ckowvxszuh .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ckowvxszuh .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ckowvxszuh .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ckowvxszuh .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ckowvxszuh .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ckowvxszuh .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ckowvxszuh .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ckowvxszuh .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ckowvxszuh .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ckowvxszuh .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ckowvxszuh .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ckowvxszuh .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ckowvxszuh .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ckowvxszuh .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ckowvxszuh .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ckowvxszuh .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ckowvxszuh .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ckowvxszuh .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ckowvxszuh .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ckowvxszuh .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ckowvxszuh .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ckowvxszuh .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ckowvxszuh .gt_left {
+  text-align: left;
+}
+
+#ckowvxszuh .gt_center {
+  text-align: center;
+}
+
+#ckowvxszuh .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ckowvxszuh .gt_font_normal {
+  font-weight: normal;
+}
+
+#ckowvxszuh .gt_font_bold {
+  font-weight: bold;
+}
+
+#ckowvxszuh .gt_font_italic {
+  font-style: italic;
+}
+
+#ckowvxszuh .gt_super {
+  font-size: 65%;
+}
+
+#ckowvxszuh .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ckowvxszuh .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ckowvxszuh .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ckowvxszuh .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ckowvxszuh .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ckowvxszuh .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ckowvxszuh .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#ckowvxszuh .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#ckowvxszuh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="table gt_table caption-top" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="gt_col_headings gt_spanner_row header">
+<th rowspan="2" id="row" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Row</th>
+<th colspan="6" id="Scores" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="colgroup"><div class="gt_column_spanner">
+Scores
+</div></th>
+<th rowspan="2" id="dental_age" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Age</th>
+<th colspan="2" id="95% CI" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="colgroup"><div class="gt_column_spanner">
+95% CI
+</div></th>
+<th rowspan="2" id="n_estimable" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">n</th>
+<th rowspan="2" id="compatibility" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Compat.</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="Canine" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Canine</th>
+<th id="P3" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">P3</th>
+<th id="P4" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">P4</th>
+<th id="M1" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">M1</th>
+<th id="M2" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">M2</th>
+<th id="M3" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">M3</th>
+<th id="ci_lower" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Lower</th>
+<th id="ci_upper" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Upper</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">1</td>
+<td class="gt_row gt_left" headers="Canine">C.oc</td>
+<td class="gt_row gt_left" headers="P3">—</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">—</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">1.93</td>
+<td class="gt_row gt_right" headers="ci_lower">1.46</td>
+<td class="gt_row gt_right" headers="ci_upper">2.69</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">2</td>
+<td class="gt_row gt_left" headers="Canine">Cr.5</td>
+<td class="gt_row gt_left" headers="P3">—</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">—</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">2.58</td>
+<td class="gt_row gt_right" headers="ci_lower">1.93</td>
+<td class="gt_row gt_right" headers="ci_upper">3.62</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">3</td>
+<td class="gt_row gt_left" headers="Canine">Cr.5</td>
+<td class="gt_row gt_left" headers="P3">C.i</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">—</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">2.51</td>
+<td class="gt_row gt_right" headers="ci_lower">2.08</td>
+<td class="gt_row gt_right" headers="ci_upper">3.09</td>
+<td class="gt_row gt_right" headers="n_estimable">2</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">4</td>
+<td class="gt_row gt_left" headers="Canine">Cr.5</td>
+<td class="gt_row gt_left" headers="P3">C.co</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">—</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">2.79</td>
+<td class="gt_row gt_right" headers="ci_lower">2.24</td>
+<td class="gt_row gt_right" headers="ci_upper">3.57</td>
+<td class="gt_row gt_right" headers="n_estimable">2</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">5</td>
+<td class="gt_row gt_left" headers="Canine">Cr.75</td>
+<td class="gt_row gt_left" headers="P3">C.oc</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">—</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">3.44</td>
+<td class="gt_row gt_right" headers="ci_lower">2.86</td>
+<td class="gt_row gt_right" headers="ci_upper">4.23</td>
+<td class="gt_row gt_right" headers="n_estimable">2</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">6</td>
+<td class="gt_row gt_left" headers="Canine">Cr.75</td>
+<td class="gt_row gt_left" headers="P3">C.oc</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">Cr.c</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">3.18</td>
+<td class="gt_row gt_right" headers="ci_lower">2.41</td>
+<td class="gt_row gt_right" headers="ci_upper">4.39</td>
+<td class="gt_row gt_right" headers="n_estimable">3</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">7</td>
+<td class="gt_row gt_left" headers="Canine">Cr.75</td>
+<td class="gt_row gt_left" headers="P3">Cr.5</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">R.i</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">3.70</td>
+<td class="gt_row gt_right" headers="ci_lower">3.06</td>
+<td class="gt_row gt_right" headers="ci_upper">4.57</td>
+<td class="gt_row gt_right" headers="n_estimable">3</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">8</td>
+<td class="gt_row gt_left" headers="Canine">Cr.75</td>
+<td class="gt_row gt_left" headers="P3">Cr.5</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">R.i</td>
+<td class="gt_row gt_left" headers="M2">C.i</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">3.70</td>
+<td class="gt_row gt_right" headers="ci_lower">3.16</td>
+<td class="gt_row gt_right" headers="ci_upper">4.39</td>
+<td class="gt_row gt_right" headers="n_estimable">4</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">9</td>
+<td class="gt_row gt_left" headers="Canine">Cr.75</td>
+<td class="gt_row gt_left" headers="P3">Cr.5</td>
+<td class="gt_row gt_left" headers="P4">C.i</td>
+<td class="gt_row gt_left" headers="M1">Cl.i</td>
+<td class="gt_row gt_left" headers="M2">C.i</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">3.84</td>
+<td class="gt_row gt_right" headers="ci_lower">3.31</td>
+<td class="gt_row gt_right" headers="ci_upper">4.51</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">10</td>
+<td class="gt_row gt_left" headers="Canine">Cr.c</td>
+<td class="gt_row gt_left" headers="P3">Cr.75</td>
+<td class="gt_row gt_left" headers="P4">C.co</td>
+<td class="gt_row gt_left" headers="M1">R.25</td>
+<td class="gt_row gt_left" headers="M2">C.co</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">4.52</td>
+<td class="gt_row gt_right" headers="ci_lower">3.70</td>
+<td class="gt_row gt_right" headers="ci_upper">5.66</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">11</td>
+<td class="gt_row gt_left" headers="Canine">Cr.c</td>
+<td class="gt_row gt_left" headers="P3">Cr.c</td>
+<td class="gt_row gt_left" headers="P4">C.oc</td>
+<td class="gt_row gt_left" headers="M1">R.25</td>
+<td class="gt_row gt_left" headers="M2">C.oc</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">5.01</td>
+<td class="gt_row gt_right" headers="ci_lower">3.94</td>
+<td class="gt_row gt_right" headers="ci_upper">6.59</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">12</td>
+<td class="gt_row gt_left" headers="Canine">Cr.c</td>
+<td class="gt_row gt_left" headers="P3">Cr.c</td>
+<td class="gt_row gt_left" headers="P4">Cr.5</td>
+<td class="gt_row gt_left" headers="M1">R.5</td>
+<td class="gt_row gt_left" headers="M2">Cr.5</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">5.56</td>
+<td class="gt_row gt_right" headers="ci_lower">4.55</td>
+<td class="gt_row gt_right" headers="ci_upper">6.97</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">13</td>
+<td class="gt_row gt_left" headers="Canine">R.i</td>
+<td class="gt_row gt_left" headers="P3">Cr.c</td>
+<td class="gt_row gt_left" headers="P4">Cr.75</td>
+<td class="gt_row gt_left" headers="M1">R.75</td>
+<td class="gt_row gt_left" headers="M2">Cr.75</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">6.44</td>
+<td class="gt_row gt_right" headers="ci_lower">5.50</td>
+<td class="gt_row gt_right" headers="ci_upper">7.66</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">14</td>
+<td class="gt_row gt_left" headers="Canine">R.i</td>
+<td class="gt_row gt_left" headers="P3">R.i</td>
+<td class="gt_row gt_left" headers="P4">Cr.c</td>
+<td class="gt_row gt_left" headers="M1">R.75</td>
+<td class="gt_row gt_left" headers="M2">Cr.c</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">7.17</td>
+<td class="gt_row gt_right" headers="ci_lower">6.26</td>
+<td class="gt_row gt_right" headers="ci_upper">8.31</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">15</td>
+<td class="gt_row gt_left" headers="Canine">R.25</td>
+<td class="gt_row gt_left" headers="P3">R.i</td>
+<td class="gt_row gt_left" headers="P4">R.i</td>
+<td class="gt_row gt_left" headers="M1">R.75</td>
+<td class="gt_row gt_left" headers="M2">R.i</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">7.75</td>
+<td class="gt_row gt_right" headers="ci_lower">6.72</td>
+<td class="gt_row gt_right" headers="ci_upper">9.03</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">16</td>
+<td class="gt_row gt_left" headers="Canine">R.25</td>
+<td class="gt_row gt_left" headers="P3">R.25</td>
+<td class="gt_row gt_left" headers="P4">R.i</td>
+<td class="gt_row gt_left" headers="M1">R.c</td>
+<td class="gt_row gt_left" headers="M2">Cl.i</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">8.42</td>
+<td class="gt_row gt_right" headers="ci_lower">7.41</td>
+<td class="gt_row gt_right" headers="ci_upper">9.65</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">17</td>
+<td class="gt_row gt_left" headers="Canine">R.5</td>
+<td class="gt_row gt_left" headers="P3">R.25</td>
+<td class="gt_row gt_left" headers="P4">R.25</td>
+<td class="gt_row gt_left" headers="M1">R.c</td>
+<td class="gt_row gt_left" headers="M2">R.25</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">9.02</td>
+<td class="gt_row gt_right" headers="ci_lower">7.79</td>
+<td class="gt_row gt_right" headers="ci_upper">10.56</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">18</td>
+<td class="gt_row gt_left" headers="Canine">R.5</td>
+<td class="gt_row gt_left" headers="P3">R.5</td>
+<td class="gt_row gt_left" headers="P4">R.25</td>
+<td class="gt_row gt_left" headers="M1">A.5</td>
+<td class="gt_row gt_left" headers="M2">R.25</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">9.50</td>
+<td class="gt_row gt_right" headers="ci_lower">8.41</td>
+<td class="gt_row gt_right" headers="ci_upper">10.82</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">19</td>
+<td class="gt_row gt_left" headers="Canine">R.75</td>
+<td class="gt_row gt_left" headers="P3">R.5</td>
+<td class="gt_row gt_left" headers="P4">R.5</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">R.5</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">10.35</td>
+<td class="gt_row gt_right" headers="ci_lower">9.16</td>
+<td class="gt_row gt_right" headers="ci_upper">11.80</td>
+<td class="gt_row gt_right" headers="n_estimable">4</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">20</td>
+<td class="gt_row gt_left" headers="Canine">R.75</td>
+<td class="gt_row gt_left" headers="P3">R.5</td>
+<td class="gt_row gt_left" headers="P4">R.5</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">R.5</td>
+<td class="gt_row gt_left" headers="M3">C.i</td>
+<td class="gt_row gt_right" headers="dental_age">10.12</td>
+<td class="gt_row gt_right" headers="ci_lower">8.81</td>
+<td class="gt_row gt_right" headers="ci_upper">11.74</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">21</td>
+<td class="gt_row gt_left" headers="Canine">R.c</td>
+<td class="gt_row gt_left" headers="P3">R.75</td>
+<td class="gt_row gt_left" headers="P4">R.75</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">R.75</td>
+<td class="gt_row gt_left" headers="M3">C.co</td>
+<td class="gt_row gt_right" headers="dental_age">11.08</td>
+<td class="gt_row gt_right" headers="ci_lower">9.47</td>
+<td class="gt_row gt_right" headers="ci_upper">13.15</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">22</td>
+<td class="gt_row gt_left" headers="Canine">A.5</td>
+<td class="gt_row gt_left" headers="P3">R.c</td>
+<td class="gt_row gt_left" headers="P4">R.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">R.c</td>
+<td class="gt_row gt_left" headers="M3">C.oc</td>
+<td class="gt_row gt_right" headers="dental_age">12.15</td>
+<td class="gt_row gt_right" headers="ci_lower">10.15</td>
+<td class="gt_row gt_right" headers="ci_upper">14.83</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">23</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.5</td>
+<td class="gt_row gt_left" headers="P4">A.5</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.5</td>
+<td class="gt_row gt_left" headers="M3">Cr.5</td>
+<td class="gt_row gt_right" headers="dental_age">13.12</td>
+<td class="gt_row gt_right" headers="ci_lower">10.73</td>
+<td class="gt_row gt_right" headers="ci_upper">16.44</td>
+<td class="gt_row gt_right" headers="n_estimable">4</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">24</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">Cr.75</td>
+<td class="gt_row gt_right" headers="dental_age">12.62</td>
+<td class="gt_row gt_right" headers="ci_lower">10.29</td>
+<td class="gt_row gt_right" headers="ci_upper">15.87</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">overlap</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">25</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">Cr.c</td>
+<td class="gt_row gt_right" headers="dental_age">13.32</td>
+<td class="gt_row gt_right" headers="ci_lower">10.89</td>
+<td class="gt_row gt_right" headers="ci_upper">16.68</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">overlap</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">26</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.i</td>
+<td class="gt_row gt_right" headers="dental_age">13.87</td>
+<td class="gt_row gt_right" headers="ci_lower">11.33</td>
+<td class="gt_row gt_right" headers="ci_upper">17.38</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">overlap</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">27</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">Cl.i</td>
+<td class="gt_row gt_right" headers="dental_age">14.59</td>
+<td class="gt_row gt_right" headers="ci_lower">11.94</td>
+<td class="gt_row gt_right" headers="ci_upper">18.26</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">overlap</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">28</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.25</td>
+<td class="gt_row gt_right" headers="dental_age">15.66</td>
+<td class="gt_row gt_right" headers="ci_lower">12.87</td>
+<td class="gt_row gt_right" headers="ci_upper">19.51</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">29</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.5</td>
+<td class="gt_row gt_right" headers="dental_age">—</td>
+<td class="gt_row gt_right" headers="ci_lower">—</td>
+<td class="gt_row gt_right" headers="ci_upper">—</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
+<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">30</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.75</td>
+<td class="gt_row gt_right" headers="dental_age">—</td>
+<td class="gt_row gt_right" headers="ci_lower">—</td>
+<td class="gt_row gt_right" headers="ci_upper">—</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
+<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">31</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.c</td>
+<td class="gt_row gt_right" headers="dental_age">—</td>
+<td class="gt_row gt_right" headers="ci_lower">—</td>
+<td class="gt_row gt_right" headers="ci_upper">—</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
+<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">32</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">A.5</td>
+<td class="gt_row gt_right" headers="dental_age">—</td>
+<td class="gt_row gt_right" headers="ci_lower">—</td>
+<td class="gt_row gt_right" headers="ci_upper">—</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
+<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Females</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">dental_age</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">row</span>, y <span class="op">=</span> <span class="va">dental_age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Row"</span>, y <span class="op">=</span> <span class="st">"Dental Age"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="DA_Continuity_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section><section class="level2"><h2 id="male-progression">Male progression<a class="anchor" aria-label="anchor" href="#male-progression"></a>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">male</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>    <span class="op">~</span><span class="va">Sex</span> , <span class="op">~</span><span class="va">Canine</span> , <span class="op">~</span><span class="va">P3</span>     , <span class="op">~</span><span class="va">P4</span>     , <span class="op">~</span><span class="va">M1</span>    , <span class="op">~</span><span class="va">M2</span>     , <span class="op">~</span><span class="va">M3</span>     ,</span>
 <span>    <span class="st">"M"</span>  , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
@@ -194,7 +1155,7 @@
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">male_results</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">male</span><span class="op">)</span><span class="op">)</span>, \<span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">male</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span>    <span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ac_info.html">ac_info</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span></span>
@@ -208,27 +1169,985 @@
 <span>    <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">male</span> <span class="op">|&gt;</span></span>
+<span><span class="va">Males</span> <span class="op">&lt;-</span> <span class="va">male</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">male_results</span>, by <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Sex</span>, <span class="op">-</span><span class="va">row</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dental_age</span>, <span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 32 × 11
-   Canine P3    P4    M1    M2    M3    dental_age ci_lower ci_upper n_estimable
-   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
- 1 C.oc   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        1.97     1.49     2.71           1
- 2 Cr.5   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.75     2.03     3.93           1
- 3 Cr.5   C.i   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.58     2.08     3.31           2
- 4 Cr.5   C.co  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        2.9      2.42     3.53           2
- 5 Cr.75  C.oc  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;        3.56     2.67     4.99           2
- 6 Cr.75  C.oc  &lt;NA&gt;  Cr.c  &lt;NA&gt;  &lt;NA&gt;        3.27     2.31     4.99           3
- 7 Cr.75  Cr.5  &lt;NA&gt;  R.i   &lt;NA&gt;  &lt;NA&gt;        3.89     3.14     4.94           3
- 8 Cr.75  Cr.5  &lt;NA&gt;  R.i   C.i   &lt;NA&gt;        3.86     3.21     4.73           4
- 9 Cr.75  Cr.5  C.i   Cl.i  C.i   &lt;NA&gt;        3.95     3.39     4.67           5
-10 Cr.c   Cr.75 C.co  R.25  C.co  &lt;NA&gt;        4.65     3.47     6.56           5
-# ℹ 22 more rows
-# ℹ 1 more variable: compatibility &lt;chr&gt;</code></pre>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dental_age</span>, <span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span><span class="va">row</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Males</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://gt.rstudio.com/reference/sub_missing.html" class="external-link">sub_missing</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://gt.rstudio.com/reference/cols_label.html" class="external-link">cols_label</a></span><span class="op">(</span></span>
+<span>        row <span class="op">=</span> <span class="st">"Row"</span>,</span>
+<span>        dental_age <span class="op">=</span> <span class="st">"Age"</span>,</span>
+<span>        ci_lower <span class="op">=</span> <span class="st">"Lower"</span>,</span>
+<span>        ci_upper <span class="op">=</span> <span class="st">"Upper"</span>,</span>
+<span>        n_estimable <span class="op">=</span> <span class="st">"n"</span>,</span>
+<span>        compatibility <span class="op">=</span> <span class="st">"Compat."</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://gt.rstudio.com/reference/tab_spanner.html" class="external-link">tab_spanner</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Scores"</span>, columns <span class="op">=</span> <span class="va">Canine</span><span class="op">:</span><span class="va">M3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://gt.rstudio.com/reference/tab_spanner.html" class="external-link">tab_spanner</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"95% CI"</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div id="bkwcawpqxc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bkwcawpqxc table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#bkwcawpqxc thead, #bkwcawpqxc tbody, #bkwcawpqxc tfoot, #bkwcawpqxc tr, #bkwcawpqxc td, #bkwcawpqxc th {
+  border-style: none;
+}
+
+#bkwcawpqxc p {
+  margin: 0;
+  padding: 0;
+}
+
+#bkwcawpqxc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#bkwcawpqxc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#bkwcawpqxc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#bkwcawpqxc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#bkwcawpqxc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bkwcawpqxc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bkwcawpqxc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bkwcawpqxc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#bkwcawpqxc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#bkwcawpqxc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#bkwcawpqxc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#bkwcawpqxc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#bkwcawpqxc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#bkwcawpqxc .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#bkwcawpqxc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#bkwcawpqxc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#bkwcawpqxc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#bkwcawpqxc .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#bkwcawpqxc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bkwcawpqxc .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#bkwcawpqxc .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#bkwcawpqxc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#bkwcawpqxc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bkwcawpqxc .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#bkwcawpqxc .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#bkwcawpqxc .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bkwcawpqxc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bkwcawpqxc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#bkwcawpqxc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bkwcawpqxc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#bkwcawpqxc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bkwcawpqxc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bkwcawpqxc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bkwcawpqxc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bkwcawpqxc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bkwcawpqxc .gt_left {
+  text-align: left;
+}
+
+#bkwcawpqxc .gt_center {
+  text-align: center;
+}
+
+#bkwcawpqxc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#bkwcawpqxc .gt_font_normal {
+  font-weight: normal;
+}
+
+#bkwcawpqxc .gt_font_bold {
+  font-weight: bold;
+}
+
+#bkwcawpqxc .gt_font_italic {
+  font-style: italic;
+}
+
+#bkwcawpqxc .gt_super {
+  font-size: 65%;
+}
+
+#bkwcawpqxc .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#bkwcawpqxc .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#bkwcawpqxc .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#bkwcawpqxc .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#bkwcawpqxc .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#bkwcawpqxc .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#bkwcawpqxc .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#bkwcawpqxc .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#bkwcawpqxc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="table gt_table caption-top" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="gt_col_headings gt_spanner_row header">
+<th rowspan="2" id="row" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Row</th>
+<th colspan="6" id="Scores" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="colgroup"><div class="gt_column_spanner">
+Scores
+</div></th>
+<th rowspan="2" id="dental_age" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Age</th>
+<th colspan="2" id="95% CI" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="colgroup"><div class="gt_column_spanner">
+95% CI
+</div></th>
+<th rowspan="2" id="n_estimable" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">n</th>
+<th rowspan="2" id="compatibility" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Compat.</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="Canine" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Canine</th>
+<th id="P3" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">P3</th>
+<th id="P4" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">P4</th>
+<th id="M1" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">M1</th>
+<th id="M2" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">M2</th>
+<th id="M3" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">M3</th>
+<th id="ci_lower" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Lower</th>
+<th id="ci_upper" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Upper</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">1</td>
+<td class="gt_row gt_left" headers="Canine">C.oc</td>
+<td class="gt_row gt_left" headers="P3">—</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">—</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">1.97</td>
+<td class="gt_row gt_right" headers="ci_lower">1.49</td>
+<td class="gt_row gt_right" headers="ci_upper">2.71</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">2</td>
+<td class="gt_row gt_left" headers="Canine">Cr.5</td>
+<td class="gt_row gt_left" headers="P3">—</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">—</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">2.75</td>
+<td class="gt_row gt_right" headers="ci_lower">2.03</td>
+<td class="gt_row gt_right" headers="ci_upper">3.93</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">3</td>
+<td class="gt_row gt_left" headers="Canine">Cr.5</td>
+<td class="gt_row gt_left" headers="P3">C.i</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">—</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">2.58</td>
+<td class="gt_row gt_right" headers="ci_lower">2.08</td>
+<td class="gt_row gt_right" headers="ci_upper">3.31</td>
+<td class="gt_row gt_right" headers="n_estimable">2</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">4</td>
+<td class="gt_row gt_left" headers="Canine">Cr.5</td>
+<td class="gt_row gt_left" headers="P3">C.co</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">—</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">2.90</td>
+<td class="gt_row gt_right" headers="ci_lower">2.42</td>
+<td class="gt_row gt_right" headers="ci_upper">3.53</td>
+<td class="gt_row gt_right" headers="n_estimable">2</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">5</td>
+<td class="gt_row gt_left" headers="Canine">Cr.75</td>
+<td class="gt_row gt_left" headers="P3">C.oc</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">—</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">3.56</td>
+<td class="gt_row gt_right" headers="ci_lower">2.67</td>
+<td class="gt_row gt_right" headers="ci_upper">4.99</td>
+<td class="gt_row gt_right" headers="n_estimable">2</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">6</td>
+<td class="gt_row gt_left" headers="Canine">Cr.75</td>
+<td class="gt_row gt_left" headers="P3">C.oc</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">Cr.c</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">3.27</td>
+<td class="gt_row gt_right" headers="ci_lower">2.31</td>
+<td class="gt_row gt_right" headers="ci_upper">4.99</td>
+<td class="gt_row gt_right" headers="n_estimable">3</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">7</td>
+<td class="gt_row gt_left" headers="Canine">Cr.75</td>
+<td class="gt_row gt_left" headers="P3">Cr.5</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">R.i</td>
+<td class="gt_row gt_left" headers="M2">—</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">3.89</td>
+<td class="gt_row gt_right" headers="ci_lower">3.14</td>
+<td class="gt_row gt_right" headers="ci_upper">4.94</td>
+<td class="gt_row gt_right" headers="n_estimable">3</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">8</td>
+<td class="gt_row gt_left" headers="Canine">Cr.75</td>
+<td class="gt_row gt_left" headers="P3">Cr.5</td>
+<td class="gt_row gt_left" headers="P4">—</td>
+<td class="gt_row gt_left" headers="M1">R.i</td>
+<td class="gt_row gt_left" headers="M2">C.i</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">3.86</td>
+<td class="gt_row gt_right" headers="ci_lower">3.21</td>
+<td class="gt_row gt_right" headers="ci_upper">4.73</td>
+<td class="gt_row gt_right" headers="n_estimable">4</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">9</td>
+<td class="gt_row gt_left" headers="Canine">Cr.75</td>
+<td class="gt_row gt_left" headers="P3">Cr.5</td>
+<td class="gt_row gt_left" headers="P4">C.i</td>
+<td class="gt_row gt_left" headers="M1">Cl.i</td>
+<td class="gt_row gt_left" headers="M2">C.i</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">3.95</td>
+<td class="gt_row gt_right" headers="ci_lower">3.39</td>
+<td class="gt_row gt_right" headers="ci_upper">4.67</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">10</td>
+<td class="gt_row gt_left" headers="Canine">Cr.c</td>
+<td class="gt_row gt_left" headers="P3">Cr.75</td>
+<td class="gt_row gt_left" headers="P4">C.co</td>
+<td class="gt_row gt_left" headers="M1">R.25</td>
+<td class="gt_row gt_left" headers="M2">C.co</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">4.65</td>
+<td class="gt_row gt_right" headers="ci_lower">3.47</td>
+<td class="gt_row gt_right" headers="ci_upper">6.56</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">11</td>
+<td class="gt_row gt_left" headers="Canine">Cr.c</td>
+<td class="gt_row gt_left" headers="P3">Cr.c</td>
+<td class="gt_row gt_left" headers="P4">C.oc</td>
+<td class="gt_row gt_left" headers="M1">R.25</td>
+<td class="gt_row gt_left" headers="M2">C.oc</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">5.18</td>
+<td class="gt_row gt_right" headers="ci_lower">3.87</td>
+<td class="gt_row gt_right" headers="ci_upper">7.33</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">12</td>
+<td class="gt_row gt_left" headers="Canine">Cr.c</td>
+<td class="gt_row gt_left" headers="P3">Cr.c</td>
+<td class="gt_row gt_left" headers="P4">Cr.5</td>
+<td class="gt_row gt_left" headers="M1">R.5</td>
+<td class="gt_row gt_left" headers="M2">Cr.5</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">5.84</td>
+<td class="gt_row gt_right" headers="ci_lower">4.83</td>
+<td class="gt_row gt_right" headers="ci_upper">7.23</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">13</td>
+<td class="gt_row gt_left" headers="Canine">R.i</td>
+<td class="gt_row gt_left" headers="P3">Cr.c</td>
+<td class="gt_row gt_left" headers="P4">Cr.75</td>
+<td class="gt_row gt_left" headers="M1">R.75</td>
+<td class="gt_row gt_left" headers="M2">Cr.75</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">6.73</td>
+<td class="gt_row gt_right" headers="ci_lower">5.64</td>
+<td class="gt_row gt_right" headers="ci_upper">8.17</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">14</td>
+<td class="gt_row gt_left" headers="Canine">R.i</td>
+<td class="gt_row gt_left" headers="P3">R.i</td>
+<td class="gt_row gt_left" headers="P4">Cr.c</td>
+<td class="gt_row gt_left" headers="M1">R.75</td>
+<td class="gt_row gt_left" headers="M2">Cr.c</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">7.44</td>
+<td class="gt_row gt_right" headers="ci_lower">6.65</td>
+<td class="gt_row gt_right" headers="ci_upper">8.38</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">15</td>
+<td class="gt_row gt_left" headers="Canine">R.25</td>
+<td class="gt_row gt_left" headers="P3">R.i</td>
+<td class="gt_row gt_left" headers="P4">R.i</td>
+<td class="gt_row gt_left" headers="M1">R.75</td>
+<td class="gt_row gt_left" headers="M2">R.i</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">7.95</td>
+<td class="gt_row gt_right" headers="ci_lower">6.68</td>
+<td class="gt_row gt_right" headers="ci_upper">9.61</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">16</td>
+<td class="gt_row gt_left" headers="Canine">R.25</td>
+<td class="gt_row gt_left" headers="P3">R.25</td>
+<td class="gt_row gt_left" headers="P4">R.i</td>
+<td class="gt_row gt_left" headers="M1">R.c</td>
+<td class="gt_row gt_left" headers="M2">Cl.i</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">8.68</td>
+<td class="gt_row gt_right" headers="ci_lower">7.63</td>
+<td class="gt_row gt_right" headers="ci_upper">9.98</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">17</td>
+<td class="gt_row gt_left" headers="Canine">R.5</td>
+<td class="gt_row gt_left" headers="P3">R.25</td>
+<td class="gt_row gt_left" headers="P4">R.25</td>
+<td class="gt_row gt_left" headers="M1">R.c</td>
+<td class="gt_row gt_left" headers="M2">R.25</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">9.33</td>
+<td class="gt_row gt_right" headers="ci_lower">7.84</td>
+<td class="gt_row gt_right" headers="ci_upper">11.30</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">18</td>
+<td class="gt_row gt_left" headers="Canine">R.5</td>
+<td class="gt_row gt_left" headers="P3">R.5</td>
+<td class="gt_row gt_left" headers="P4">R.25</td>
+<td class="gt_row gt_left" headers="M1">A.5</td>
+<td class="gt_row gt_left" headers="M2">R.25</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">9.96</td>
+<td class="gt_row gt_right" headers="ci_lower">8.73</td>
+<td class="gt_row gt_right" headers="ci_upper">11.48</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">19</td>
+<td class="gt_row gt_left" headers="Canine">R.75</td>
+<td class="gt_row gt_left" headers="P3">R.5</td>
+<td class="gt_row gt_left" headers="P4">R.5</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">R.5</td>
+<td class="gt_row gt_left" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">10.84</td>
+<td class="gt_row gt_right" headers="ci_lower">9.55</td>
+<td class="gt_row gt_right" headers="ci_upper">12.42</td>
+<td class="gt_row gt_right" headers="n_estimable">4</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">20</td>
+<td class="gt_row gt_left" headers="Canine">R.75</td>
+<td class="gt_row gt_left" headers="P3">R.5</td>
+<td class="gt_row gt_left" headers="P4">R.5</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">R.5</td>
+<td class="gt_row gt_left" headers="M3">C.i</td>
+<td class="gt_row gt_right" headers="dental_age">10.52</td>
+<td class="gt_row gt_right" headers="ci_lower">9.02</td>
+<td class="gt_row gt_right" headers="ci_upper">12.43</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">21</td>
+<td class="gt_row gt_left" headers="Canine">R.c</td>
+<td class="gt_row gt_left" headers="P3">R.75</td>
+<td class="gt_row gt_left" headers="P4">R.75</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">R.75</td>
+<td class="gt_row gt_left" headers="M3">C.co</td>
+<td class="gt_row gt_right" headers="dental_age">11.44</td>
+<td class="gt_row gt_right" headers="ci_lower">9.62</td>
+<td class="gt_row gt_right" headers="ci_upper">13.82</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">22</td>
+<td class="gt_row gt_left" headers="Canine">A.5</td>
+<td class="gt_row gt_left" headers="P3">R.c</td>
+<td class="gt_row gt_left" headers="P4">R.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">R.c</td>
+<td class="gt_row gt_left" headers="M3">C.oc</td>
+<td class="gt_row gt_right" headers="dental_age">12.41</td>
+<td class="gt_row gt_right" headers="ci_lower">10.28</td>
+<td class="gt_row gt_right" headers="ci_upper">15.30</td>
+<td class="gt_row gt_right" headers="n_estimable">5</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">23</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.5</td>
+<td class="gt_row gt_left" headers="P4">A.5</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.5</td>
+<td class="gt_row gt_left" headers="M3">Cr.5</td>
+<td class="gt_row gt_right" headers="dental_age">13.13</td>
+<td class="gt_row gt_right" headers="ci_lower">10.66</td>
+<td class="gt_row gt_right" headers="ci_upper">16.58</td>
+<td class="gt_row gt_right" headers="n_estimable">4</td>
+<td class="gt_row gt_left" headers="compatibility">overlap</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">24</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">Cr.75</td>
+<td class="gt_row gt_right" headers="dental_age">12.20</td>
+<td class="gt_row gt_right" headers="ci_lower">10.00</td>
+<td class="gt_row gt_right" headers="ci_upper">15.23</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">overlap</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">25</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">Cr.c</td>
+<td class="gt_row gt_right" headers="dental_age">12.95</td>
+<td class="gt_row gt_right" headers="ci_lower">10.61</td>
+<td class="gt_row gt_right" headers="ci_upper">16.17</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">overlap</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">26</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.i</td>
+<td class="gt_row gt_right" headers="dental_age">13.72</td>
+<td class="gt_row gt_right" headers="ci_lower">11.25</td>
+<td class="gt_row gt_right" headers="ci_upper">17.12</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">overlap</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">27</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">Cl.i</td>
+<td class="gt_row gt_right" headers="dental_age">14.43</td>
+<td class="gt_row gt_right" headers="ci_lower">11.85</td>
+<td class="gt_row gt_right" headers="ci_upper">17.97</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">28</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.25</td>
+<td class="gt_row gt_right" headers="dental_age">15.27</td>
+<td class="gt_row gt_right" headers="ci_lower">12.57</td>
+<td class="gt_row gt_right" headers="ci_upper">18.97</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">29</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.5</td>
+<td class="gt_row gt_right" headers="dental_age">16.04</td>
+<td class="gt_row gt_right" headers="ci_lower">13.32</td>
+<td class="gt_row gt_right" headers="ci_upper">19.70</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">30</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.75</td>
+<td class="gt_row gt_right" headers="dental_age">16.45</td>
+<td class="gt_row gt_right" headers="ci_lower">13.75</td>
+<td class="gt_row gt_right" headers="ci_upper">20.06</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">31</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.c</td>
+<td class="gt_row gt_right" headers="dental_age">16.82</td>
+<td class="gt_row gt_right" headers="ci_lower">14.15</td>
+<td class="gt_row gt_right" headers="ci_upper">20.33</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">32</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">A.5</td>
+<td class="gt_row gt_right" headers="dental_age">17.32</td>
+<td class="gt_row gt_right" headers="ci_lower">14.75</td>
+<td class="gt_row gt_right" headers="ci_upper">20.65</td>
+<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Males</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">dental_age</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">row</span>, y <span class="op">=</span> <span class="va">dental_age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Row"</span>, y <span class="op">=</span> <span class="st">"Dental Age"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="DA_Continuity_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section><section class="level2"><h2 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>

@@ -5,13 +5,15 @@
 library(AgeFromDentition)
 library(dplyr)
 library(tibble)
+library(ggplot2)
+library(gt)
+library(tidyr)
 ```
 
 Dental age estimates generally increase as tooth stages advance. This
 vignette constructs fine-scale example progressions for females and
 males, starting with only the canine scored and gradually adding teeth,
-ending with all teeth at `A.c` except M3 at `A.5`. Each row advances at
-most a few teeth by a single stage — no tooth ever skips a stage.
+ending with all teeth at `A.c` except M3 at `A.5`.
 
 ## Female progression
 
@@ -69,28 +71,45 @@ female_results <- purrr::map_dfr(seq_len(nrow(female)), \(i) {
     )
 })
 
-female |>
+Females <- female |>
     mutate(row = row_number()) |>
     left_join(female_results, by = "row") |>
     select(-Sex, -row) |>
-    mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2)))
+    mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2))) |>
+    mutate(row = row_number()) |>
+    relocate(row)
 ```
 
-    # A tibble: 32 × 11
-       Canine P3    P4    M1    M2    M3    dental_age ci_lower ci_upper n_estimable
-       <chr>  <chr> <chr> <chr> <chr> <chr>      <dbl>    <dbl>    <dbl>       <int>
-     1 C.oc   <NA>  <NA>  <NA>  <NA>  <NA>        1.93     1.46     2.69           1
-     2 Cr.5   <NA>  <NA>  <NA>  <NA>  <NA>        2.58     1.93     3.62           1
-     3 Cr.5   C.i   <NA>  <NA>  <NA>  <NA>        2.51     2.08     3.09           2
-     4 Cr.5   C.co  <NA>  <NA>  <NA>  <NA>        2.79     2.24     3.57           2
-     5 Cr.75  C.oc  <NA>  <NA>  <NA>  <NA>        3.44     2.86     4.23           2
-     6 Cr.75  C.oc  <NA>  Cr.c  <NA>  <NA>        3.18     2.41     4.39           3
-     7 Cr.75  Cr.5  <NA>  R.i   <NA>  <NA>        3.7      3.06     4.57           3
-     8 Cr.75  Cr.5  <NA>  R.i   C.i   <NA>        3.7      3.16     4.39           4
-     9 Cr.75  Cr.5  C.i   Cl.i  C.i   <NA>        3.84     3.31     4.51           5
-    10 Cr.c   Cr.75 C.co  R.25  C.co  <NA>        4.52     3.7      5.66           5
-    # ℹ 22 more rows
-    # ℹ 1 more variable: compatibility <chr>
+``` r
+
+Females |>
+    gt() |>
+    sub_missing() |>
+    cols_label(
+        row = "Row",
+        dental_age = "Age",
+        ci_lower = "Lower",
+        ci_upper = "Upper",
+        n_estimable = "n",
+        compatibility = "Compat."
+    ) |>
+    tab_spanner(label = "Scores", columns = Canine:M3) |>
+    tab_spanner(label = "95% CI", columns = c(ci_lower, ci_upper))
+```
+
+[TABLE]
+
+``` r
+
+Females |>
+    drop_na(dental_age) |>
+    ggplot(aes(x = row, y = dental_age)) +
+    geom_line(linewidth = 1.5) +
+    labs(x = "Row", y = "Dental Age") +
+    theme_classic()
+```
+
+![](DA_Continuity_files/figure-html/unnamed-chunk-2-1.png)
 
 ## Male progression
 
@@ -148,28 +167,45 @@ male_results <- purrr::map_dfr(seq_len(nrow(male)), \(i) {
     )
 })
 
-male |>
+Males <- male |>
     mutate(row = row_number()) |>
     left_join(male_results, by = "row") |>
     select(-Sex, -row) |>
-    mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2)))
+    mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2))) |>
+    mutate(row = row_number()) |>
+    relocate(row)
 ```
 
-    # A tibble: 32 × 11
-       Canine P3    P4    M1    M2    M3    dental_age ci_lower ci_upper n_estimable
-       <chr>  <chr> <chr> <chr> <chr> <chr>      <dbl>    <dbl>    <dbl>       <int>
-     1 C.oc   <NA>  <NA>  <NA>  <NA>  <NA>        1.97     1.49     2.71           1
-     2 Cr.5   <NA>  <NA>  <NA>  <NA>  <NA>        2.75     2.03     3.93           1
-     3 Cr.5   C.i   <NA>  <NA>  <NA>  <NA>        2.58     2.08     3.31           2
-     4 Cr.5   C.co  <NA>  <NA>  <NA>  <NA>        2.9      2.42     3.53           2
-     5 Cr.75  C.oc  <NA>  <NA>  <NA>  <NA>        3.56     2.67     4.99           2
-     6 Cr.75  C.oc  <NA>  Cr.c  <NA>  <NA>        3.27     2.31     4.99           3
-     7 Cr.75  Cr.5  <NA>  R.i   <NA>  <NA>        3.89     3.14     4.94           3
-     8 Cr.75  Cr.5  <NA>  R.i   C.i   <NA>        3.86     3.21     4.73           4
-     9 Cr.75  Cr.5  C.i   Cl.i  C.i   <NA>        3.95     3.39     4.67           5
-    10 Cr.c   Cr.75 C.co  R.25  C.co  <NA>        4.65     3.47     6.56           5
-    # ℹ 22 more rows
-    # ℹ 1 more variable: compatibility <chr>
+``` r
+
+Males |>
+    gt() |>
+    sub_missing() |>
+    cols_label(
+        row = "Row",
+        dental_age = "Age",
+        ci_lower = "Lower",
+        ci_upper = "Upper",
+        n_estimable = "n",
+        compatibility = "Compat."
+    ) |>
+    tab_spanner(label = "Scores", columns = Canine:M3) |>
+    tab_spanner(label = "95% CI", columns = c(ci_lower, ci_upper))
+```
+
+[TABLE]
+
+``` r
+
+Males |>
+    drop_na(dental_age) |>
+    ggplot(aes(x = row, y = dental_age)) +
+    geom_line(linewidth = 1.5) +
+    labs(x = "Row", y = "Dental Age") +
+    theme_classic()
+```
+
+![](DA_Continuity_files/figure-html/unnamed-chunk-4-1.png)
 
 ## Notes
 
