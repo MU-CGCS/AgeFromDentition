@@ -1,0 +1,146 @@
+# AgeFromDentition
+
+The goal of `AgeFromDentition` is to estimate dental age from scores of
+dental development.
+
+## Installation
+
+You can install the development version of AgeFromDentition from
+[GitHub](https://github.com/) with:
+
+``` r
+
+# install.packages("remotes")
+remotes::install_github("MU-CGCS/AgeFromDentition")
+```
+
+## Usage
+
+Score six mandibular teeth and pass the row straight to the estimator:
+
+``` r
+
+library(AgeFromDentition)
+
+estimate_dental_age(ExampleScores[1, ], verbose = FALSE)
+#> Dental age: 9.04 years (mode of the fitted distribution).
+#> Central 95% interval: 7.61 to 10.90 years.
+#> Estimated from 5 teeth.
+#> Not scored: M3.
+```
+
+## Terminal (Ac) stages
+
+A tooth at `Ac` has completed. That tells you the individual is *older
+than* the completion age, and nothing more — there is no finite age in
+stage to invert, which is why Tables 8–13 of Šešelj et al. (2019) have
+no `Ac` row.
+
+Such teeth are excluded from the estimate and reported separately as a
+**reference completion threshold**, derived from the ages of attainment
+in Tables 2–7:
+
+``` r
+
+x <- data.frame(Sex = "F", Canine = "Ac", P3 = "Ac", P4 = "Ac",
+                M1 = "Ac", M2 = "Ac", M3 = NA)
+
+estimate_dental_age(x, verbose = FALSE)
+#> Dental age: no finite point estimate.
+#> All scored teeth are at terminal stage Ac (Canine, P3, P4, M1, M2).
+#> Reference completion threshold: 12.19 years - the 2.5th percentile of the sex-specific predictive distribution for attaining Ac in M2 (q = 0.025, method = "predictive").
+#> This is a descriptive completion threshold for the reference sample, not a lower confidence limit for this individual.
+#> Not scored: M3.
+```
+
+Note what this does **not** do: it does not return a point estimate, and
+it does not return 18. The threshold is a percentile of the reference
+sample’s completion ages — a descriptive statistic, not a lower
+confidence limit for the individual.
+
+An unscored M3 is never treated as a completed one. The two differ by
+nearly two years here.
+
+When some teeth are still developing, you get an estimate *and* a
+threshold, plus a code saying whether they agree:
+
+``` r
+
+y <- data.frame(Sex = "F", Canine = "R.c", P3 = "R.c", P4 = "R.75",
+                M1 = "Ac", M2 = "R.5", M3 = NA)
+
+est <- estimate_dental_age(y, verbose = FALSE)
+ac_info(est)$compatibility
+#> [1] "compatible"
+```
+
+See
+[`vignette("terminal-stages")`](https://mu-cgcs.github.io/AgeFromDentition/articles/terminal-stages.md)
+for the full treatment, including the convention to declare in a methods
+section.
+
+# Package index
+
+## Estimating age
+
+Estimate dental age from scored teeth, and interpret the result.
+
+- [`estimate_dental_age()`](https://mu-cgcs.github.io/AgeFromDentition/reference/estimate_dental_age.md)
+  : Estimate dental age
+- [`print(`*`<dental_age>`*`)`](https://mu-cgcs.github.io/AgeFromDentition/reference/print.dental_age.md)
+  : Print a dental age estimate
+- [`ac_info()`](https://mu-cgcs.github.io/AgeFromDentition/reference/ac_info.md)
+  : Terminal-stage information from a dental age estimate
+
+## Terminal stages
+
+Teeth at apex closure carry no finite age in stage. They are reported as
+a percentile of the reference distribution of age at completion.
+
+- [`ac_completion_threshold()`](https://mu-cgcs.github.io/AgeFromDentition/reference/ac_completion_threshold.md)
+  : Reference completion threshold for terminal (Ac) teeth
+
+## Intervals and sampling
+
+Stochastic summaries of the fitted distribution. Neither is used to
+judge compatibility with a completion threshold.
+
+- [`estimate_age_hdi()`](https://mu-cgcs.github.io/AgeFromDentition/reference/estimate_age_hdi.md)
+  : Estimate HDI from dental age estimate
+- [`age_samples()`](https://mu-cgcs.github.io/AgeFromDentition/reference/age_samples.md)
+  : Generate sample for age estimate
+
+## Preparing scores
+
+- [`get_means_for_scores()`](https://mu-cgcs.github.io/AgeFromDentition/reference/get_means_for_scores.md)
+  : Lookup mean and sd for a sex / tooth / stage combination
+- [`recode_score()`](https://mu-cgcs.github.io/AgeFromDentition/reference/recode_score.md)
+  : Recode scores
+- [`score_to_stage()`](https://mu-cgcs.github.io/AgeFromDentition/reference/score_to_stage.md)
+  : Convert stage numeric score to character score
+- [`validate_score()`](https://mu-cgcs.github.io/AgeFromDentition/reference/validate_score.md)
+  : Validate stage scores
+
+## Reference data
+
+Sex-specific values from Šešelj et al. (2019). Note that `log_mu` means
+age *given* the stage in `AgeTables`, and age at *entering* the stage in
+`AttainmentTables`.
+
+- [`AgeTables`](https://mu-cgcs.github.io/AgeFromDentition/reference/AgeTables.md)
+  : Age given stage: log-normal parameters for dental stages
+- [`AttainmentTables`](https://mu-cgcs.github.io/AgeFromDentition/reference/AttainmentTables.md)
+  : Age of attainment: log-normal transition parameters
+- [`StageTies`](https://mu-cgcs.github.io/AgeFromDentition/reference/StageTies.md)
+  : Tied stage transitions
+- [`ExampleScores`](https://mu-cgcs.github.io/AgeFromDentition/reference/ExampleScores.md)
+  : Example dental scores
+
+# Articles
+
+### All vignettes
+
+- [Dental Age
+  Continuity](https://mu-cgcs.github.io/AgeFromDentition/articles/DA_Continuity.md):
+- [Terminal (Ac)
+  stages](https://mu-cgcs.github.io/AgeFromDentition/articles/terminal-stages.md):
