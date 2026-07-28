@@ -39,18 +39,19 @@ test_that("estimate_dental_age reproduces the v0.1 values exactly", {
 test_that("get_means_for_scores is unchanged for every ExampleScores row", {
   # The lookup table itself, not just the estimate derived from it.
   for (i in seq_len(nrow(ExampleScores))) {
-    means <- get_means_for_scores(ExampleScores[i, ], verbose = FALSE)
+    scores <- get_means_for_scores(ExampleScores[i, ], verbose = FALSE)
 
-    expect_s3_class(means, "data.frame")
-    expect_equal(dim(means), c(6L, 2L))
-    expect_named(means, c("log_mu", "log_sd"))
+    expect_s3_class(scores, "dental_scores")
+    expect_s3_class(scores$means, "data.frame")
+    expect_equal(dim(scores$means), c(6L, 2L))
+    expect_named(scores$means, c("log_mu", "log_sd"))
     expect_equal(
-      rownames(means),
+      rownames(scores$means),
       c("Canine", "P3", "P4", "M1", "M2", "M3")
     )
   }
 
   # Row 5 has M1 = "C.i", which the estimator drops on purpose.
-  means_5 <- get_means_for_scores(ExampleScores[5, ], verbose = FALSE)
-  expect_true(is.na(means_5["M1", "log_mu"]))
+  scores_5 <- get_means_for_scores(ExampleScores[5, ], verbose = FALSE)
+  expect_true(is.na(scores_5$means["M1", "log_mu"]))
 })

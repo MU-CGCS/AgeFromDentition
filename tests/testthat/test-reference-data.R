@@ -5,12 +5,40 @@
 test_that("AgeTables has the expected shape", {
   expect_s3_class(AgeTables, "data.frame")
   expect_equal(nrow(AgeTables), 150L)
-  expect_named(AgeTables, c("Sex", "Tooth", "Stage", "log_mu", "log_sd"))
+  expect_named(
+    AgeTables,
+    c("Sex", "Tooth", "Stage", "log_mu", "log_sd",
+      "mode", "median", "mean", "sd", "hpd_low", "opt", "hpd_high")
+  )
   expect_setequal(AgeTables$Sex, c("F", "M"))
   expect_setequal(
     AgeTables$Tooth,
     c("Canine", "P3", "P4", "M1", "M2", "M3")
   )
+})
+
+test_that("the published summaries agree with the log-normal parameters", {
+  # median = exp(log_mu), mode = exp(log_mu - log_sd^2),
+  # mean = exp(log_mu + log_sd^2 / 2). Exact identities, so any drift
+  # between the two halves of the table is a transcription error.
+  fitted <- AgeTables[!is.na(AgeTables$log_mu), ]
+
+  expect_equal(exp(fitted$log_mu), fitted$median, tolerance = 1e-3)
+  expect_equal(
+    exp(fitted$log_mu - fitted$log_sd^2), fitted$mode,
+    tolerance = 1e-3
+  )
+  expect_equal(
+    exp(fitted$log_mu + fitted$log_sd^2 / 2), fitted$mean,
+    tolerance = 1e-3
+  )
+})
+
+test_that("the published HPD interval brackets the optimal age", {
+  bounded <- AgeTables[!is.na(AgeTables$hpd_low), ]
+
+  expect_true(all(bounded$hpd_low <= bounded$opt))
+  expect_true(all(bounded$opt <= bounded$hpd_high))
 })
 
 test_that("AgeTables has no Ac row", {
@@ -28,6 +56,36 @@ test_that("AgeTables' missing parameters are exactly the four female M3 rows", {
 
   # log_mu and log_sd are missing together, never one without the other.
   expect_equal(is.na(AgeTables$log_mu), is.na(AgeTables$log_sd))
+})
+
+test_that("two of those four rows still carry a published interval", {
+  # The reason for shipping the HPD columns: girls' M3 R.75 and R.c have
+  # no log-normal fit but do have a published interval, which was
+  # unreachable while the dataset held only log_mu and log_sd.
+  hpd_only <- AgeTables[is.na(AgeTables$log_mu) & !is.na(AgeTables$hpd_low), ]
+
+  expect_equal(nrow(hpd_only), 2L)
+  expect_setequal(hpd_only$Stage, c("R.75", "R.c"))
+  expect_true(all(hpd_only$Sex == "F"))
+  expect_true(all(hpd_only$Tooth == "M3"))
+
+  # Wide intervals, and worth being visible: over seven years each.
+  expect_true(all(hpd_only$hpd_high - hpd_only$hpd_low > 7))
+})
+
+test_that("zero-width stages are missing in every column", {
+  # R.5 and A.5 are tied with the following stage, so nothing at all can
+  # be estimated for them -- unlike the HPD-only pair above.
+  zero_width <- AgeTables[
+    AgeTables$Sex == "F" &
+      AgeTables$Tooth == "M3" &
+      AgeTables$Stage %in% c("R.5", "A.5"),
+  ]
+
+  expect_equal(nrow(zero_width), 2L)
+  value_cols <- c("log_mu", "log_sd", "mode", "median", "mean", "sd",
+                  "hpd_low", "opt", "hpd_high")
+  expect_true(all(is.na(zero_width[, value_cols])))
 })
 
 test_that("AgeTables rows are in developmental, not alphabetical, order", {
