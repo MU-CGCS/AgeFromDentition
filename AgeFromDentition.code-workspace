@@ -1,8 +1,36 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "cSpell.words": [
+      "fels",
+      "magrittr",
+      "missingness",
+      "pdftotext",
+      "pkgdown",
+      "poppler",
+      "prespecified",
+      "purrr",
+      "qnorm",
+      "Rbuildignore",
+      "readr",
+      "Repoint",
+      "rlnorm",
+      "rmarkdown",
+      "roxygen",
+      "Šešelj",
+      "stringr",
+      "testthat",
+      "tibble",
+      "tidyr",
+      "unassessable",
+      "unerupted",
+      "unparameterized",
+      "unscorable",
+      "usethis"
+    ]
+  }
 }
