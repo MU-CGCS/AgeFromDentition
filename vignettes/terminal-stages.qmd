@@ -1,17 +1,14 @@
 ---
 title: "Terminal (Ac) stages"
-output: rmarkdown::html_vignette
+format: html
 vignette: >
   %\VignetteIndexEntry{Terminal (Ac) stages}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
-```
-
-```{r setup}
+```{r}
+#| label: setup
 library(AgeFromDentition)
 ```
 
