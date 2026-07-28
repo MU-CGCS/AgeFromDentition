@@ -464,9 +464,25 @@ rekey <- function(reference) {
 
 # Age given stage (Tables 8-13). log_mu is the mean log age *given* that
 # the tooth is observed in the stage; log_sd is its log-scale SD.
+#
+# The remaining columns are the paper's own published summaries, carried
+# through under their printed names so a reader can check a row against
+# Table 8a-13a directly. Note the mixed scales: log_mu and log_sd are on
+# the log scale, everything after them is in years.
+#
+# They are already validated upstream and need no new checks here --
+# mode, median, mean and sd are reconciled against log_mu/log_sd by the
+# closed-form identities, and hpd_low/opt/hpd_high by the monotonicity
+# check.
 AgeTables <- fels_age_given_stage |>
   rekey() |>
-  transmute(Sex, Tooth, Stage, log_mu = ln_mu, log_sd = ln_sigma) |>
+  transmute(
+    Sex, Tooth, Stage,
+    log_mu = ln_mu,
+    log_sd = ln_sigma,
+    mode, median, mean, sd,
+    hpd_low, opt, hpd_high
+  ) |>
   as.data.frame()
 
 # Ages of attainment (Tables 2-7). log_mu is the mean log age at
@@ -505,7 +521,13 @@ StageTies <- fels_ties |>
 # AgeTables has been shipped since v0.1. Regenerating it must reproduce
 # it exactly, or something has gone wrong that the identity checks above
 # did not reach. This is the single most informative check in the file:
-# it ties 150 values in the archive to a dataset that predates it.
+# it ties values in the archive to a dataset that predates it.
+#
+# Only the five original columns are compared. AgeTables has since
+# gained the paper's published summary columns, and comparing on the
+# intersection lets the check keep its meaning -- a tie back to v0.1 --
+# across that addition and any future one.
+age_tables_core <- c("Sex", "Tooth", "Stage", "log_mu", "log_sd")
 shipped_path <- path(project_root, "data", "AgeTables.rda")
 
 if (file_exists(shipped_path)) {
@@ -513,9 +535,10 @@ if (file_exists(shipped_path)) {
   load(shipped_path, envir = shipped_env)
   shipped <- get("AgeTables", envir = shipped_env) |>
     as.data.frame()
-  rownames(shipped) <- NULL
 
-  regenerated <- AgeTables
+  shipped <- shipped[, age_tables_core, drop = FALSE]
+  regenerated <- AgeTables[, age_tables_core, drop = FALSE]
+  rownames(shipped) <- NULL
   rownames(regenerated) <- NULL
 
   # Compared as-is, with no re-sorting on either side, so this checks
@@ -530,8 +553,8 @@ if (file_exists(shipped_path)) {
     )
   }
   cli_alert_success(
-    "Regenerated AgeTables is identical to the shipped dataset \\
-     ({nrow(shipped)} rows)."
+    "Regenerated AgeTables reproduces the shipped dataset on \\
+     {length(age_tables_core)} core columns ({nrow(shipped)} rows)."
   )
 } else {
   cli_alert_warning(
@@ -552,7 +575,26 @@ cli_alert_success(
 
 stopifnot(nrow(AgeTables) == 150L)
 stopifnot(sum(is.na(AgeTables$log_mu)) == 4L)
-cli_alert_success("AgeTables: 150 rows, 4 without log-normal parameters.")
+
+# The two NA patterns differ, and the difference is the reason for
+# shipping the HPD columns at all: girls' M3 R.75 and R.c have no
+# log-normal fit but do have a published interval, which was invisible
+# while AgeTables carried only log_mu and log_sd.
+stopifnot(sum(is.na(AgeTables$mode)) == 4L)
+stopifnot(sum(is.na(AgeTables$hpd_low)) == 2L)
+stopifnot(sum(is.na(AgeTables$opt)) == 2L)
+stopifnot(sum(is.na(AgeTables$hpd_high)) == 2L)
+
+hpd_only <- AgeTables |>
+  filter(is.na(log_mu), !is.na(hpd_low))
+stopifnot(nrow(hpd_only) == 2L)
+stopifnot(all(hpd_only$Sex == "F"), all(hpd_only$Tooth == "M3"))
+stopifnot(setequal(hpd_only$Stage, c("R.75", "R.c")))
+
+cli_alert_success(
+  "AgeTables: 150 rows, 4 without log-normal parameters, of which 2 \\
+   (female M3 R.75 and R.c) do carry a published HPD interval."
+)
 
 stopifnot(nrow(StageTies) == 2L)
 stopifnot(all(StageTies$Tooth == "M3"))
