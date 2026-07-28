@@ -1,6 +1,6 @@
 Package: AgeFromDentition
 Title: Estimate Dental Age
-Version: 0.1
+Version: 0.2.0
 Authors@R: 
     person(given = "Kevin",
            family = "Middleton",
@@ -15,13 +15,23 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-Depends: 
-    R (>= 2.10)
+Depends:
+    R (>= 4.6)
 Imports:
     HDInterval,
-    dplyr,
-    magrittr
-Suggests: 
+    dplyr
+Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
+Config/Needs/data-raw:
+    cli,
+    dplyr,
+    fs,
+    glue,
+    purrr,
+    readr,
+    stringr,
+    tibble,
+    tidyr,
+    usethis
