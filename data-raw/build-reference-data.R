@@ -682,55 +682,187 @@ cli_alert_info(
 cli_alert_info("fels_ties: {nrow(fels_ties)} tied stage pairs.")
 
 # ---------------------------------------------------------------------
+# Adapter: re-key to the AgeFromDentition vocabulary
+# ---------------------------------------------------------------------
+
+# Everything above works in the vocabulary of the source tables. The
+# package itself uses different names, and existing code compares
+# against them directly, so the shipped datasets are re-keyed here
+# rather than the package being rewritten around the source names.
+#
+# Stage is stored as **character**, not an ordered factor: AgeTables$Stage
+# is character and validate_score() compares against it with %in%.
+
+cli_h1("Re-keying to package vocabulary")
+
+stage_map <- c(
+  Ci = "C.i", Cco = "C.co", Coc = "C.oc", Cr1_2 = "Cr.5",
+  Cr3_4 = "Cr.75", Crc = "Cr.c", Ri = "R.i", Cli = "Cl.i",
+  R1_4 = "R.25", R1_2 = "R.5", R3_4 = "R.75", Rc = "R.c",
+  A1_2 = "A.5", Ac = "Ac"
+)
+
+tooth_map <- c(C = "Canine", P3 = "P3", P4 = "P4",
+               M1 = "M1", M2 = "M2", M3 = "M3")
+
+sex_map <- c(female = "F", male = "M")
+
+# Row order is Tooth (anatomical), then Sex, then stage_index
+# (developmental). It reproduces the order AgeTables has shipped in
+# since v0.1, which lets the reproduction check below compare row by row
+# and so verify ordering as well as values.
+#
+# Do not sort on Stage itself. It is character, so sorting it would give
+# alphabetical order -- A.5 before C.i -- which scrambles the
+# developmental sequence the tables are meant to be read in.
+tooth_order <- c("Canine", "P3", "P4", "M1", "M2", "M3")
+
+rekey <- function(reference) {
+  out <- reference |>
+    mutate(
+      Sex = unname(sex_map[as.character(sex)]),
+      Tooth = unname(tooth_map[tooth]),
+      Stage = unname(stage_map[as.character(stage)])
+    )
+  if (anyNA(out$Sex) || anyNA(out$Tooth) || anyNA(out$Stage)) {
+    cli_abort("Re-keying produced NA in Sex, Tooth, or Stage.")
+  }
+  return(out |> arrange(match(Tooth, tooth_order), Sex, stage_index))
+}
+
+# Age given stage (Tables 8-13). log_mu is the mean log age *given* that
+# the tooth is observed in the stage; log_sd is its log-scale SD.
+AgeTables <- fels_age_given_stage |>
+  rekey() |>
+  transmute(Sex, Tooth, Stage, log_mu = ln_mu, log_sd = ln_sigma) |>
+  as.data.frame()
+
+# Ages of attainment (Tables 2-7). log_mu is the mean log age at
+# *entering* the stage -- a different quantity from AgeTables$log_mu.
+# se_log_mu is required downstream: the predictive completion threshold
+# widens log_sd by it (PLAN.md D4), which is what distinguishes the
+# well-estimated transitions from M3's n = 1 and n = 5 terminal rows.
+AttainmentTables <- fels_attainment |>
+  rekey() |>
+  transmute(
+    Sex, Tooth, Stage,
+    log_mu = theta,
+    log_sd = ln_sd,
+    se_log_mu = se_theta,
+    n
+  ) |>
+  as.data.frame()
+
+# Tied adjacent transitions. A terminal tie means the stage below Ac and
+# Ac itself are fitted at the same age, so observing Ac adds nothing
+# beyond the preceding stage (PLAN.md §3.3).
+StageTies <- fels_ties |>
+  mutate(
+    Sex = unname(sex_map[as.character(sex)]),
+    Tooth = unname(tooth_map[tooth]),
+    Stage_lo = unname(stage_map[as.character(stage_lo)]),
+    Stage_hi = unname(stage_map[as.character(stage_hi)])
+  ) |>
+  transmute(Sex, Tooth, Stage_lo, Stage_hi, log_mu = theta, tie_class) |>
+  as.data.frame()
+
+# ---------------------------------------------------------------------
+# QA: the adapter must be a no-op for data already shipped
+# ---------------------------------------------------------------------
+
+# AgeTables has been shipped since v0.1. Regenerating it from the
+# extraction must reproduce it exactly, or the extraction is wrong
+# somewhere the identity checks above did not reach. This is the single
+# most informative check in the file: it ties 150 independently parsed
+# values to a dataset that predates this pipeline.
+shipped_path <- path(project_root, "data", "AgeTables.rda")
+
+if (file_exists(shipped_path)) {
+  shipped_env <- new.env()
+  load(shipped_path, envir = shipped_env)
+  shipped <- get("AgeTables", envir = shipped_env) |>
+    as.data.frame()
+  rownames(shipped) <- NULL
+
+  regenerated <- AgeTables
+  rownames(regenerated) <- NULL
+
+  # Compared as-is, with no re-sorting on either side, so this checks
+  # row order as well as values.
+  identical_check <- all.equal(shipped, regenerated)
+  if (!isTRUE(identical_check)) {
+    print(identical_check)
+    cli_abort(
+      "Regenerated AgeTables differs from the shipped dataset. Resolve \\
+       before overwriting: the shipped values are the ones every \\
+       existing result was computed from."
+    )
+  }
+  cli_alert_success(
+    "Regenerated AgeTables is identical to the shipped dataset \\
+     ({nrow(shipped)} rows)."
+  )
+} else {
+  cli_alert_warning(
+    "No shipped AgeTables found; skipping the reproduction check."
+  )
+}
+
+# Structural assertions on the new datasets.
+stopifnot(nrow(AttainmentTables) == 162L)
+stopifnot(sum(AttainmentTables$Stage == "Ac") == 12L)
+stopifnot(!anyNA(AttainmentTables$log_mu))
+stopifnot(!anyNA(AttainmentTables$log_sd))
+stopifnot(!anyNA(AttainmentTables$se_log_mu))
+stopifnot(all(AttainmentTables$n > 0L))
+cli_alert_success(
+  "AttainmentTables: 162 rows, 12 Ac transitions, no missing parameters."
+)
+
+stopifnot(nrow(AgeTables) == 150L)
+stopifnot(sum(is.na(AgeTables$log_mu)) == 4L)
+cli_alert_success("AgeTables: 150 rows, 4 without log-normal parameters.")
+
+stopifnot(nrow(StageTies) == 2L)
+stopifnot(all(StageTies$Tooth == "M3"))
+stopifnot(all(StageTies$Sex == "F"))
+stopifnot(setequal(StageTies$tie_class, c("interior", "terminal")))
+cli_alert_success("StageTies: 2 ties, both female M3.")
+
+# AttainmentTables must cover every AgeTables key, adding only the 12 Ac
+# rows. If it did not, a tooth could be scorable but have no transition
+# to derive a threshold from.
+ags_keys <- AgeTables |> select(Sex, Tooth, Stage)
+att_keys <- AttainmentTables |> select(Sex, Tooth, Stage)
+stopifnot(nrow(anti_join(ags_keys, att_keys,
+                         by = c("Sex", "Tooth", "Stage"))) == 0L)
+extra <- anti_join(att_keys, ags_keys, by = c("Sex", "Tooth", "Stage"))
+stopifnot(nrow(extra) == 12L, all(extra$Stage == "Ac"))
+cli_alert_success(
+  "AttainmentTables is a strict superset of AgeTables, adding only Ac."
+)
+
+# ---------------------------------------------------------------------
 # Write package data objects
 # ---------------------------------------------------------------------
 
 cli_h1("Writing package data")
 
-# Stage is stored as an ordered factor so that comparisons and sorting
-# respect the developmental sequence. Levels are tooth-specific, so the
-# shipped column uses the full molar vocabulary as a common superset.
-stage_superset <- c(stage_levels_molar)
+# ExampleScores is re-serialized only, so that all four shipped
+# datasets use the same format. Its contents are deliberately untouched.
+example_env <- new.env()
+load(path(project_root, "data", "ExampleScores.rda"), envir = example_env)
+ExampleScores <- get("ExampleScores", envir = example_env)
 
-fels_attainment <- fels_attainment |>
-  mutate(stage = factor(
-    as.character(stage),
-    levels = stage_superset,
-    ordered = TRUE
-  ))
-
-fels_age_given_stage <- fels_age_given_stage |>
-  mutate(stage = factor(
-    as.character(stage),
-    levels = stage_superset,
-    ordered = TRUE
-  ))
-
-fels_ties <- fels_ties |>
-  mutate(across(
-    c(stage_lo, stage_hi),
-    \(x) factor(as.character(x), levels = stage_superset, ordered = TRUE)
-  ))
-
-dir_create(path(project_root, "data"))
-save(
-  fels_attainment,
-  file = path(project_root, "data", "fels_attainment.rda"),
-  version = 3,
-  compress = "bzip2"
+usethis::use_data(
+  AgeTables, AttainmentTables, StageTies, ExampleScores,
+  overwrite = TRUE,
+  compress = "bzip2",
+  version = 3
 )
-save(
-  fels_age_given_stage,
-  file = path(project_root, "data", "fels_age_given_stage.rda"),
-  version = 3,
-  compress = "bzip2"
-)
-save(
-  fels_ties,
-  file = path(project_root, "data", "fels_ties.rda"),
-  version = 3,
-  compress = "bzip2"
-)
-cli_alert_success("Wrote data/fels_attainment.rda")
-cli_alert_success("Wrote data/fels_age_given_stage.rda")
-cli_alert_success("Wrote data/fels_ties.rda")
+
+cli_h1("Summary")
+cli_alert_info("AgeTables: {nrow(AgeTables)} rows.")
+cli_alert_info("AttainmentTables: {nrow(AttainmentTables)} rows.")
+cli_alert_info("StageTies: {nrow(StageTies)} rows.")
+cli_alert_info("ExampleScores: {nrow(ExampleScores)} rows (re-serialized).")

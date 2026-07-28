@@ -3,27 +3,56 @@
 \docType{data}
 \name{AgeTables}
 \alias{AgeTables}
-\title{Table of means and standard deviations for dental stages}
+\title{Age given stage: log-normal parameters for dental stages}
 \format{
-A tibble with 150 rows and 5 variables:
+A data frame with 150 rows and 5 variables:
 \describe{
 \item{Sex}{character of sex: "F" or "M"}
-\item{Tooth}{character ID of tooth}
+\item{Tooth}{character ID of tooth: "Canine", "P3", "P4", "M1", "M2",
+or "M3"}
 \item{Stage}{character for tooth stage}
-\item{log_mu}{numeric log mean for sex/tooth/stage}
-\item{log_sd}{numeric log sd for sex/tooth/stage}
+\item{log_mu}{numeric mean log age given the stage}
+\item{log_sd}{numeric log-scale standard deviation}
 }
 }
 \source{
-Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing of Development of
-the Permanent Mandibular Dentition: New Reference Values from the Fels
-Longitudinal Study. Anat Rec 302:1733–1753.
+Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing of Development
+of the Permanent Mandibular Dentition: New Reference Values from the Fels
+Longitudinal Study. Anat Rec 302:1733-1753. Tables 8-13, panel (a).
 }
 \usage{
 AgeTables
 }
 \description{
-A dataset containing the lookup table for dental ages from Šešelj et al.
-(2019).
+Sex-specific age-given-stage reference values from Tables 8-13 of Šešelj
+et al. (2019). Each row gives the log-normal approximation to the
+distribution of age \emph{conditional on observing a tooth in a stage}.
+}
+\details{
+Note the contrast with \link{AttainmentTables}: here \code{log_mu} is the mean log
+age \emph{given} that the tooth is observed in the stage, whereas in
+\code{AttainmentTables} it is the mean log age at \emph{entering} the stage. The
+two are different quantities and are not interchangeable.
+
+There is deliberately no \code{Ac} row. Apex closure is a terminal, absorbing
+stage: once a tooth reaches it, the observation says only that the
+individual is older than the completion age, so there is no finite mean
+age in stage to report. Use \link{AttainmentTables} for \code{Ac}.
+
+Four rows carry \code{NA} parameters, all of them female M3, and they are not
+all the same kind of gap:
+\describe{
+\item{\code{R.5} and \code{A.5}}{zero-width stages. The fitted transition ages
+are tied with the following stage (see \link{StageTies}), so the stage has
+no width and no parameters can be estimated.}
+\item{\code{R.75} and \code{R.c}}{Šešelj et al. publish an HPD interval and an
+optimal age for these rows but no log-normal fit, so the parameters
+needed here are unavailable.}
+}
+A tooth scored into one of these four rows contributes nothing to the age
+estimate.
+}
+\seealso{
+\link{AttainmentTables}, \link{StageTies}
 }
 \keyword{datasets}
