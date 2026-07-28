@@ -40,7 +40,10 @@ jobs:
 
       - name: Build site
         shell: Rscript {0}
+        env:
+          QUARTO_LOG_LEVEL: DEBUG
         run: |
+          options(pkgdown.quiet = FALSE)
           pkgdown::build_site_github_pages(
             new_process = FALSE,
             install = TRUE
