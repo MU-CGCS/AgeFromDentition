@@ -13,13 +13,15 @@ vignette: >
 library(AgeFromDentition)
 library(dplyr)
 library(tibble)
+library(ggplot2)
+library(gt)
+library(tidyr)
 ```
 
 Dental age estimates generally increase as tooth stages advance. This
 vignette constructs fine-scale example progressions for females and
 males, starting with only the canine scored and gradually adding teeth,
-ending with all teeth at `A.c` except M3 at `A.5`. Each row advances at
-most a few teeth by a single stage — no tooth ever skips a stage.
+ending with all teeth at `A.c` except M3 at `A.5`.
 
 ## Female progression
 
@@ -77,11 +79,38 @@ female_results <- purrr::map_dfr(seq_len(nrow(female)), \(i) {
     )
 })
 
-female |>
+Females <- female |>
     mutate(row = row_number()) |>
     left_join(female_results, by = "row") |>
     select(-Sex, -row) |>
-    mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2)))
+    mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2))) |>
+    mutate(row = row_number()) |>
+    relocate(row)
+```
+
+```{r}
+Females |>
+    gt() |>
+    sub_missing() |>
+    cols_label(
+        row = "Row",
+        dental_age = "Age",
+        ci_lower = "Lower",
+        ci_upper = "Upper",
+        n_estimable = "n",
+        compatibility = "Compat."
+    ) |>
+    tab_spanner(label = "Scores", columns = Canine:M3) |>
+    tab_spanner(label = "95% CI", columns = c(ci_lower, ci_upper))
+```
+
+```{r}
+Females |>
+    drop_na(dental_age) |>
+    ggplot(aes(x = row, y = dental_age)) +
+    geom_line(linewidth = 1.5) +
+    labs(x = "Row", y = "Dental Age") +
+    theme_classic()
 ```
 
 ## Male progression
@@ -140,11 +169,38 @@ male_results <- purrr::map_dfr(seq_len(nrow(male)), \(i) {
     )
 })
 
-male |>
+Males <- male |>
     mutate(row = row_number()) |>
     left_join(male_results, by = "row") |>
     select(-Sex, -row) |>
-    mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2)))
+    mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2))) |>
+    mutate(row = row_number()) |>
+    relocate(row)
+```
+
+```{r}
+Males |>
+    gt() |>
+    sub_missing() |>
+    cols_label(
+        row = "Row",
+        dental_age = "Age",
+        ci_lower = "Lower",
+        ci_upper = "Upper",
+        n_estimable = "n",
+        compatibility = "Compat."
+    ) |>
+    tab_spanner(label = "Scores", columns = Canine:M3) |>
+    tab_spanner(label = "95% CI", columns = c(ci_lower, ci_upper))
+```
+
+```{r}
+Males |>
+    drop_na(dental_age) |>
+    ggplot(aes(x = row, y = dental_age)) +
+    geom_line(linewidth = 1.5) +
+    labs(x = "Row", y = "Dental Age") +
+    theme_classic()
 ```
 
 ## Notes

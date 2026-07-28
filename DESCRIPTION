@@ -1,7 +1,7 @@
 Package: AgeFromDentition
 Title: Estimate Dental Age
 Version: 0.2.0
-Authors@R: 
+Authors@R:
     person(given = "Kevin",
            family = "Middleton",
            role = c("aut", "cre"),
@@ -10,7 +10,7 @@ Authors@R:
 Description: Estimate dental age given a set of dental scores for six teeth
     following the method of Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing
     of Development of the Permanent Mandibular Dentition: New Reference Values
-    from the Fels Longitudinal Study. Anat Rec 302:1733–1753.
+    from the Fels Longitudinal Study. Anat Rec 302:1733-1753.
 URL: https://mu-cgcs.github.io/AgeFromDentition/,
     https://github.com/MU-CGCS/AgeFromDentition
 BugReports: https://github.com/MU-CGCS/AgeFromDentition/issues
@@ -26,12 +26,15 @@ Imports:
     dplyr,
     glue
 Suggests:
+    ggplot2,
+    gt,
     knitr,
     purrr,
     quarto,
     rmarkdown,
     testthat (>= 3.0.0),
-    tibble
+    tibble,
+    tidyr
 VignetteBuilder: knitr, quarto
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
