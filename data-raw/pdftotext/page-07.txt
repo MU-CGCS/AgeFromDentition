@@ -1,0 +1,75 @@
+                                          DENTAL DEVELOPMENT REFERENCE VALUES FROM FELS                                                      7
+TABLE 6. Ages of attainment for the developmental stages of mandibular second molar (M2) in (a) girls and boys
+  and (b) the combined sex sample. Modes, medians, and means are the age of attainment statistics in years.
+                                                                   (a) Girls and boys
+                                     Girls                                                                         Boys
+Stages         θ a
+                        SE (θ)   a
+                                     N       Modes           Medians    Means           θ   a
+                                                                                                   SE (θ) a
+                                                                                                              N    Modes      Medians   Means
+Ci           1.2428     0.0159       47       3.4294          3.4653    3.4834     1.2635          0.0174     57    3.483      3.5378    3.5655
+Cco          1.3726     0.0172       40       3.9048          3.9456    3.9662     1.3903          0.0157     69    3.9539     4.0161    4.0475
+Coc          1.5088     0.0159       46       4.4745          4.5213    4.5449     1.4896          0.0173     57    4.3667     4.4353    4.4701
+Cr1/2        1.6068     0.017        41       4.9352          4.9868    5.0128     1.6055          0.0189     48    4.9033     4.9803    5.0193
+Cr3/4        1.7654     0.0164       46       5.7834          5.8439    5.8744     1.8115          0.0149     79    6.0249     6.1196    6.1675
+Crc          1.9352     0.0131       69       6.8538          6.9254    6.9615     1.9445          0.0137     90    6.8819     6.9901    7.0449
+Ri           2.0412     0.0109       95       7.6201          7.6998    7.74       2.0563          0.0129     99    7.696      7.817     7.8782
+Cli          2.1413     0.0125       69       8.4224          8.5105    8.5549     2.1539          0.015      72    8.485      8.6184    8.6859
+R1/4         2.2068     0.0118       79       8.9925          9.0866    9.134      2.2299          0.015      72    9.155      9.2989    9.3718
+R1/2         2.3361     0.0116       80      10.2338         10.3408   10.3948     2.3688          0.0144     78   10.5192    10.6846   10.7682
+R3/4         2.4192     0.0131       64      11.1206         11.2369   11.2955     2.4452          0.0149     72   11.3543    11.5329   11.6232
+Rc           2.5423     0.0138       57      12.5773         12.7089   12.7752     2.5707          0.0162     61   12.8726    13.075    13.1774
+A1/2         2.624      0.0158       43      13.648          13.7908   13.8627     2.644           0.0172     54   13.8516    14.0694   14.1795
+Ac           2.7037     0.0173       37      14.7803         14.9349   15.0128     2.7092          0.0181     49   14.7848    15.0173   15.1348
+ln_SDa       0.102      0.0027                                                     0.1249          0.003
+                                                               (b) Combined sex sample
+Stages                    θa
+                                                SE (θ)   a
+                                                                         N                      Modes               Medians             Means
+Ci                      1.2542                  0.012                   104                      3.4585              3.505               3.5285
+Cco                     1.3836                  0.0117                  109                      3.9363              3.9892              4.016
+Coc                     1.4981                  0.0119                  103                      4.4138              4.4732              4.5032
+Cr1/2                   1.6062                  0.0129                   89                      4.9177              4.9838              5.0172
+Cr3/4                   1.7949                  0.011                   125                      5.939               6.0189              6.0592
+Crc                     1.9405                  0.0096                  159                      6.8698              6.9622              7.0089
+Ri                      2.0488                  0.0086                  194                      7.6556              7.7586              7.8106
+Cli                     2.1477                  0.0099                  141                      8.4514              8.5651              8.6226
+R1/4                    2.2177                  0.0096                  151                      9.0642              9.1862              9.2478
+R1/2                    2.3522                  0.0094                  158                     10.3692             10.5087             10.5791
+R3/4                    2.433                   0.0101                  136                     11.2418             11.393              11.4694
+Rc                      2.5572                  0.0108                  118                     12.7284             12.8996             12.9861
+A1/2                    2.6354                  0.0119                   97                     13.7637             13.9489             14.0424
+Ac                      2.707                   0.0127                   86                     14.7853             14.9843             15.0847
+ln_SDa                  0.1156                  0.0021
+a
+    Refer to Table 2.
+
+
+
+                               RESULTS                                        necessarily the same individuals who deﬁne the next
+                                                                              transition. This problem is easiest to illustrate for the
+   The ages of attainment (Tables 2–7) by deﬁnition pre-
+                                                                              third molar in girls with stages root “apex half complete”
+date average ages given stage (Tables 8–13). For most
+                                                                              and “root complete.” Two girls contribute to the likelihood
+mandibular teeth and most stages, both of those metrics
+tend to be younger in girls, especially from the late stages                  for “apex half complete” because they have recorded ages
+of crown completion through the stages of root formation.                     prior to this stage and ages in the stage. There is one girl
+This is the case for both statistics in the canine, ﬁrst and                  with an age recorded prior to root completion and an age
+second premolars (P3 and P4, respectively), and second                        recorded after root completion. Figure 5A shows the con-
+molar (M2). The two exceptions to this are the ﬁrst molar                     tributions to the likelihood from these three girls with a
+(M1) and the third molar (M3). In case of the M1, the ages                    vertical line through the mode for transition to “apex half
+of attainment and average ages given stage tend to be                         complete” and for “apex complete.” Note that these modes
+only slightly younger than in boys (0.05–0.15 year) until                     coincide. This is because the highest likelihood for the girl
+the very late stages of root development, when girls out-                     with root completion occurs when the mode for transition
+pace boys by approximately 0.3–0.4 year. In the develop-                      to the last stage is earlier than the mode for transition to
+ment of the M3, the attainment ages and average ages                          the penultimate stage (Fig. 5B). Because of the restriction
+given stage are initially younger in girls but become                         on the model, the two transitions are forced to be equal.
+younger in boys by crown ½ complete stage.                                    The same problem occurs with the stages “root half com-
+   Two issues need to be addressed before turning to more                     plete” and “root three quarters complete” for the third
+general descriptions of the results. First, in a very few                     molar in girls. An additional issue occurs when the poste-
+cases it was not possible to resolve mean (on the ln scale)                   rior density for age given stage is not well modeled as a
+ages of attainment for two adjacent stages. This happens                      log-normal distribution. This only occurs for the cusp ini-
+because the individuals who deﬁne one transition are not                      tiation stage for the ﬁrst molars. In this case, one should
+

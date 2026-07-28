@@ -1,0 +1,74 @@
+8                                                                  ŠEŠELJ ET AL.
+
+ TABLE 7. Ages of attainment for the developmental stages of mandibular third molar (M3) in (a) girls and boys
+   and (b) the combined sex sample. Modes, medians, and means are the age of attainment statistics in years.
+                                                               (a) Girls and boys
+                                 Girls                                                                         Boys
+Stages      θa
+                    SE (θ)   a
+                                 N       Modes           Medians      Means         θ   a
+                                                                                               SE (θ) a
+                                                                                                          N    Modes      Medians   Means
+Ci        2.2009    0.0141       61       8.9274          9.0331      9.0865     2.2402        0.0147     53    9.29       9.3952    9.4482
+Cco       2.2749    0.0131       70       9.6131          9.7269      9.7844     2.2926        0.015      52    9.7898     9.9006    9.9565
+Coc       2.3504    0.0172       41      10.367          10.4898     10.5517     2.3631        0.0171     40   10.5049    10.6238   10.6838
+Cr1/2     2.4168    0.0184       36      11.0787         11.2099     11.2761     2.425         0.0185     34   11.1757    11.3022   11.366
+Cr3/4     2.51      0.0181       37      12.1609         12.3049     12.3776     2.4842        0.0172     39   11.8573    11.9915   12.0592
+Crc       2.5852    0.0188       34      13.1107         13.2659     13.3443     2.5417        0.0181     35   12.5591    12.7012   12.7729
+Ri        2.6174    0.0185       35      13.5397         13.7001     13.7809     2.6033        0.0202     28   13.357     13.5082   13.5845
+Cli       2.6656    0.0215       26      14.2083         14.3766     14.4614     2.6578        0.0239     20   14.1052    14.2649   14.3454
+R1/4      2.7204    0.0201       30      15.0087         15.1864     15.276      2.7047        0.0196     30   14.7825    14.9498   15.0342
+R1/2      2.8156    0.0178       25      16.5077         16.7032     16.8018     2.7743        0.0184     34   15.848     16.0274   16.1179
+R3/4      2.8156    0.0178       13      16.5077         16.7032     16.8018     2.808         0.0239     20   16.3912    16.5767   16.6703
+Rc        2.8526    0.0365        9      17.1299         17.3328     17.4351     2.8331        0.0297     13   16.8078    16.9981   17.094
+A1/2      2.8934    0.0638        2      17.8433         18.0546     18.1612     2.8621        0.0437      6   17.3024    17.4982   17.597
+Ac        2.8934    0.0638        1      17.8433         18.0546     18.1612     2.9156        0.0482      5   18.2532    18.4599   18.5641
+ln_SDa    0.1085    0.0038                                                       0.1061        0.0038
+                                                           (b) Combined sex sample
+Stages                θa
+                                            SE (θ)   a
+                                                                       N                    Modes               Medians             Means
+Ci                 2.2192                   0.0103                    114                    9.0931              9.2                 9.2539
+Cco                2.2824                   0.0099                    122                    9.6863              9.8002              9.8576
+Coc                2.3566                   0.0122                     81                   10.4324             10.555              10.6169
+Cr1/2              2.4208                   0.0131                     70                   11.1241             11.2549             11.3208
+Cr3/4              2.4967                   0.0126                     76                   12.0013             12.1424             12.2135
+Crc                2.5631                   0.0132                     69                   12.8252             12.976              13.052
+Ri                 2.6111                   0.0138                     63                   13.4559             13.614              13.6938
+Cli                2.6622                   0.0161                     46                   14.1613             14.3278             14.4117
+R1/4               2.7126                   0.0141                     60                   14.8933             15.0684             15.1567
+R1/2               2.7944                   0.0142                     59                   16.1628             16.3528             16.4486
+R3/4               2.8063                   0.019                      33                   16.3563             16.5486             16.6455
+Rc                 2.8411                   0.0233                     22                   16.9355             17.1346             17.235
+A1/2               2.8736                   0.0387                      8                   17.495              17.7006             17.8043
+Ac                 2.9066                   0.0448                      6                   18.082              18.2945             18.4017
+ln_SDa             0.1081                   0.0027
+a
+  Refer to Table 2.
+Note: Italics indicate it was not possible to resolve mean ages of attainment for two adjacent stages. For a detailed explana-
+tion, refer to the Results section.
+
+
+
+use the HPD and the optimum age rather than the                             around the mean. Early forming teeth generally exhibit
+approximation from the log-normal distribution.                             narrower HPD intervals, and later forming teeth exhibit
+   A clear trend observable across early vs. late formation                 greater HPD intervals, with the exception of the canine.
+stages is the changes in variance surrounding the average                   The narrowest HPD intervals are observed in the M1,
+age given stage, as illustrated by the HPD interval. As a                   followed by the P3, P4 and M2, C, and M3. In our dataset,
+general rule, within teeth the variance increases from                      the canine is the tooth that takes the longest to fully form,
+earlier through the later stages, so that the early stages                  from cusp initiation to root apex completion. It takes on
+of crown formation tend to exhibit the narrowest HPD,                       average just over 11 years in girls and around 12.5 years
+usually around 0.4–0.5 year from the optimum value,                         in boys. Other teeth, including the M3, generally take
+which then increase to more than a year above and below                     9–10 years to complete formation.
+the optimal value for the late stages of root formation. An                    To investigate whether the discrepancies between our
+exception to this is the M3, whose HPD interval bounds                      ages of attainment and those reported by MFH are
+are 2 years or more from the optimum value throughout                       inﬂuenced by temporal changes in dental development
+its period of development. Furthermore, within teeth, the                   within the FLS sample, we subdivided the sample based
+HPD interval for each stage of development is generally                     on whether the radiographs were recorded before or after
+very similar in girls and boys, even though girls tend to                   1963, the year of the MFH publication (Supplementary
+complete formation faster (at younger ages) than boys                       Materials Tables S1–S6). Though the small sample sizes
+do. One exception to this is the M2, where the HPD inter-                   of the later subset (1963–1982) did not allow for statisti-
+vals are consistently wider in boys.                                        cal comparisons with the earlier subset (1940–1962), we
+   Across teeth, those that start and complete mineraliza-                  found no evidence of systematic differences or large dis-
+tion around the same time exhibit comparable dispersion                     crepancies between the ﬁrst half and the entirety of the
+

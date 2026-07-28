@@ -1,0 +1,73 @@
+                                         DENTAL DEVELOPMENT REFERENCE VALUES FROM FELS                                                 5
+TABLE 4. Ages of attainment for the developmental stages of mandibular second premolar (P4) in (a) girls and
+boys and (b) the combined sex sample. Modes, medians, and means are the age of attainment statistics in years.
+                                                               (a) Girls and boys
+                                   Girls                                                                     Boys
+Stages         θa
+                        SE (θ) a
+                                   N       Modes          Medians   Means           θ
+                                                                                    a
+                                                                                          SE (θ)   a
+                                                                                                       N     Modes      Medians   Means
+Ci           1.2768     0.0175      47      3.5394         3.5851    3.6082   1.2589       0.0164       53    3.4778     3.5215    3.5436
+Cco          1.3886     0.0209      32      3.9581         4.0092    4.035    1.3699       0.0171       47    3.8861     3.935     3.9596
+Coc          1.4773     0.0214      30      4.3252         4.3811    4.4093   1.4701       0.019        38    4.2956     4.3497    4.3769
+Cr1/2        1.6052     0.0187      41      4.9154         4.9789    5.0109   1.5917       0.0172       48    4.8511     4.9121    4.9429
+Cr3/4        1.7379     0.0178      46      5.6129         5.6854    5.722    1.7447       0.0145       69    5.6531     5.7242    5.7601
+Crc          1.9091     0.0141      72      6.661          6.747     6.7905   1.9294       0.0132       78    6.7999     6.8854    6.9285
+Ri           2.0388     0.0124      89      7.5834         7.6814    7.7308   2.058        0.0125       86    7.733      7.8303    7.8794
+R1/4         2.138      0.0105     124      8.3743         8.4825    8.5371   2.1589       0.0112      105    8.554      8.6616    8.7159
+R1/2         2.3003     0.0123      88      9.8499         9.9772   10.0414   2.3403       0.0128       80   10.2554    10.3844   10.4495
+R3/4         2.3954     0.0142      67     10.8326        10.9726   11.0432   2.423        0.0147       60   11.1395    11.2796   11.3504
+Rc           2.5346     0.0168      47     12.4505        12.6114   12.6926   2.542        0.0162       49   12.5472    12.7051   12.7847
+A1/2         2.6293     0.0199      33     13.6872        13.8641   13.9533   2.6114       0.0194       34   13.4489    13.6181   13.7035
+Ac           2.6827     0.0195      35     14.438         14.6245   14.7187   2.6855       0.0178       42   14.4834    14.6655   14.7575
+ln_SDa       0.1133     0.0031                                                0.1118       0.003
+                                                            (b) Combined sex sample
+Stages                    θa
+                                             SE (θ)   a
+                                                                     N                  Modes                 Medians             Means
+Ci                      1.2674                0.012                 100                  3.5065                3.5516              3.5744
+Cco                     1.3775                0.0133                 79                  3.9147                3.965               3.9904
+Coc                     1.4732                0.0143                 68                  4.3078                4.3632              4.3911
+Cr1/2                   1.5979                0.0127                 89                  4.8799                4.9426              4.9743
+Cr3/4                   1.7419                0.0113                115                  5.6358                5.7082              5.7447
+Crc                     1.9197                0.0097                150                  6.7324                6.8189              6.8626
+Ri                      2.0482                0.0088                175                  7.6556                7.7539              7.8036
+R1/4                    2.1476                0.0077                229                  8.4556                8.5643              8.6191
+R1/2                    2.3193                0.0089                168                 10.0395               10.1686             10.2337
+R3/4                    2.4085                0.0103                127                 10.9762               11.1173             11.1885
+Rc                      2.5383                0.0117                 96                 12.4975               12.6581             12.7392
+A1/2                    2.6202                0.014                  67                 13.5642               13.7385             13.8265
+Ac                      2.6842                0.0132                 77                 14.4606               14.6465             14.7403
+ln_SDa                  0.113                 0.0022
+a
+    Refer to Table 2.
+
+   Before analyzing the data, all ages were converted to                  converted to the mean, median, and modal ages of attain-
+the natural log scale. The transition analysis was then ﬁt                ment (sometimes referred to in the literature as “age enter-
+as a series of normal distributions for ages of attainment,               ing a stage”) in these tables using standard equations for
+where the means for the ln ages increased across the                      the log-normal distribution (Forbes et al., 2011). The
+stages and the ln scale SD was equal across all stages                    median values on the original scale of age in decimal years
+within a given tooth. Konigsberg et al. (2016) found that                 are the ages at which 50% of the individuals would have
+such a model often ﬁts ordinal categorical data depen-                    entered a given stage. The modal ages are the ages with the
+dent on age. In particular, they found that this model ﬁt                 highest probability that an individual would have entered a
+well to cross-sectional observations on dental formation                  given stage. The mean ages on the raw scale for entering a
+following the Moorrees et al. (1963a) scoring system. The                 stage have no direct interpretation. Because the transition
+model for the current analysis was ﬁt by writing the log-                 models were ﬁt on a natural log scale, the means are
+likelihood of the parameters conditional on the data and                  greater than the medians, which are greater than the
+optimizing the log-likelihood using “auglag” with the “R”                 modes.
+(R Core Team, 2017) package “alabama.” This is a con-                        From the difference of cumulative lognormal distribu-
+strained optimization so that the mean attainment ages                    tions of attainment ages for adjacent stages, we can ﬁnd
+(on the natural log scale) must increase for later develop-               the probability at any given age that an individual will
+mental stages and so that the common SD (again on the ln                  be in each of the stages (also known as “stage for age”).
+scale) must be greater than 0.0. The square roots of the                  This is shown in Shackelford et al.’s (2012) equation 3, in
+diagonal of the inverse of the negative of the Hessian                    Konigsberg (2015) equation 1, and Figure 1 for the nor-
+matrix was used to ﬁnd the standard errors of the parame-                 mal distribution. At any given age, the probability of
+ter estimates. The means and common SDs on the natural                    being in each of the stages must sum to 1.0. This form of
+log scale as well as their standard errors are in Tables 2–7              information can be used to determine if an individual is
+for girls and boys. The counts per stage are lower than the               developmentally advanced or delayed. For example, if an
+actual counts in each stage because the former counts only                individual at a given age has a high probability of being
+include cases where adjacent stages were observed in an                   in a particular stage, but is instead in an earlier stage,
+individual. The parameter estimates in the tables are also                then they demonstrate delayed development.
+

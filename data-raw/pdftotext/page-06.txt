@@ -1,0 +1,74 @@
+6                                                                     ŠEŠELJ ET AL.
+
+    TABLE 5. Ages of attainment for the developmental stages of mandibular ﬁrst molar (M1) in (a) girls and boys
+     and (b) the combined sex sample. Modes, medians, and means are the age of attainment statistics in years.
+                                                                  (a) Girls and boys
+                                     Girls                                                                      Boys
+Stages          θ   a
+                        SE (θ)   a
+                                      N      Modes       Medians        Means         θa
+                                                                                              SE (θ)  a
+                                                                                                          N      Modes     Medians    Means
+Ci           −1.73       0.0587       29     0.1748          0.1773     0.1785     −1.7496     0.0469      48    0.1715     0.1738     0.175
+Cco          −0.7586     0.0199       65     0.4618          0.4683     0.4716     −0.7625     0.0184      82    0.4603     0.4665     0.4696
+Coc          −0.1801     0.0203       57     0.8235          0.8352     0.8411     −0.1329     0.0177      70    0.8639     0.8756     0.8815
+Cr1/2         0.2226     0.0256       47     1.2319          1.2493     1.2581      0.3169     0.0192      64    1.3545     1.3729     1.3821
+Cr3/4         0.6323     0.0182       60     1.8556          1.8819     1.8952      0.6473     0.0174      67    1.8849     1.9104     1.9232
+Crc           0.9116     0.0153       72     2.4535          2.4883     2.5059      0.9372     0.015       74    2.5188     2.5528     2.57
+Ri            1.1534     0.0152       70     3.1247          3.1689     3.1913      1.1904     0.0136      84    3.2445     3.2884     3.3106
+Cli           1.3585     0.0168       55     3.836           3.8904     3.9178      1.3626     0.0152      67    3.8542     3.9063     3.9327
+R1/4          1.4914     0.0171       55     4.3812          4.4433     4.4747      1.5003     0.0148      72    4.4232     4.483      4.5132
+R1/2          1.7129     0.0159       64     5.4676          5.545      5.5842      1.7444     0.014       79    5.6461     5.7225     5.761
+R3/4          1.8808     0.0153       68     6.4671          6.5587     6.605       1.895      0.0134      83    6.5638     6.6525     6.6974
+Rc            2.0799     0.0116      112     7.8919          8.0037     8.0602      2.0814     0.0108     124    7.9087     8.0157     8.0697
+A1/2          2.1754     0.0115      111     8.6827          8.8057     8.8679      2.2057     0.0118     102    8.9555     9.0766     9.1378
+Ac            2.2787     0.0118      112     9.6276          9.764      9.8329      2.3186     0.0114     114   10.0259    10.1614    10.2299
+ln_SDa        0.1186     0.0032                                                     0.1159     0.003
+                                                               (b) Combined sex sample
+Stages                    θa
+                                                SE (θ)   a
+                                                                           N                 Modes               Medians              Means
+Ci                      −1.7424                 0.037                      77                0.1727               0.1751               0.1763
+Cco                     −0.7612                 0.0136                    147                0.4606               0.4671               0.4704
+Coc                     −0.1539                 0.0135                    127                0.8454               0.8574               0.8634
+Cr1/2                    0.2802                 0.0155                    111                1.305                1.3234               1.3327
+Cr3/4                    0.6398                 0.0126                    127                1.8698               1.8961               1.9094
+Crc                      0.9243                 0.0108                    146                2.4851               2.5201               2.5378
+Ri                       1.1735                 0.0102                    154                3.1884               3.2333               3.256
+Cli                      1.3607                 0.0114                    122                3.8447               3.8989               3.9263
+R1/4                     1.4964                 0.0113                    127                4.4035               4.4656               4.4969
+R1/2                     1.7303                 0.0106                    143                5.5639               5.6423               5.682
+R3/4                     1.8887                 0.0102                    151                6.5189               6.6108               6.6572
+Rc                       2.0807                 0.008                     236                7.8988               8.0101               8.0663
+A1/2                     2.1898                 0.0083                    213                8.8093               8.9334               8.9962
+Ac                       2.2991                 0.0083                    226                9.8267               9.9652              10.0352
+ln_SDa                   0.1183                 0.0022
+a
+    Refer to Table 2.
+
+
+
+   Alternatively, it may be desirable to “invert” the infor-                    estimates in Tables 2–7 rather than from the ﬁtted log-
+mation on tooth stages in order to estimate the age of an                       normal distributions in Tables 8–13. An example of a 95%
+individual. This is clearly a Bayesian problem, as we wish                      HPD is shown in Figure 3 for girls who are in the root apex
+to proceed from the probability of being in a particular                        half complete stage for the ﬁrst molar. The horizontal
+stage conditional on age to the probability of being a partic-                  dashed line in Figure 3 is at a value of 0.0498. There is an
+ular age conditional on stage. Shackelford et al. (2012)                        area of 0.018 in the left tail and 0.032 in the right tail,
+show how to do this and, in particular, note that the differ-                   adding to 0.05 total in the tails. In contrast, Figure 4 shows
+ence of cumulative normal distributions of ln scale age,                        a 95% conﬁdence interval with 0.025 in both of the tails.
+which is proportional to the probability density of age con-                    The darker gray region contributing to the 95% conﬁdence
+ditional on stage, can often be ﬁt by a normal distribution                     interval has a lower posterior density than deﬁned by the
+of ln scale age (see their equation 3 through 5). The mean,                     height of the left tail.
+median, and modal age given stage (also referred to as                             As the FLS oblique jaw radiographs were recorded
+“age for stage” or “age in a stage”) for boys and girls can be                  over more than four decades, we wanted to investigate
+found in Tables 8–13. Note that these tables also list the                      whether there have been changes in the timing or tempo
+SDs on the raw scale of decimal years, again using a stan-                      of dental formation within the FLS sample, particularly
+dard equation from Forbes et al. (2011). These raw scale                        in comparison with the sample of MFH. As the details of
+SDs are not particularly useful as the deviations are asym-                     the MFH sample are unknown, other than the number
+metric around the raw scale mean, and the mean is not a                         of FLS boys and girls included in their study, we sub-
+good measure of central tendency for log-normal distribu-                       divided our sample based on whether the radiographs
+tions. We only include the SDs for the sake of complete-                        were recorded before or after 1963, the year of the MFH
+ness. Of greater use in these tables will be the 95% highest                    publication. We compared the 1940–1963 subset to the
+posterior densities (HPD) and the optimum estimate of                           values obtained based on the entire sample, and
+age. These are derived directly from the transition model                       to MFH.
+

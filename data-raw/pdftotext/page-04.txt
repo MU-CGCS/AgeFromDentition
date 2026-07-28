@@ -1,0 +1,82 @@
+4                                                                   ŠEŠELJ ET AL.
+
+TABLE 3. Ages of attainment for the developmental stages of mandibular ﬁrst premolar (P3) in (a) girls and boys
+  and (b) the combined sex sample. Modes, medians, and means are the age of attainment statistics in years.
+                                                               (a) Girls and boys
+                                   Girls                                                                      Boys
+Stages         θa
+                        SE (θ) a
+                                   N       Modes          Medians      Means        θa
+                                                                                           SE (θ)   a
+                                                                                                        N     Modes      Medians   Means
+Ci           0.838      0.0255      22      2.2873         2.3117      2.324     0.8512     0.0194       37    2.3195     2.3425    2.354
+Cco          0.9861     0.0154      55      2.6525         2.6808      2.695     1.0132     0.0142       62    2.7274     2.7544    2.768
+Coc          1.1644     0.0153      53      3.1702         3.204       3.221     1.1594     0.0134       66    3.1568     3.188     3.2037
+Cr1/2        1.2902     0.0139      63      3.5952         3.6335      3.6528    1.3196     0.0119       81    3.7053     3.7419    3.7604
+Cr3/4        1.48       0.0131      77      4.3466         4.3929      4.4163    1.5338     0.0113       96    4.5904     4.6358    4.6586
+Crc          1.7293     0.0133      78      5.5772         5.6367      5.6667    1.7846     0.0117       95    5.8989     5.9572    5.9866
+Ri           1.9439     0.0124      79      6.9122         6.9859      7.0231    1.9811     0.0105      101    7.1797     7.2507    7.2865
+R1/4         2.076      0.0103     109      7.8884         7.9725      8.0149    2.1082     0.0099      111    8.1528     8.2334    8.274
+R1/2         2.2619     0.0105     102      9.5            9.6013      9.6524    2.3072     0.0112       84    9.9479    10.0463   10.0958
+R3/4         2.3494     0.0128      68     10.3687        10.4793     10.535     2.4003     0.0128       63   10.9185    11.0265   11.0809
+Rc           2.4447     0.0155      47     11.4054        11.5271     11.5884    2.4785     0.015        46   11.8066    11.9234   11.9822
+A1/2         2.5236     0.0185      32     12.3418        12.4734     12.5398    2.561      0.0174       34   12.822     12.9488   13.0126
+Ac           2.5909     0.0192      31     13.201         13.3418     13.4127    2.6371     0.0161       40   13.8358    13.9726   14.0415
+ln_SDa       0.103      0.0029                                                   0.0992     0.0027
+                                                            (b) Combined sex sample
+Stages                    θa
+                                             SE (θ)   a
+                                                                        N                 Modes                Medians             Means
+Ci                      0.8459                0.0157                    59                2.3055                2.3301              2.3425
+Cco                     1.0002                0.0106                   117                2.6901                2.7188              2.7333
+Coc                     1.1616                0.0103                   119                3.1613                3.195               3.212
+Cr1/2                   1.3066                0.0092                   144                3.6546                3.6936              3.7132
+Cr3/4                   1.5099                0.0087                   173                4.4785                4.5263              4.5504
+Crc                     1.7596                0.0089                   173                5.7488                5.8101              5.841
+Ri                      1.9648                0.0082                   180                7.0582                7.1335              7.1714
+R1/4                    2.0922                0.0072                   220                8.0172                8.1027              8.1458
+R1/2                    2.2822                0.0078                   186                9.6948                9.7982              9.8503
+R3/4                    2.374                 0.0092                   131               10.6269               10.7403             10.7974
+Rc                      2.4614                0.011                     93               11.5975               11.7212             11.7836
+A1/2                    2.5427                0.0129                    66               12.5798               12.714              12.7816
+Ac                      2.6172                0.0126                    71               13.5528               13.6973             13.7702
+ln_SDa                  0.103                 0.002
+a
+    Refer to Table 2.
+
+
+of radiographs per participant ranges from 1 to 34, with the                 Statistical Methods
+median value of nine radiographs per participant. The partic-
+                                                                                Because the FLS data are longitudinal, we can ﬁt a
+ipants are mostly of European ancestry, born between 1929
+                                                                             so-called “transition analysis” model (Boldsen et al.,
+and 1974, and come primarily from Southwest Ohio and
+                                                                             2002) by treating the data as being “interval-censored.”
+neighboring regions. The participants were not recruited for
+                                                                             Holman and Jones (1998) and Konigsberg and Holman
+any particular phenotypic or health-related trait, and can be
+                                                                             (1999) have used such an approach for dental emergence.
+assumed to represent normal intra-population variation in
+                                                                             In this setting, there is a “last” age at which a given tooth
+such traits. All protocols were approved by the Wright State
+                                                                             in an individual has not yet emerged and a later “ﬁrst”
+University Institutional Review Board.
+                                                                             age at which the tooth is ﬁrst seen to have emerged. The
+                                                                             record is interval-censored in the sense that the tooth
+                                                                             must have emerged between the two observation ages. If
+Assessment of Dental Formation
+                                                                             the age of tooth emergence follows some parametric dis-
+   Dental formation of left mandibular canines, premolars,                   tribution, then that tooth’s contribution to the likelihood
+and molars was scored by a single observer (M.Š.) using                      is a left and right truncated area from the distribution.
+the 14-stage MFH scoring system (Moorrees et al., 1963a),                    Figure 1 shows an example for ﬁrst molar (M1) formation
+following the further description and illustration of each                   in one of the FLS girls, who at age 9.52 years was in the
+MFH stage by AlQahtani et al. (2009, 2010) in the freely                     root apex half complete stage, and at age 10.69 years was
+available London Atlas of Tooth Development and Erup-                        in the root apex complete stage. Using the estimated
+tion (Table 1). Our data include an additional stage “zero”,                 mean on the natural log scale for root apex completion in
+representing the appearance of the tooth crypt (Fanning,                     the M1 of 2.28 and a common SD on the ln scale of 0.12,
+1961; Liversidge, 2009, 2011). All data were scored within                   this individual contributes 0.36 to the likelihood. This is
+individuals by increasing age, which assures that there                      the area of the shaded region in Figure 1. Figure 2 shows
+were no reversals of the stages. The intra-observer error                    the same setting as Figure 1 but drawn on the natural
+based on 257 radiographs, measured by Cohen’s kappa, was                     log scale so that the distribution of attainment ages is
+0.75, indicating strong agreement (Landis and Koch, 1977).                   normal.
+
