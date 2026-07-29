@@ -165,8 +165,8 @@ reproduced from the report alone.
 
 ### Uncertainty in standard deviation is not propagated
 
-Uncertainty in the scale parameter (`se_ln_sd` in the source tables,
-around 0.003–0.004) is *not* propagated. The predictive form is more
+Uncertainty in the scale parameter (`se_ln_sd` in the source tables),
+~0.003–0.004, is *not* propagated. The predictive form is more
 predictive than plug-in, but not fully predictive.
 
 ## Female M3 stage tie
