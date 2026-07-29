@@ -10,6 +10,7 @@
       "extdata",
       "fels",
       "magrittr",
+      "mathrm",
       "missingness",
       "Nonterminal",
       "ORCID",
@@ -47,7 +48,8 @@
       "unparameterized",
       "unscorable",
       "unscored",
-      "usethis"
+      "usethis",
+      "vapply"
     ]
   }
 }
