@@ -201,7 +201,7 @@ bind_rows(
 ) |>
     ggplot(aes(x = row, y = dental_age, color = M3_status)) +
     geom_line(linewidth = 1.5) +
-    scale_color_manual(values = c("navy", "firebrick4")) +
+    scale_color_manual(values = c("navy", "firebrick")) +
     labs(
         x = "Row",
         y = "Dental Age",
@@ -386,7 +386,7 @@ bind_rows(
 ) |>
     ggplot(aes(x = row, y = dental_age, color = M3_status)) +
     geom_line(linewidth = 1.5) +
-    scale_color_manual(values = c("navy", "firebrick4")) +
+    scale_color_manual(values = c("navy", "firebrick")) +
     labs(
         x = "Row",
         y = "Dental Age",
