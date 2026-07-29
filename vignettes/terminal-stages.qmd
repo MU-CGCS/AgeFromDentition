@@ -14,11 +14,11 @@ library(AgeFromDentition)
 
 ## Apex closed (A~c~) stages cannot be inverted
 
-The method presented in Šešelj et al. (2019) estimates age by inverting a tooth's stage. Given that a tooth is observed e.g., at `R.5`, Tables 8–13 supply a log-normal distribution for the individual's age.
+The method presented in Šešelj et al. (2019) estimates age by inverting a tooth's stage. Given that a tooth is observed e.g., at `R.5`, Šešelj et al.tables 8–13 supply a log-normal distribution for the individual's age.
 
-Apex closure (tooth stage coded `A.c`) breaks that logic, because it is terminal (no exit point). Once a tooth reaches it, it stays there. Observing A~c~ therefore tells you only that the individual is older than the completion age (which has a distribution). It does not localize age further. Tables 8–13 have no A~c~ row for this reason.
+Apex closure (tooth stage coded `A.c`) breaks that logic, because it is terminal (no exit point). Once a tooth reaches it, it stays there. Observing A~c~ therefore tells you only that the individual is older than the completion age (which has a distribution). It does not localize age further. Šešelj et al. tables 8–13 have no A~c~ row for this reason.
 
-For a non-terminal stage $s$ the likelihood is localized:
+For a non-terminal stage $s$ the likelihood is localized between a lower bound ($F_{t,s}(a)$) and an upper bound ($F_{t,s+1}(a)$):
 
 $$P(s \mid a) = F_{t,s}(a) - F_{t,s+1}(a)$$
 
@@ -28,9 +28,9 @@ whereas for the terminal stage it is one-sided, rising with age towards 1:
 
 $$P(\mathrm{A_c} \mid a) = F_{t,\mathrm{A_c}}(a)$$
 
-An A~c~ observation is weakly informative about age, because that observation has an age at attainment (Tables 2-7), which itself is a distribution.
+An A~c~ observation is weakly informative about age, because that observation has an age at attainment (Šešelj et al. tables 2-7), which itself has a distribution.
 
-## What we reports instead
+## What is reported
 
 Teeth at A~c~ are excluded from the weighted age estimate and used to compute a *reference completion threshold*: a percentile of the sex-specific distribution of age upon *entering* A~c~, taken from Tables 2–7.
 
