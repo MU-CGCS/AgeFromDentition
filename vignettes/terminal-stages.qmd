@@ -135,9 +135,7 @@ info <- ac_info(estimate_dental_age(y, verbose = FALSE))
 c(low_precision = info$low_precision, tied = info$tied_transition)
 ```
 
-Neither flag causes the tooth to be dropped. Discarding the binding tooth
-would understate the threshold and throw away the very observation being
-reported on.
+Neither flag causes the tooth to be dropped.
 
 ## Compatibility codes
 
@@ -152,42 +150,23 @@ estimate, a threshold, and a code relating them:
 | `overlap` | threshold falls inside the interval |
 | `discordant` | `ci_upper < threshold` |
 
-The interval is an equal-tailed **central 95%** interval, computed
-analytically. It is not a highest-density interval, and it is deliberately
-not taken from `estimate_age_hdi()`, which is Monte Carlo and unseeded — a
-code built on that would vary between runs on identical input.
+The interval is an equal-tailed **central 95%** interval, computed analytically. It is not an HDI and not from MCMC. `estimate_age_hdi()` uses MCMC, which is reported to the user.
 
-`discordant` raises a warning, but does not assert a cause. The
-age-given-stage estimator and the attainment threshold come from related
-but different models, combined here deliberately approximately, so
-disagreement can reflect the method as much as the data.
+`discordant` raises a warning. The age-given-stage estimator and the attainment threshold come from related but different models, combined approximately, so disagreement can reflect the method as much as the data.
 
-## Combining several A.c teeth
+## Combining several A~c~ teeth
 
-With more than one completed tooth, the **largest** per-tooth threshold is
-reported. This is a transparent reporting convention, not a statistical
-combination: it ignores the joint probability of the observed completion
+With more than one completed tooth, the *largest* per-tooth threshold is
+reported. It ignores the joint probability of the observed completion
 pattern and any correlation between teeth within a person.
 
-The full per-tooth table is always returned, so the convention can be
-inspected rather than trusted:
+The full per-tooth table is always returned:
 
 ```{r}
 ac_completion_threshold("F", c("Canine", "P3", "P4", "M1"))$per_tooth
 ```
 
-Note that the binding tooth here is P4, not the canine.
-
-## Missing teeth
-
-`NA` means the tooth was not scored, and nothing more. The input format
-records presence or absence only, so the package never reports *why* a
-tooth is absent — agenesis, extraction, an unscorable image, and a
-radiograph that did not include the tooth are analytically different, but
-indistinguishable here.
-
-If that distinction matters for your application, record it alongside the
-scores; a future release may carry it through.
+Note that the threshold tooth here is P4, not the canine.
 
 ## Reference
 
