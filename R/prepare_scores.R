@@ -114,9 +114,9 @@ prepare_scores <- function(x, verbose = TRUE) {
     for (tooth in Teeth[status == "unparameterized"]) {
       stage <- x[1, tooth]
       sex_label <- ifelse(sex == "F", "females", "males")
-      cli::cli_inform(c(
-        "{tooth} stage {stage} has no published",
-        "log-normal parameters for {sex_label};",
+      cli::cli_inform(paste0(
+        "{tooth} stage {stage} has no published ",
+        "log-normal parameters for {sex_label}; ",
         "excluded."
       ))
     }
