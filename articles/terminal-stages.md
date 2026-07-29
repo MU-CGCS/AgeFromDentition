@@ -31,8 +31,7 @@ in stage $`s`$ at age $`a`$, having entered $`s`$ but not yet entered
 $`s+1`$. This is the likelihood used to invert the stage into an age
 estimate.
 
-whereas for the terminal stage it is one-sided, rising with age towards
-1:
+For the terminal stage it is one-sided, rising with age towards 1:
 
 ``` math
 P(\mathrm{A_c} \mid a) = F_{t,\mathrm{A_c}}(a)
@@ -56,15 +55,13 @@ ac_completion_threshold("F", "M2")$threshold
 
     [1] 12.19381
 
-The threshold value represents that 2.5% of the female reference sample
-had M2 at A_(c) by about 12.2 years.
+The threshold value says that 2.5% of the female reference sample had M2
+at stage A_(c) by about 12.2 years.
 
-### What it is not
-
-It is not a lower confidence limit for the individual being assessed. It
-describes the reference sample, not the person. It is also not a minimum
-age. Individuals below the threshold exist in the reference sample: 2.5%
-by definition.
+**What it is not**: It is not a lower confidence limit for the
+individual being assessed. It describes the reference sample, not the
+person. It is also not a minimum age. Individuals below the threshold
+exist in the reference sample (2.5% by default).
 
 ## The all-A_(c) case
 
@@ -100,9 +97,9 @@ ac_info(estimate_dental_age(x, verbose = FALSE))$threshold
 
     [1] 12.19381
 
-An unscored M3 is not treated as completed. Scoring it `A.c` adds a
-sixth tooth to the threshold calculation, which changes the binding
-tooth:
+but this is based on M2. An unscored M3 is not treated as completed.
+Scoring it `A.c` adds a sixth tooth to the threshold calculation, which
+changes the binding tooth to M3:
 
 ``` r
 
@@ -114,7 +111,7 @@ ac_info(estimate_dental_age(y, verbose = FALSE))$threshold
 
     [1] 14.10746
 
-## Predictive interval vs. known mean
+## Predictive interval vs. known mean (“plug-in”)
 
 By default the threshold is computed predictively, widening the
 reference standard deviation by the standard error of the fitted mean:

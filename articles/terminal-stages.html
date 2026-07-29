@@ -79,7 +79,7 @@
 <p>For a non-terminal stage <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math> the likelihood is localized between a lower bound (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><mi>s</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">F_{t,s}(a)</annotation></semantics></math>) and an upper bound (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><mi>s</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">F_{t,s+1}(a)</annotation></semantics></math>):</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo>∣</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><mi>s</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><mi>s</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">P(s \mid a) = F_{t,s}(a) - F_{t,s+1}(a)</annotation></semantics></math></p>
 <p>The difference <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><mi>s</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><mi>s</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">F_{t,s}(a) - F_{t,s+1}(a)</annotation></semantics></math> is the probability of being in stage <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math> at age <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>, having entered <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math> but not yet entered <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">s+1</annotation></semantics></math>. This is the likelihood used to invert the stage into an age estimate.</p>
-<p>whereas for the terminal stage it is one-sided, rising with age towards 1:</p>
+<p>For the terminal stage it is one-sided, rising with age towards 1:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="normal">A</mi><mi mathvariant="normal">c</mi></msub><mo>∣</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><msub><mi mathvariant="normal">A</mi><mi mathvariant="normal">c</mi></msub></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">P(\mathrm{A_c} \mid a) = F_{t,\mathrm{A_c}}(a)</annotation></semantics></math></p>
 <p>An A<sub>c</sub> observation is weakly informative about age, because that observation has an age at attainment (Šešelj et al. tables 2-7), which itself has a distribution.</p>
 </section><section class="level2"><h2 id="what-is-reported">What is reported<a class="anchor" aria-label="anchor" href="#what-is-reported"></a>
@@ -92,11 +92,9 @@
 <pre><code>[1] 12.19381</code></pre>
 </div>
 </div>
-<p>The threshold value represents that 2.5% of the female reference sample had M2 at A<sub>c</sub> by about 12.2 years.</p>
-<section class="level3"><h3 id="what-it-is-not">What it is not<a class="anchor" aria-label="anchor" href="#what-it-is-not"></a>
-</h3>
-<p>It is not a lower confidence limit for the individual being assessed. It describes the reference sample, not the person. It is also not a minimum age. Individuals below the threshold exist in the reference sample: 2.5% by definition.</p>
-</section></section><section class="level2"><h2 id="the-all-ac-case">The all-A<sub>c</sub> case<a class="anchor" aria-label="anchor" href="#the-all-ac-case"></a>
+<p>The threshold value says that 2.5% of the female reference sample had M2 at stage A<sub>c</sub> by about 12.2 years.</p>
+<p><strong>What it is not</strong>: It is not a lower confidence limit for the individual being assessed. It describes the reference sample, not the person. It is also not a minimum age. Individuals below the threshold exist in the reference sample (2.5% by default).</p>
+</section><section class="level2"><h2 id="the-all-ac-case">The all-A<sub>c</sub> case<a class="anchor" aria-label="anchor" href="#the-all-ac-case"></a>
 </h2>
 <p>When every scored tooth has completed, there is no point estimate:</p>
 <div class="cell">
@@ -128,7 +126,7 @@ Not scored: M3.</code></pre>
 <pre><code>[1] 12.19381</code></pre>
 </div>
 </div>
-<p>An unscored M3 is not treated as completed. Scoring it <code>A.c</code> adds a sixth tooth to the threshold calculation, which changes the binding tooth:</p>
+<p>but this is based on M2. An unscored M3 is not treated as completed. Scoring it <code>A.c</code> adds a sixth tooth to the threshold calculation, which changes the binding tooth to M3:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span></span>
@@ -139,7 +137,7 @@ Not scored: M3.</code></pre>
 <pre><code>[1] 14.10746</code></pre>
 </div>
 </div>
-</section><section class="level2"><h2 id="predictive-interval-vs--known-mean">Predictive interval vs. known mean<a class="anchor" aria-label="anchor" href="#predictive-interval-vs--known-mean"></a>
+</section><section class="level2"><h2 id="predictive-interval-vs--known-mean-plug-in">Predictive interval vs. known mean (“plug-in”)<a class="anchor" aria-label="anchor" href="#predictive-interval-vs--known-mean-plug-in"></a>
 </h2>
 <p>By default the threshold is computed predictively, widening the reference standard deviation by the standard error of the fitted mean:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mtext mathvariant="normal">eff</mtext></msub><mo>=</mo><msqrt><mrow><msup><mrow><mi mathvariant="normal">l</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">g</mi><mi mathvariant="normal">_</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">d</mi></mrow><mn>2</mn></msup><mo>+</mo><msup><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">_</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">g</mi><mi mathvariant="normal">_</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">u</mi></mrow><mn>2</mn></msup></mrow></msqrt></mrow><annotation encoding="application/x-tex">\sigma_{\text{eff}} = \sqrt{\mathrm{log\_sd}^2 + \mathrm{se\_log\_mu}^2}</annotation></semantics></math></p>
