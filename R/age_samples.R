@@ -6,13 +6,13 @@
 #' @return n samples, or `n` `NA`s when the estimate has no finite value
 #'
 #' @details
-#' This function is **stochastic**: it draws from the fitted log-normal and
-#' is not seeded, so results vary between runs. Call [set.seed()] first if
+#' This function  draws from the fitted log-normal and does not internally
+#' set a seed, so results vary between runs. Call [set.seed()] first if
 #' you need reproducible output.
 #'
 #' When `age_est` has no point estimate -- every scored tooth at terminal
-#' stage `"Ac"`, for instance -- there is no distribution to draw from and
-#' `n` `NA`s are returned.
+#' stage `"Ac"` -- there is no distribution to draw from and `n` `NA`s are
+#' returned.
 #'
 #' @seealso [estimate_dental_age()], [estimate_age_hdi()]
 #'

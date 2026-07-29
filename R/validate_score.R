@@ -17,12 +17,11 @@
 #' dataset covering all fourteen stages: [AgeTables] omits `"Ac"` because
 #' apex closure is terminal and has no finite age in stage.
 #'
-#' Supplying `tooth` matters more than it looks. Not every stage exists for
+#' Supplying `tooth` in important. Not every stage exists for
 #' every tooth: the single-rooted teeth (Canine, P3, P4) have no `"Cl.i"`
 #' (root cleft initiation). Checked against the global vocabulary alone,
 #' `"Cl.i"` on a canine is accepted, matches no reference row, and the tooth
-#' is then silently dropped from the age estimate. The tooth-aware check
-#' catches it instead.
+#' is then silently dropped from the age estimate.
 #'
 #' @seealso [score_to_stage()], [recode_score()]
 #'

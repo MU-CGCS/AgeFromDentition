@@ -26,11 +26,6 @@
 #'     in [AgeTables].}
 #' }
 #'
-#' The categories exist because the previous implementation collapsed all
-#' four to `NA` and dropped them without comment. A completed tooth, an
-#' unscored tooth, and a tooth whose reference row is empty are different
-#' observations and are reported differently.
-#'
 #' @seealso [get_means_for_scores()], [estimate_dental_age()]
 #'
 #' @noRd
@@ -61,8 +56,7 @@ prepare_scores <- function(x, verbose = TRUE) {
     x[1, tooth] <- stage
 
     # Validation is tooth-aware, so a stage that does not exist for this
-    # tooth -- Cl.i on a single-rooted tooth, say -- is an error rather
-    # than a row that quietly looks up to nothing.
+    # tooth -- e.g., Cl.i on a single-rooted tooth -- is an error.
     if (!validate_score(stage, tooth = tooth)) {
       cli::cli_abort("Invalid stage {.val {stage}} for {.val {tooth}}.")
     }
@@ -93,7 +87,6 @@ prepare_scores <- function(x, verbose = TRUE) {
 
   # M1 at C.i is left-censored: the stage is open below and the fitted
   # parameters describe a range the individual has already passed through.
-  # The estimator has dropped it since v0.1 and continues to.
   m1_dropped <- isTRUE(x$M1 == "C.i")
   if (m1_dropped) {
     means[4, ] <- c(NA_real_, NA_real_)
@@ -121,9 +114,11 @@ prepare_scores <- function(x, verbose = TRUE) {
     for (tooth in Teeth[status == "unparameterized"]) {
       stage <- x[1, tooth]
       sex_label <- ifelse(sex == "F", "females", "males")
-      cli::cli_inform(
-        "{tooth} stage {stage} has no published log-normal parameters for {sex_label}; excluded."
-      )
+      cli::cli_inform(c(
+        "{tooth} stage {stage} has no published",
+        "log-normal parameters for {sex_label};",
+        "excluded."
+      ))
     }
   }
 

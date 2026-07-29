@@ -3,9 +3,9 @@
 #' Estimate dental age from a set of scored teeth, following the method
 #' described in Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing of
 #' Development of the Permanent Mandibular Dentition: New Reference Values
-#' from the Fels Longitudinal Study. Anat Rec 302:1733-1753.
+#' from the Fels Longitudinal Study. *Anat Rec* 302:1733-1753.
 #'
-#' Teeth at the terminal stage `"Ac"` are excluded from the estimate and
+#' Teeth at the terminal stage `"A.c"` are excluded from the estimate and
 #' reported separately as a completion threshold. See Details.
 #'
 #' @param scores a scored row (a data frame with `Sex` and one column per
@@ -21,32 +21,28 @@
 #'
 #' @return A named numeric vector of length 5 with class `dental_age`:
 #'   `log_age`, `log_total_var`, `dental_age`, `ci_lower`, `ci_upper`. All
-#'   five are `NA_real_` when no tooth supplies a usable estimate.
+#'   five are `NA` when no tooth supplies a usable estimate.
 #'   Terminal-stage information is attached as an attribute; retrieve it
 #'   with [ac_info()].
 #'
 #' @details
 #' # Terminal stages
 #'
-#' A tooth at `"Ac"` has completed, which says only that the individual is
+#' A tooth at `"A.c"` has completed, which says only that the individual is
 #' older than the completion age. It carries no finite age in stage and is
-#' therefore excluded from the weighted estimate. Instead, the `Ac` teeth
+#' therefore excluded from the weighted estimate. Instead, the `A.c` teeth
 #' produce a **reference completion threshold** via
 #' [ac_completion_threshold()], reported alongside the estimate.
 #'
-#' When every scored tooth is at `"Ac"`, there is no point estimate at all
-#' and the threshold is the only result. The numeric fields are `NA_real_`.
-#' Returning a fixed age in that situation -- 18, say -- would impose a
-#' hidden prior and map very different completion patterns onto one number.
+#' When every scored tooth is at `"A.c"`, there is no point estimate at all
+#' and the threshold is the only result.
 #'
 #' # The interval
 #'
 #' `ci_lower` and `ci_upper` are an equal-tailed **central 95% interval**,
-#' computed analytically with [stats::qlnorm()]. It is not a
-#' highest-density interval: equal-tailed log-normal quantiles are not a
-#' highest-density region, because the log-normal is asymmetric on the age
-#' scale. For an HDI, use [estimate_age_hdi()], which is a separate,
-#' Monte Carlo, function.
+#' computed with [stats::qlnorm()]. It is not a highest-density interval.
+#' For an HDI, use [estimate_age_hdi()], which is a separate, Monte Carlo,
+#' function.
 #'
 #' The compatibility code below is defined from this interval only, so that
 #' it is deterministic and reproducible.
@@ -65,8 +61,8 @@
 #'
 #' `discordant` does not necessarily indicate a scoring error. The
 #' age-given-stage estimator and the attainment threshold come from related
-#' but different models, combined here deliberately approximately, so
-#' disagreement can also reflect reference-sample variation.
+#' but different models, combined approximately, so disagreement can also
+#' reflect reference-sample variation.
 #'
 #' @seealso [ac_completion_threshold()], [ac_info()], [estimate_age_hdi()]
 #'
@@ -81,9 +77,13 @@
 #'                 M1 = "Ac", M2 = "Ac", M3 = NA)
 #' estimate_dental_age(x)
 #'
-estimate_dental_age <- function(scores, q = 0.025,
-                                method = c("predictive", "plugin"),
-                                sex = NULL, verbose = TRUE) {
+estimate_dental_age <- function(
+  scores,
+  q = 0.025,
+  method = c("predictive", "plugin"),
+  sex = NULL,
+  verbose = TRUE
+) {
   method <- match.arg(method)
 
   if (inherits(scores, "dental_scores")) {
@@ -107,9 +107,12 @@ estimate_dental_age <- function(scores, q = 0.025,
   }
 
   means <- prepared$means
-  if (is.null(prepared$sex)) prepared$sex <- sex
+  if (is.null(prepared$sex)) {
+    prepared$sex <- sex
+  }
 
-  # ---- Point estimate, unchanged from v0.1 ----------------------------
+  ##########################################################################
+  # Point estimate using bounds
   m <- means$log_mu[!is.na(means$log_mu)]
   s <- means$log_sd[!is.na(means$log_sd)]
   n_estimable <- length(m)
@@ -147,10 +150,10 @@ estimate_dental_age <- function(scores, q = 0.025,
   }
 
   # Back-transform to the age scale. exp(mu) / exp(var) is the
-  # mode of the fitted log-normal, not the mean or median.
+  # mode of the fitted log-normal.
   dental_age <- exp(age) / exp(vv)
 
-  # ---- Central interval, analytic and deterministic (never sampled) ---
+  # Central interval, analytic and deterministic
   ci_level <- 0.95
   if (is.na(age)) {
     ci_lower <- NA_real_
@@ -161,20 +164,25 @@ estimate_dental_age <- function(scores, q = 0.025,
     ci_upper <- stats::qlnorm(1 - tail, age, sqrt(vv))
   }
 
-  # ---- Completion threshold from the terminal teeth -------------------
+  # Completion threshold from the terminal teeth
   if (is.null(prepared$sex)) {
     ac <- empty_threshold(q, method)
   } else {
     ac <- ac_completion_threshold(
-      prepared$sex, prepared$terminal_teeth, q, method
+      prepared$sex,
+      prepared$terminal_teeth,
+      q,
+      method
     )
   }
 
   # Classify the relationship between the analytic central interval
   # and the completion threshold. Uses the central interval (not
-  # the HDI) so the code is deterministic.
+  # the HDI).
   compatibility <- classify_compatibility(
-    ci_lower, ci_upper, ac$threshold,
+    ci_lower,
+    ci_upper,
+    ac$threshold,
     n_terminal = length(prepared$terminal_teeth),
     n_estimable = n_estimable
   )
@@ -205,7 +213,10 @@ estimate_dental_age <- function(scores, q = 0.025,
   )
 
   info$message <- render_dental_age(
-    dental_age, ci_lower, ci_upper, info
+    dental_age,
+    ci_lower,
+    ci_upper,
+    info
   )
 
   out <- c(
@@ -243,8 +254,13 @@ empty_threshold <- function(q, method) {
 # against a threshold.
 #
 # Boundaries are inclusive at the lower limit and exclusive at the upper.
-classify_compatibility <- function(ci_lower, ci_upper, threshold,
-                                   n_terminal, n_estimable) {
+classify_compatibility <- function(
+  ci_lower,
+  ci_upper,
+  threshold,
+  n_terminal,
+  n_estimable
+) {
   # Order matters: discordant before compatible, because the
   # boundary cases (ci_upper == threshold) fall to overlap.
   if (n_terminal == 0L) {

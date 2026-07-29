@@ -5,10 +5,8 @@
 #' @return string of recoded stage score
 #'
 #' @details
-#' `"Ac"` (apex closure) passes through unchanged rather than becoming `NA`.
-#' It is a terminal stage, not a missing observation; see [score_to_stage()].
-#'
-#' `"zero"` does become `NA`.
+#' `"zero"` becomes `NA`, because this is the "zero" stage, which represents
+#' an open-ended lower bound.
 #'
 #' @export
 #'

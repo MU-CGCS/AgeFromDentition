@@ -1,23 +1,16 @@
 #' Estimate HDI from dental age estimate
 #'
 #' @param age_est numeric vector output from \code{estimate_dental_age()}.
-#' @param n numeric number of samples to produce. Defaults to 1e5 for speed.
-#' Increase this number for investigating the tails of the distribution.
+#' @param n numeric number of samples to produce. Defaults to 1e5.
 #' @param interval numeric width of the HD interval. Defaults to 0.5
 #'
 #' @return numeric vector with the lower and upper bounds of the interval,
 #'   and the completion threshold from `age_est` if it had one
 #'
 #' @details
-#' This is a genuine highest-density interval, obtained by sampling. It is
-#' therefore **stochastic and unseeded**: two calls on the same input give
-#' slightly different bounds. Call [set.seed()] first for reproducible
-#' output, and raise `n` when the tails matter.
-#'
-#' Because of that, it is never used to decide whether an estimate is
-#' compatible with a completion threshold. [estimate_dental_age()] computes
-#' its own equal-tailed central interval analytically for that purpose, so
-#' the compatibility code cannot vary between runs.
+#' This is a genuine highest-density interval, obtained by sampling. Call
+#' [set.seed()] first for reproducible output, and raise `n` when the tails
+#' matter.
 #'
 #' `completion_threshold` is carried through unchanged so that a caller
 #' plotting the interval can draw the threshold on the same axis.
@@ -47,7 +40,9 @@ estimate_age_hdi <- function(age_est, n = 1e5, interval = 0.5) {
   info <- attr(age_est, "ac_info")
   threshold <- if (is.null(info)) NA_real_ else info$threshold
 
-  return(c("lower_bound" = hdi_lo,
-           "upper_bound" = hdi_hi,
-           "completion_threshold" = threshold))
+  return(c(
+    "lower_bound" = hdi_lo,
+    "upper_bound" = hdi_hi,
+    "completion_threshold" = threshold
+  ))
 }

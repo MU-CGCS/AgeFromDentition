@@ -6,9 +6,7 @@
 #'
 #' @details
 #' Score 14 is apex closure and converts to `"Ac"`, a terminal stage. It is
-#' deliberately **not** converted to `NA`: `NA` means the tooth was not
-#' scored, whereas `"Ac"` means it was scored and is complete. The two are
-#' different observations and must stay distinguishable.
+#' not converted to `NA`: `NA` means the tooth was not scored.
 #'
 #' Score 0 (crypt) does convert to `NA`. It lies below the first modelled
 #' stage and has no reference parameters.

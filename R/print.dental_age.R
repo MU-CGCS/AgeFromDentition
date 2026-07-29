@@ -12,14 +12,13 @@
 #   3. The phrase "minimum age" is never used. The threshold is not a
 #      minimum.
 
-
 # Format a tooth vector for prose, in anatomical order.
 format_teeth <- function(teeth) {
   return(paste(teeth, collapse = ", "))
 }
 
 
-# The sentence describing the threshold, plus its mandatory disclaimer.
+# The sentence describing the threshold, plus its disclaimer.
 threshold_lines <- function(info) {
   distribution <- if (info$method == "predictive") {
     "predictive distribution"
@@ -46,22 +45,31 @@ threshold_lines <- function(info) {
   caveats <- character(0)
   if (info$low_precision) {
     binding <- info$per_tooth[info$per_tooth$Tooth == info$binding_tooth, ]
-    caveats <- c(caveats, glue::glue(
-      "it rests on {binding$n} ",
-      "{ifelse(binding$n == 1, 'individual', 'individuals')} ",
-      "(se = {binding$se_log_mu})"
-    ))
+    caveats <- c(
+      caveats,
+      glue::glue(
+        "it rests on {binding$n} ",
+        "{ifelse(binding$n == 1, 'individual', 'individuals')} ",
+        "(se = {binding$se_log_mu})"
+      )
+    )
   }
   if (info$tied_transition) {
-    caveats <- c(caveats, glue::glue(
-      "the {info$binding_tooth} Ac transition is tied with A.5 in the ",
-      "fitted model, so Ac provides no distinction from A.5 for this sex"
-    ))
+    caveats <- c(
+      caveats,
+      glue::glue(
+        "the {info$binding_tooth} Ac transition is tied with A.5 in the ",
+        "fitted model, so Ac provides no distinction from A.5 for this sex"
+      )
+    )
   }
   if (length(caveats) > 0L) {
-    lines <- c(lines, glue::glue(
-      "Threshold unstable: {paste(caveats, collapse = '; ')}."
-    ))
+    lines <- c(
+      lines,
+      glue::glue(
+        "Threshold unstable: {paste(caveats, collapse = '; ')}."
+      )
+    )
   }
 
   return(lines)
@@ -144,16 +152,22 @@ render_dental_age <- function(dental_age, ci_lower, ci_upper, info) {
 
   # Unscored teeth are named, never explained.
   if (length(info$missing_teeth) > 0L) {
-    lines <- c(lines, glue::glue(
-      "Not scored: {format_teeth(info$missing_teeth)}."
-    ))
+    lines <- c(
+      lines,
+      glue::glue(
+        "Not scored: {format_teeth(info$missing_teeth)}."
+      )
+    )
   }
 
   if (length(info$unparameterized_teeth) > 0L) {
-    lines <- c(lines, glue::glue(
-      "Excluded, no published parameters: ",
-      "{format_teeth(info$unparameterized_teeth)}."
-    ))
+    lines <- c(
+      lines,
+      glue::glue(
+        "Excluded, no published parameters: ",
+        "{format_teeth(info$unparameterized_teeth)}."
+      )
+    )
   }
 
   return(paste(as.character(lines), collapse = "\n"))
@@ -217,9 +231,10 @@ print.dental_age <- function(x, ...) {
 #'
 ac_info <- function(x) {
   if (!inherits(x, "dental_age")) {
-    cli::cli_abort(
-      "{.arg x} must be a {.cls dental_age} object from {.fun estimate_dental_age}."
-    )
+    cli::cli_abort(c(
+      "{.arg x} must be a {.cls dental_age} object.",
+      "i" = "Use {.fun estimate_dental_age} to create one."
+    ))
   }
   return(attr(x, "ac_info"))
 }

@@ -124,9 +124,11 @@ ac_completion_threshold <- function(
     cli::cli_abort("{.arg teeth} must not contain NA.")
   }
   if (anyDuplicated(teeth) > 0L) {
-    cli::cli_abort(
-      "{.arg teeth} must not contain duplicates: {paste(unique(teeth[duplicated(teeth)]), collapse = ', ')}."
-    )
+    cli::cli_abort(c(
+      "{.arg teeth} must not contain duplicates.",
+      "i" = "Duplicated: {paste(unique(teeth[duplicated(teeth)]),
+    collapse = ', ')}."
+    ))
   }
 
   known_teeth <- unique(AttainmentTables$Tooth)
@@ -155,7 +157,7 @@ ac_completion_threshold <- function(
       } else {
         log_sd
       },
-      # q-th percentile of the log-normal: exp(mu + z_q * sigma)
+      # percentile of the log-normal: exp(mu + z_q * sigma)
       threshold = exp(log_mu + stats::qnorm(q) * sd_eff)
     ) |>
     dplyr::select(Tooth, log_mu, log_sd, se_log_mu, sd_eff, n, threshold)
@@ -172,8 +174,8 @@ ac_completion_threshold <- function(
     ))
   }
 
-  # The "binding" tooth is the one with the largest (latest)
-  # threshold. It determines the reported value and drives the flags.
+  # The "binding" tooth is the one with the latest threshold. It determines
+  # the reported value and drives the flags.
   binding <- which.max(per_tooth$threshold)
   binding_tooth <- per_tooth$Tooth[binding]
 

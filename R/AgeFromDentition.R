@@ -6,17 +6,19 @@
 "_PACKAGE"
 
 # Ignore some global variables
-utils::globalVariables(c("AgeTables",
-                         "AttainmentTables",
-                         "StageTies",
-                         "Sex",
-                         "Tooth",
-                         "Stage",
-                         "Stage_hi",
-                         "tie_class",
-                         "log_mu",
-                         "log_sd",
-                         "se_log_mu",
-                         "sd_eff",
-                         "threshold",
-                         "n"))
+utils::globalVariables(c(
+    "AgeTables",
+    "AttainmentTables",
+    "StageTies",
+    "Sex",
+    "Tooth",
+    "Stage",
+    "Stage_hi",
+    "tie_class",
+    "log_mu",
+    "log_sd",
+    "se_log_mu",
+    "sd_eff",
+    "threshold",
+    "n"
+))
