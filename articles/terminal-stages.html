@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Terminal (Ac) stages • AgeFromDentition</title>
+<title>Terminal apex closed stages • AgeFromDentition</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="terminal-stages_files/libs/quarto-html/popper.min.js"></script><script src="terminal-stages_files/libs/quarto-html/tippy.umd.min.js"></script><link href="terminal-stages_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="terminal-stages_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Terminal (Ac) stages">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Terminal apex closed stages">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -36,7 +36,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/DA_Continuity.html">Dental Age Continuity</a></li>
-    <li><a class="dropdown-item" href="../articles/terminal-stages.html">Terminal (Ac) stages</a></li>
+    <li><a class="dropdown-item" href="../articles/terminal-stages.html">Terminal apex closed stages</a></li>
   </ul>
 </li>
       </ul>
@@ -54,7 +54,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Terminal (Ac) stages</h1>
+      <h1>Terminal apex closed stages</h1>
 
 
 
@@ -72,18 +72,19 @@
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mu-cgcs.github.io/AgeFromDentition/">AgeFromDentition</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<section class="level2"><h2 id="why-ac-cannot-be-inverted">Why Ac cannot be inverted<a class="anchor" aria-label="anchor" href="#why-ac-cannot-be-inverted"></a>
+<section class="level2"><h2 id="apex-closed-ac-stages-cannot-be-inverted">Apex closed (A<sub>c</sub>) stages cannot be inverted<a class="anchor" aria-label="anchor" href="#apex-closed-ac-stages-cannot-be-inverted"></a>
 </h2>
-<p>The method of Šešelj et al. (2019) estimates age by inverting a tooth’s stage: given that a tooth is observed at, say, <code>R.5</code>, Tables 8–13 supply a log-normal distribution for the individual’s age.</p>
-<p>Apex closure (<code>Ac</code>) breaks that logic, because it is <strong>absorbing</strong>. Once a tooth reaches it, it stays there for the rest of life. Observing <code>Ac</code> therefore tells you only that the individual is older than the completion age; it does not localize age at all. Tables 8–13 have no <code>Ac</code> row for precisely this reason.</p>
-<p>Formally, for a non-terminal stage <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math> the likelihood is localized:</p>
+<p>The method presented in Šešelj et al. (2019) estimates age by inverting a tooth’s stage. Given that a tooth is observed e.g., at <code>R.5</code>, Tables 8–13 supply a log-normal distribution for the individual’s age.</p>
+<p>Apex closure (tooth stage coded <code>A.c</code>) breaks that logic, because it is terminal (no exit point). Once a tooth reaches it, it stays there. Observing A<sub>c</sub> therefore tells you only that the individual is older than the completion age (which has a distribution). It does not localize age further. Tables 8–13 have no A<sub>c</sub> row for this reason.</p>
+<p>For a non-terminal stage <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math> the likelihood is localized:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo>∣</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><mi>s</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><mi>s</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">P(s \mid a) = F_{t,s}(a) - F_{t,s+1}(a)</annotation></semantics></math></p>
+<p>The difference <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><mi>s</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><mi>s</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">F_{t,s}(a) - F_{t,s+1}(a)</annotation></semantics></math> is the probability of being in stage <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math> at age <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>, having entered <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math> but not yet entered <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">s+1</annotation></semantics></math>. This is the likelihood used to invert the stage into an age estimate.</p>
 <p>whereas for the terminal stage it is one-sided, rising with age towards 1:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">c</mi></mrow><mo>∣</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">c</mi></mrow></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">P(\mathrm{Ac} \mid a) = F_{t,\mathrm{Ac}}(a)</annotation></semantics></math></p>
-<p>An <code>Ac</code> observation is weakly informative about age, but it is not uninformative — so discarding it entirely also throws something away.</p>
-</section><section class="level2"><h2 id="what-this-package-reports-instead">What this package reports instead<a class="anchor" aria-label="anchor" href="#what-this-package-reports-instead"></a>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="normal">A</mi><mi mathvariant="normal">c</mi></msub><mo>∣</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>F</mi><mrow><mi>t</mi><mo>,</mo><msub><mi mathvariant="normal">A</mi><mi mathvariant="normal">c</mi></msub></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">P(\mathrm{A_c} \mid a) = F_{t,\mathrm{A_c}}(a)</annotation></semantics></math></p>
+<p>An A<sub>c</sub> observation is weakly informative about age, because that observation has an age at attainment (Tables 2-7), which itself is a distribution.</p>
+</section><section class="level2"><h2 id="what-we-reports-instead">What we reports instead<a class="anchor" aria-label="anchor" href="#what-we-reports-instead"></a>
 </h2>
-<p>Teeth at <code>Ac</code> are excluded from the weighted age estimate and used to compute a <strong>reference completion threshold</strong>: a percentile of the sex-specific distribution of age at <em>entering</em> <code>Ac</code>, taken from the attainment parameters in Tables 2–7.</p>
+<p>Teeth at A<sub>c</sub> are excluded from the weighted age estimate and used to compute a <em>reference completion threshold</em>: a percentile of the sex-specific distribution of age upon <em>entering</em> A<sub>c</sub>, taken from Tables 2–7.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ac_completion_threshold.html">ac_completion_threshold</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="st">"M2"</span><span class="op">)</span><span class="op">$</span><span class="va">threshold</span></span></code></pre></div>
@@ -91,18 +92,24 @@
 <pre><code>[1] 12.19381</code></pre>
 </div>
 </div>
-<p>That number says: 2.5% of the female reference sample had completed M2 by about 12.2 years.</p>
+<p>The threshold value represents that 2.5% of the female reference sample had M2 at A<sub>c</sub> by about 12.2 years.</p>
 <section class="level3"><h3 id="what-it-is-not">What it is not<a class="anchor" aria-label="anchor" href="#what-it-is-not"></a>
 </h3>
-<p>It is <strong>not</strong> a 97.5% lower confidence limit for the individual being assessed. It describes the reference sample, not the person. The package’s output says so explicitly, every time, because the distinction is easy to lose in a methods section.</p>
-<p>It is also not a minimum age. Individuals below the threshold exist in the reference sample — 2.5% of them, by construction.</p>
-</section></section><section class="level2"><h2 id="the-all-ac-case">The all-Ac case<a class="anchor" aria-label="anchor" href="#the-all-ac-case"></a>
+<p>It is not a lower confidence limit for the individual being assessed. It describes the reference sample, not the person. It is also not a minimum age. Individuals below the threshold exist in the reference sample: 2.5% by definition.</p>
+</section></section><section class="level2"><h2 id="the-all-ac-case">The all-A<sub>c</sub> case<a class="anchor" aria-label="anchor" href="#the-all-ac-case"></a>
 </h2>
-<p>When every scored tooth has completed, there is no point estimate at all:</p>
+<p>When every scored tooth has completed, there is no point estimate:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Sex <span class="op">=</span> <span class="st">"F"</span>, Canine <span class="op">=</span> <span class="st">"Ac"</span>, P3 <span class="op">=</span> <span class="st">"Ac"</span>, P4 <span class="op">=</span> <span class="st">"Ac"</span>,</span>
-<span>                M1 <span class="op">=</span> <span class="st">"Ac"</span>, M2 <span class="op">=</span> <span class="st">"Ac"</span>, M3 <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    Sex <span class="op">=</span> <span class="st">"F"</span>,</span>
+<span>    Canine <span class="op">=</span> <span class="st">"A.c"</span>,</span>
+<span>    P3 <span class="op">=</span> <span class="st">"A.c"</span>,</span>
+<span>    P4 <span class="op">=</span> <span class="st">"A.c"</span>,</span>
+<span>    M1 <span class="op">=</span> <span class="st">"A.c"</span>,</span>
+<span>    M2 <span class="op">=</span> <span class="st">"A.c"</span>,</span>
+<span>    M3 <span class="op">=</span> <span class="cn">NA</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">x</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -113,42 +120,52 @@ This is a descriptive completion threshold for the reference sample, not a lower
 Not scored: M3.</code></pre>
 </div>
 </div>
-<p>A tempting shortcut is to return a terminal age — 18, say — in this situation. The package does not, and will not. That value is unsupported by the reference data, and it maps very different completion patterns onto one number: an individual with only M1 complete and one with M3 complete would receive the same age.</p>
-<p>Note also that an unscored M3 is never treated as a completed one:</p>
+<p>The threshold still exists, drawn from the five scored teeth:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span></span>
-<span><span class="va">y</span><span class="op">$</span><span class="va">M3</span> <span class="op">&lt;-</span> <span class="st">"Ac"</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/ac_info.html">ac_info</a></span><span class="op">(</span><span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">y</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">threshold</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 14.10746</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ac_info.html">ac_info</a></span><span class="op">(</span><span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">x</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">threshold</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12.19381</code></pre>
 </div>
 </div>
-</section><section class="level2"><h2 id="predictive-versus-plug-in">Predictive versus plug-in<a class="anchor" aria-label="anchor" href="#predictive-versus-plug-in"></a>
+<p>An unscored M3 is not treated as completed. Scoring it <code>A.c</code> adds a sixth tooth to the threshold calculation, which changes the binding tooth:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span></span>
+<span><span class="va">y</span><span class="op">$</span><span class="va">M3</span> <span class="op">&lt;-</span> <span class="st">"A.c"</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/ac_info.html">ac_info</a></span><span class="op">(</span><span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">y</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">threshold</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14.10746</code></pre>
+</div>
+</div>
+</section><section class="level2"><h2 id="predictive-interval-vs--known-mean">Predictive interval vs. known mean<a class="anchor" aria-label="anchor" href="#predictive-interval-vs--known-mean"></a>
 </h2>
-<p>By default the threshold is computed <strong>predictively</strong>, widening the reference SD by the standard error of the fitted mean:</p>
+<p>By default the threshold is computed predictively, widening the reference standard deviation by the standard error of the fitted mean:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mtext mathvariant="normal">eff</mtext></msub><mo>=</mo><msqrt><mrow><msup><mrow><mi mathvariant="normal">l</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">g</mi><mi mathvariant="normal">_</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">d</mi></mrow><mn>2</mn></msup><mo>+</mo><msup><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">_</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">g</mi><mi mathvariant="normal">_</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">u</mi></mrow><mn>2</mn></msup></mrow></msqrt></mrow><annotation encoding="application/x-tex">\sigma_{\text{eff}} = \sqrt{\mathrm{log\_sd}^2 + \mathrm{se\_log\_mu}^2}</annotation></semantics></math></p>
-<p>The source paper’s form treats the fitted mean as known. The difference is immaterial for most teeth and decisive for one:</p>
+<p>Šešelj et al. treat the fitted mean as known. The difference is small for most teeth and important for one:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">teeth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Canine"</span>, <span class="st">"P3"</span>, <span class="st">"P4"</span>, <span class="st">"M1"</span>, <span class="st">"M2"</span>, <span class="st">"M3"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  Tooth <span class="op">=</span> <span class="va">teeth</span>,</span>
-<span>  predictive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">teeth</span>, \<span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="../reference/ac_completion_threshold.html">ac_completion_threshold</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="va">t</span><span class="op">)</span><span class="op">$</span><span class="va">threshold</span></span>
-<span>  <span class="op">}</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  plugin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">teeth</span>, \<span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="../reference/ac_completion_threshold.html">ac_completion_threshold</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="va">t</span>, method <span class="op">=</span> <span class="st">"plugin"</span><span class="op">)</span><span class="op">$</span><span class="va">threshold</span></span>
-<span>  <span class="op">}</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span>    Tooth <span class="op">=</span> <span class="va">teeth</span>,</span>
+<span>    predictive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span></span>
+<span>        <span class="va">teeth</span>,</span>
+<span>        \<span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">{</span></span>
+<span>            <span class="fu"><a href="../reference/ac_completion_threshold.html">ac_completion_threshold</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="va">t</span><span class="op">)</span><span class="op">$</span><span class="va">threshold</span></span>
+<span>        <span class="op">}</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    plugin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span></span>
+<span>        <span class="va">teeth</span>,</span>
+<span>        \<span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">{</span></span>
+<span>            <span class="fu"><a href="../reference/ac_completion_threshold.html">ac_completion_threshold</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="va">t</span>, method <span class="op">=</span> <span class="st">"plugin"</span><span class="op">)</span><span class="op">$</span><span class="va">threshold</span></span>
+<span>        <span class="op">}</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span>difference <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">predictive</span> <span class="op">-</span> <span class="va">plugin</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span>difference <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">predictive</span> <span class="op">-</span> <span class="va">plugin</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Tooth predictive    plugin difference
 Canine Canine   9.881288  9.941052     -0.060
@@ -159,12 +176,12 @@ M2         M2  12.193812 12.228676     -0.035
 M3         M3  14.107460 14.595947     -0.488</code></pre>
 </div>
 </div>
-<p>Female M3 moves by almost half a year, because its <code>Ac</code> transition is estimated from a <strong>single individual</strong>. Since M3 attains <code>Ac</code> latest of any tooth, it binds the threshold whenever it is scored — so the two conventions disagree most in exactly the case this feature exists to serve.</p>
-<p>Use <code>method = "plugin"</code> if you need the source paper’s form. Whichever you choose, declare it: both <code>q</code> and <code>method</code> appear in the printed output so that the number can be reproduced from the report alone.</p>
-<section class="level3"><h3 id="a-known-incompleteness">A known incompleteness<a class="anchor" aria-label="anchor" href="#a-known-incompleteness"></a>
+<p>Female M3 moves by almost half a year, because its A<sub>c</sub> transition is estimated from a single individual. Since M3 attains A<sub>c</sub> latest of any tooth, it binds the threshold whenever it is scored.</p>
+<p>Use <code>method = "plugin"</code> if you need the original form. Both <code>q</code> and <code>method</code> appear in the printed output so that the number can be reproduced from the report alone.</p>
+<section class="level3"><h3 id="uncertainty-in-standard-deviation-is-not-propagated">Uncertainty in standard deviation is not propagated<a class="anchor" aria-label="anchor" href="#uncertainty-in-standard-deviation-is-not-propagated"></a>
 </h3>
-<p>Uncertainty in the scale parameter (<code>se_ln_sd</code> in the source tables, around 0.003–0.004) is <em>not</em> propagated. The predictive form is more predictive than plug-in, not fully predictive.</p>
-</section></section><section class="level2"><h2 id="the-female-m3-tie">The female M3 tie<a class="anchor" aria-label="anchor" href="#the-female-m3-tie"></a>
+<p>Uncertainty in the scale parameter (<code>se_ln_sd</code> in the source tables, around 0.003–0.004) is <em>not</em> propagated. The predictive form is more predictive than plug-in, but not fully predictive.</p>
+</section></section><section class="level2"><h2 id="female-m3-stage-tie">Female M3 stage tie<a class="anchor" aria-label="anchor" href="#female-m3-stage-tie"></a>
 </h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
@@ -175,7 +192,7 @@ M3         M3  14.107460 14.595947     -0.488</code></pre>
 2   F    M3      A.5       Ac 2.8934  terminal</code></pre>
 </div>
 </div>
-<p>For girls, the fitted age of attaining M3 <code>Ac</code> is identical to the age of attaining <code>A.5</code>. Observing apex closure in a female M3 therefore supplies no information beyond the preceding stage, under this reference model. The package flags it:</p>
+<p>For females, the fitted age of attaining M3 A<sub>c</sub> is identical to the age of attaining A<sub>1/2</sub>. Observing apex closure in a female M3 therefore supplies no information beyond the preceding stage, under this reference model. The package flags it:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ac_info.html">ac_info</a></span><span class="op">(</span><span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">y</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
@@ -185,7 +202,7 @@ M3         M3  14.107460 14.595947     -0.488</code></pre>
          TRUE          TRUE </code></pre>
 </div>
 </div>
-<p>Neither flag causes the tooth to be dropped. Discarding the binding tooth would understate the threshold and throw away the very observation being reported on.</p>
+<p>Neither flag causes the tooth to be dropped.</p>
 </section><section class="level2"><h2 id="compatibility-codes">Compatibility codes<a class="anchor" aria-label="anchor" href="#compatibility-codes"></a>
 </h2>
 <p>When some teeth are still developing and others have completed, you get an estimate, a threshold, and a code relating them:</p>
@@ -197,12 +214,12 @@ M3         M3  14.107460 14.595947     -0.488</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><code>no_terminal_information</code></td>
-<td style="text-align: left;">no tooth at <code>Ac</code>
+<td style="text-align: left;">no tooth at <code>A.c</code>
 </td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>completion_threshold_only</code></td>
-<td style="text-align: left;">teeth at <code>Ac</code>, none estimable</td>
+<td style="text-align: left;">teeth at <code>A.c</code>, none estimable</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>compatible</code></td>
@@ -218,12 +235,12 @@ M3         M3  14.107460 14.595947     -0.488</code></pre>
 </tr>
 </tbody>
 </table>
-<p>The interval is an equal-tailed <strong>central 95%</strong> interval, computed analytically. It is not a highest-density interval, and it is deliberately not taken from <code><a href="../reference/estimate_age_hdi.html">estimate_age_hdi()</a></code>, which is Monte Carlo and unseeded — a code built on that would vary between runs on identical input.</p>
-<p><code>discordant</code> raises a warning, but does not assert a cause. The age-given-stage estimator and the attainment threshold come from related but different models, combined here deliberately approximately, so disagreement can reflect the method as much as the data.</p>
-</section><section class="level2"><h2 id="combining-several-ac-teeth">Combining several Ac teeth<a class="anchor" aria-label="anchor" href="#combining-several-ac-teeth"></a>
+<p>The interval is an equal-tailed <strong>central 95%</strong> interval, computed analytically. It is not an HDI and not from MCMC. <code><a href="../reference/estimate_age_hdi.html">estimate_age_hdi()</a></code> uses MCMC, which is reported to the user.</p>
+<p><code>discordant</code> raises a warning. The age-given-stage estimator and the attainment threshold come from related but different models, combined approximately, so disagreement can reflect the method as much as the data.</p>
+</section><section class="level2"><h2 id="combining-several-ac-teeth">Combining several A<sub>c</sub> teeth<a class="anchor" aria-label="anchor" href="#combining-several-ac-teeth"></a>
 </h2>
-<p>With more than one completed tooth, the <strong>largest</strong> per-tooth threshold is reported. This is a transparent reporting convention, not a statistical combination: it ignores the joint probability of the observed completion pattern and any correlation between teeth within a person.</p>
-<p>The full per-tooth table is always returned, so the convention can be inspected rather than trusted:</p>
+<p>With more than one completed tooth, the <em>largest</em> per-tooth threshold is reported. It ignores the joint probability of the observed completion pattern and any correlation between teeth within a person.</p>
+<p>The full per-tooth table is always returned:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ac_completion_threshold.html">ac_completion_threshold</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Canine"</span>, <span class="st">"P3"</span>, <span class="st">"P4"</span>, <span class="st">"M1"</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">per_tooth</span></span></code></pre></div>
@@ -235,21 +252,7 @@ M3         M3  14.107460 14.595947     -0.488</code></pre>
 4     M1 2.2787 0.1186    0.0118 0.1191856 112  7.729936</code></pre>
 </div>
 </div>
-<p>Note that the binding tooth here is P4, not the canine.</p>
-</section><section class="level2"><h2 id="for-your-methods-section">For your methods section<a class="anchor" aria-label="anchor" href="#for-your-methods-section"></a>
-</h2>
-<p>Adapt the following. It states the four things that make the result reproducible: the reference values, the treatment of <code>Ac</code>, the convention that produced the threshold, and what happens when nothing is estimable.</p>
-<blockquote>
-<p>Dental age was estimated with <code>AgeFromDentition</code> version 0.2.0, using the sex-specific reference values of Šešelj et al. (2019). Non-terminal stages were combined by precision-weighted averaging of the age-given-stage log-normal approximations (Tables 8–13). The terminal stage Ac was treated as right-censored and excluded from that estimate. For each tooth scored Ac, a reference completion threshold was calculated from the age-of-attainment parameters (Tables 2–7) as <code>exp(theta_Ac + z_q * sqrt(lnSD^2 + se_theta^2))</code> with <code>q = 0.025</code>, the 2.5th percentile of the predictive distribution of age at attaining Ac for an individual from the reference sample; where several teeth were scored Ac, the largest such threshold is reported. This threshold describes the reference sample and is not a lower confidence limit for the individual. Where no non-terminal tooth was scorable, no point estimate was produced and only the threshold is reported.</p>
-</blockquote>
-<p>If you used <code>method = "plugin"</code>, replace the formula sentence with:</p>
-<blockquote>
-<p>… calculated from the age-of-attainment parameters (Tables 2–7) as <code>exp(theta_Ac + z_q * lnSD)</code> with <code>q = 0.025</code>, the 2.5th percentile of the fitted reference distribution of age at attaining Ac.</p>
-</blockquote>
-</section><section class="level2"><h2 id="missing-teeth">Missing teeth<a class="anchor" aria-label="anchor" href="#missing-teeth"></a>
-</h2>
-<p><code>NA</code> means the tooth was not scored, and nothing more. The input format records presence or absence only, so the package never reports <em>why</em> a tooth is absent — agenesis, extraction, an unscorable image, and a radiograph that did not include the tooth are analytically different, but indistinguishable here.</p>
-<p>If that distinction matters for your application, record it alongside the scores; a future release may carry it through.</p>
+<p>Note that the threshold tooth here is P4, not the canine.</p>
 </section><section class="level2"><h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
 </h2>
 <p>Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing of Development of the Permanent Mandibular Dentition: New Reference Values from the Fels Longitudinal Study. <em>Anat Rec</em> 302:1733–1753.</p>

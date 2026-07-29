@@ -1,44 +1,50 @@
-# Terminal (Ac) stages
+# Terminal apex closed stages
 
 ``` r
 
 library(AgeFromDentition)
 ```
 
-## Why Ac cannot be inverted
+## Apex closed (A_(c)) stages cannot be inverted
 
-The method of Šešelj et al. (2019) estimates age by inverting a tooth’s
-stage: given that a tooth is observed at, say, `R.5`, Tables 8–13 supply
-a log-normal distribution for the individual’s age.
+The method presented in Šešelj et al. (2019) estimates age by inverting
+a tooth’s stage. Given that a tooth is observed e.g., at `R.5`, Tables
+8–13 supply a log-normal distribution for the individual’s age.
 
-Apex closure (`Ac`) breaks that logic, because it is **absorbing**. Once
-a tooth reaches it, it stays there for the rest of life. Observing `Ac`
-therefore tells you only that the individual is older than the
-completion age; it does not localize age at all. Tables 8–13 have no
-`Ac` row for precisely this reason.
+Apex closure (tooth stage coded `A.c`) breaks that logic, because it is
+terminal (no exit point). Once a tooth reaches it, it stays there.
+Observing A_(c) therefore tells you only that the individual is older
+than the completion age (which has a distribution). It does not localize
+age further. Tables 8–13 have no A_(c) row for this reason.
 
-Formally, for a non-terminal stage $`s`$ the likelihood is localized:
+For a non-terminal stage $`s`$ the likelihood is localized:
 
 ``` math
 P(s \mid a) = F_{t,s}(a) - F_{t,s+1}(a)
 ```
 
+The difference $`F_{t,s}(a) - F_{t,s+1}(a)`$ is the probability of being
+in stage $`s`$ at age $`a`$, having entered $`s`$ but not yet entered
+$`s+1`$. This is the likelihood used to invert the stage into an age
+estimate.
+
 whereas for the terminal stage it is one-sided, rising with age towards
 1:
 
 ``` math
-P(\mathrm{Ac} \mid a) = F_{t,\mathrm{Ac}}(a)
+P(\mathrm{A_c} \mid a) = F_{t,\mathrm{A_c}}(a)
 ```
 
-An `Ac` observation is weakly informative about age, but it is not
-uninformative — so discarding it entirely also throws something away.
+An A_(c) observation is weakly informative about age, because that
+observation has an age at attainment (Tables 2-7), which itself is a
+distribution.
 
-## What this package reports instead
+## What we reports instead
 
-Teeth at `Ac` are excluded from the weighted age estimate and used to
-compute a **reference completion threshold**: a percentile of the
-sex-specific distribution of age at *entering* `Ac`, taken from the
-attainment parameters in Tables 2–7.
+Teeth at A_(c) are excluded from the weighted age estimate and used to
+compute a *reference completion threshold*: a percentile of the
+sex-specific distribution of age upon *entering* A_(c), taken from
+Tables 2–7.
 
 ``` r
 
@@ -47,28 +53,31 @@ ac_completion_threshold("F", "M2")$threshold
 
     [1] 12.19381
 
-That number says: 2.5% of the female reference sample had completed M2
-by about 12.2 years.
+The threshold value represents that 2.5% of the female reference sample
+had M2 at A_(c) by about 12.2 years.
 
 ### What it is not
 
-It is **not** a 97.5% lower confidence limit for the individual being
-assessed. It describes the reference sample, not the person. The
-package’s output says so explicitly, every time, because the distinction
-is easy to lose in a methods section.
+It is not a lower confidence limit for the individual being assessed. It
+describes the reference sample, not the person. It is also not a minimum
+age. Individuals below the threshold exist in the reference sample: 2.5%
+by definition.
 
-It is also not a minimum age. Individuals below the threshold exist in
-the reference sample — 2.5% of them, by construction.
+## The all-A_(c) case
 
-## The all-Ac case
-
-When every scored tooth has completed, there is no point estimate at
-all:
+When every scored tooth has completed, there is no point estimate:
 
 ``` r
 
-x <- data.frame(Sex = "F", Canine = "Ac", P3 = "Ac", P4 = "Ac",
-                M1 = "Ac", M2 = "Ac", M3 = NA)
+x <- data.frame(
+    Sex = "F",
+    Canine = "A.c",
+    P3 = "A.c",
+    P4 = "A.c",
+    M1 = "A.c",
+    M2 = "A.c",
+    M3 = NA
+)
 
 estimate_dental_age(x, verbose = FALSE)
 ```
@@ -79,23 +88,7 @@ estimate_dental_age(x, verbose = FALSE)
     This is a descriptive completion threshold for the reference sample, not a lower confidence limit for this individual.
     Not scored: M3.
 
-A tempting shortcut is to return a terminal age — 18, say — in this
-situation. The package does not, and will not. That value is unsupported
-by the reference data, and it maps very different completion patterns
-onto one number: an individual with only M1 complete and one with M3
-complete would receive the same age.
-
-Note also that an unscored M3 is never treated as a completed one:
-
-``` r
-
-y <- x
-y$M3 <- "Ac"
-
-ac_info(estimate_dental_age(y, verbose = FALSE))$threshold
-```
-
-    [1] 14.10746
+The threshold still exists, drawn from the five scored teeth:
 
 ``` r
 
@@ -104,32 +97,54 @@ ac_info(estimate_dental_age(x, verbose = FALSE))$threshold
 
     [1] 12.19381
 
-## Predictive versus plug-in
+An unscored M3 is not treated as completed. Scoring it `A.c` adds a
+sixth tooth to the threshold calculation, which changes the binding
+tooth:
 
-By default the threshold is computed **predictively**, widening the
-reference SD by the standard error of the fitted mean:
+``` r
+
+y <- x
+y$M3 <- "A.c"
+
+ac_info(estimate_dental_age(y, verbose = FALSE))$threshold
+```
+
+    [1] 14.10746
+
+## Predictive interval vs. known mean
+
+By default the threshold is computed predictively, widening the
+reference standard deviation by the standard error of the fitted mean:
 
 ``` math
 \sigma_{\text{eff}} = \sqrt{\mathrm{log\_sd}^2 + \mathrm{se\_log\_mu}^2}
 ```
 
-The source paper’s form treats the fitted mean as known. The difference
-is immaterial for most teeth and decisive for one:
+Šešelj et al. treat the fitted mean as known. The difference is small
+for most teeth and important for one:
 
 ``` r
 
 teeth <- c("Canine", "P3", "P4", "M1", "M2", "M3")
 
 data.frame(
-  Tooth = teeth,
-  predictive = vapply(teeth, \(t) {
-    ac_completion_threshold("F", t)$threshold
-  }, numeric(1)),
-  plugin = vapply(teeth, \(t) {
-    ac_completion_threshold("F", t, method = "plugin")$threshold
-  }, numeric(1))
+    Tooth = teeth,
+    predictive = vapply(
+        teeth,
+        \(t) {
+            ac_completion_threshold("F", t)$threshold
+        },
+        numeric(1)
+    ),
+    plugin = vapply(
+        teeth,
+        \(t) {
+            ac_completion_threshold("F", t, method = "plugin")$threshold
+        },
+        numeric(1)
+    )
 ) |>
-  transform(difference = round(predictive - plugin, 3))
+    transform(difference = round(predictive - plugin, 3))
 ```
 
             Tooth predictive    plugin difference
@@ -140,23 +155,21 @@ data.frame(
     M2         M2  12.193812 12.228676     -0.035
     M3         M3  14.107460 14.595947     -0.488
 
-Female M3 moves by almost half a year, because its `Ac` transition is
-estimated from a **single individual**. Since M3 attains `Ac` latest of
-any tooth, it binds the threshold whenever it is scored — so the two
-conventions disagree most in exactly the case this feature exists to
-serve.
+Female M3 moves by almost half a year, because its A_(c) transition is
+estimated from a single individual. Since M3 attains A_(c) latest of any
+tooth, it binds the threshold whenever it is scored.
 
-Use `method = "plugin"` if you need the source paper’s form. Whichever
-you choose, declare it: both `q` and `method` appear in the printed
-output so that the number can be reproduced from the report alone.
+Use `method = "plugin"` if you need the original form. Both `q` and
+`method` appear in the printed output so that the number can be
+reproduced from the report alone.
 
-### A known incompleteness
+### Uncertainty in standard deviation is not propagated
 
 Uncertainty in the scale parameter (`se_ln_sd` in the source tables,
 around 0.003–0.004) is *not* propagated. The predictive form is more
-predictive than plug-in, not fully predictive.
+predictive than plug-in, but not fully predictive.
 
-## The female M3 tie
+## Female M3 stage tie
 
 ``` r
 
@@ -167,10 +180,10 @@ StageTies
     1   F    M3      R.5     R.75 2.8156  interior
     2   F    M3      A.5       Ac 2.8934  terminal
 
-For girls, the fitted age of attaining M3 `Ac` is identical to the age
-of attaining `A.5`. Observing apex closure in a female M3 therefore
-supplies no information beyond the preceding stage, under this reference
-model. The package flags it:
+For females, the fitted age of attaining M3 A_(c) is identical to the
+age of attaining A_(1/2). Observing apex closure in a female M3
+therefore supplies no information beyond the preceding stage, under this
+reference model. The package flags it:
 
 ``` r
 
@@ -181,9 +194,7 @@ c(low_precision = info$low_precision, tied = info$tied_transition)
     low_precision          tied
              TRUE          TRUE 
 
-Neither flag causes the tooth to be dropped. Discarding the binding
-tooth would understate the threshold and throw away the very observation
-being reported on.
+Neither flag causes the tooth to be dropped.
 
 ## Compatibility codes
 
@@ -192,34 +203,29 @@ an estimate, a threshold, and a code relating them:
 
 | Code                        | Condition                           |
 |:----------------------------|:------------------------------------|
-| `no_terminal_information`   | no tooth at `Ac`                    |
-| `completion_threshold_only` | teeth at `Ac`, none estimable       |
+| `no_terminal_information`   | no tooth at `A.c`                   |
+| `completion_threshold_only` | teeth at `A.c`, none estimable      |
 | `compatible`                | `ci_lower >= threshold`             |
 | `overlap`                   | threshold falls inside the interval |
 | `discordant`                | `ci_upper < threshold`              |
 
 The interval is an equal-tailed **central 95%** interval, computed
-analytically. It is not a highest-density interval, and it is
-deliberately not taken from
-[`estimate_age_hdi()`](https://mu-cgcs.github.io/AgeFromDentition/reference/estimate_age_hdi.md),
-which is Monte Carlo and unseeded — a code built on that would vary
-between runs on identical input.
+analytically. It is not an HDI and not from MCMC.
+[`estimate_age_hdi()`](https://mu-cgcs.github.io/AgeFromDentition/reference/estimate_age_hdi.md)
+uses MCMC, which is reported to the user.
 
-`discordant` raises a warning, but does not assert a cause. The
-age-given-stage estimator and the attainment threshold come from related
-but different models, combined here deliberately approximately, so
-disagreement can reflect the method as much as the data.
+`discordant` raises a warning. The age-given-stage estimator and the
+attainment threshold come from related but different models, combined
+approximately, so disagreement can reflect the method as much as the
+data.
 
-## Combining several Ac teeth
+## Combining several A_(c) teeth
 
-With more than one completed tooth, the **largest** per-tooth threshold
-is reported. This is a transparent reporting convention, not a
-statistical combination: it ignores the joint probability of the
-observed completion pattern and any correlation between teeth within a
-person.
+With more than one completed tooth, the *largest* per-tooth threshold is
+reported. It ignores the joint probability of the observed completion
+pattern and any correlation between teeth within a person.
 
-The full per-tooth table is always returned, so the convention can be
-inspected rather than trusted:
+The full per-tooth table is always returned:
 
 ``` r
 
@@ -232,47 +238,7 @@ ac_completion_threshold("F", c("Canine", "P3", "P4", "M1"))$per_tooth
     3     P4 2.6827 0.1133    0.0195 0.1149658  35 11.674082
     4     M1 2.2787 0.1186    0.0118 0.1191856 112  7.729936
 
-Note that the binding tooth here is P4, not the canine.
-
-## For your methods section
-
-Adapt the following. It states the four things that make the result
-reproducible: the reference values, the treatment of `Ac`, the
-convention that produced the threshold, and what happens when nothing is
-estimable.
-
-> Dental age was estimated with `AgeFromDentition` version 0.2.0, using
-> the sex-specific reference values of Šešelj et al. (2019).
-> Non-terminal stages were combined by precision-weighted averaging of
-> the age-given-stage log-normal approximations (Tables 8–13). The
-> terminal stage Ac was treated as right-censored and excluded from that
-> estimate. For each tooth scored Ac, a reference completion threshold
-> was calculated from the age-of-attainment parameters (Tables 2–7) as
-> `exp(theta_Ac + z_q * sqrt(lnSD^2 + se_theta^2))` with `q = 0.025`,
-> the 2.5th percentile of the predictive distribution of age at
-> attaining Ac for an individual from the reference sample; where
-> several teeth were scored Ac, the largest such threshold is reported.
-> This threshold describes the reference sample and is not a lower
-> confidence limit for the individual. Where no non-terminal tooth was
-> scorable, no point estimate was produced and only the threshold is
-> reported.
-
-If you used `method = "plugin"`, replace the formula sentence with:
-
-> … calculated from the age-of-attainment parameters (Tables 2–7) as
-> `exp(theta_Ac + z_q * lnSD)` with `q = 0.025`, the 2.5th percentile of
-> the fitted reference distribution of age at attaining Ac.
-
-## Missing teeth
-
-`NA` means the tooth was not scored, and nothing more. The input format
-records presence or absence only, so the package never reports *why* a
-tooth is absent — agenesis, extraction, an unscorable image, and a
-radiograph that did not include the tooth are analytically different,
-but indistinguishable here.
-
-If that distinction matters for your application, record it alongside
-the scores; a future release may carry it through.
+Note that the threshold tooth here is P4, not the canine.
 
 ## Reference
 
