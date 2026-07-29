@@ -111,6 +111,89 @@ Females |>
 
 ![](DA_Continuity_files/figure-html/unnamed-chunk-2-1.png)
 
+## Female progression without M3
+
+The same progression, but M3 is never scored. Without M3, the late rows
+where all other teeth have reached `A.c` produce no point estimate —
+only a completion threshold.
+
+``` r
+
+female_no_m3 <- female |>
+    mutate(M3 = NA)
+```
+
+``` r
+
+female_no_m3_results <- purrr::map_dfr(
+    seq_len(nrow(female_no_m3)),
+    \(i) {
+        est <- estimate_dental_age(
+            female_no_m3[i, ],
+            verbose = FALSE
+        )
+        info <- ac_info(est)
+        tibble(
+            row = i,
+            dental_age = est[["dental_age"]],
+            ci_lower = est[["ci_lower"]],
+            ci_upper = est[["ci_upper"]],
+            n_estimable = info$n_estimable,
+            compatibility = info$compatibility
+        )
+    }
+)
+
+Females_no_M3 <- female_no_m3 |>
+    mutate(row = row_number()) |>
+    left_join(female_no_m3_results, by = "row") |>
+    select(-Sex, -row) |>
+    mutate(across(
+        c(dental_age, ci_lower, ci_upper),
+        \(x) round(x, 2)
+    )) |>
+    mutate(row = row_number()) |>
+    relocate(row)
+```
+
+``` r
+
+Females_no_M3 |>
+    gt() |>
+    sub_missing() |>
+    cols_label(
+        row = "Row",
+        dental_age = "Age",
+        ci_lower = "Lower",
+        ci_upper = "Upper",
+        n_estimable = "n",
+        compatibility = "Compat."
+    ) |>
+    tab_spanner(label = "Scores", columns = Canine:M3) |>
+    tab_spanner(
+        label = "95% CI",
+        columns = c(ci_lower, ci_upper)
+    )
+```
+
+[TABLE]
+
+``` r
+
+Females_no_M3 |>
+    drop_na(dental_age) |>
+    ggplot(aes(x = row, y = dental_age)) +
+    geom_line(linewidth = 1.5) +
+    labs(x = "Row", y = "Dental Age") +
+    theme_classic()
+```
+
+![](DA_Continuity_files/figure-html/unnamed-chunk-4-1.png)
+
+### Comparison: with and without M3
+
+![](DA_Continuity_files/figure-html/female-comparison-1.png)
+
 ## Male progression
 
 ``` r
@@ -205,7 +288,86 @@ Males |>
     theme_classic()
 ```
 
-![](DA_Continuity_files/figure-html/unnamed-chunk-4-1.png)
+![](DA_Continuity_files/figure-html/unnamed-chunk-6-1.png)
+
+## Male progression without M3
+
+``` r
+
+male_no_m3 <- male |>
+    mutate(M3 = NA)
+```
+
+``` r
+
+male_no_m3_results <- purrr::map_dfr(
+    seq_len(nrow(male_no_m3)),
+    \(i) {
+        est <- estimate_dental_age(
+            male_no_m3[i, ],
+            verbose = FALSE
+        )
+        info <- ac_info(est)
+        tibble(
+            row = i,
+            dental_age = est[["dental_age"]],
+            ci_lower = est[["ci_lower"]],
+            ci_upper = est[["ci_upper"]],
+            n_estimable = info$n_estimable,
+            compatibility = info$compatibility
+        )
+    }
+)
+
+Males_no_M3 <- male_no_m3 |>
+    mutate(row = row_number()) |>
+    left_join(male_no_m3_results, by = "row") |>
+    select(-Sex, -row) |>
+    mutate(across(
+        c(dental_age, ci_lower, ci_upper),
+        \(x) round(x, 2)
+    )) |>
+    mutate(row = row_number()) |>
+    relocate(row)
+```
+
+``` r
+
+Males_no_M3 |>
+    gt() |>
+    sub_missing() |>
+    cols_label(
+        row = "Row",
+        dental_age = "Age",
+        ci_lower = "Lower",
+        ci_upper = "Upper",
+        n_estimable = "n",
+        compatibility = "Compat."
+    ) |>
+    tab_spanner(label = "Scores", columns = Canine:M3) |>
+    tab_spanner(
+        label = "95% CI",
+        columns = c(ci_lower, ci_upper)
+    )
+```
+
+[TABLE]
+
+``` r
+
+Males_no_M3 |>
+    drop_na(dental_age) |>
+    ggplot(aes(x = row, y = dental_age)) +
+    geom_line(linewidth = 1.5) +
+    labs(x = "Row", y = "Dental Age") +
+    theme_classic()
+```
+
+![](DA_Continuity_files/figure-html/unnamed-chunk-8-1.png)
+
+### Comparison: with and without M3
+
+![](DA_Continuity_files/figure-html/male-comparison-1.png)
 
 ## Notes
 
@@ -227,3 +389,7 @@ Males |>
 - Small dips in dental age occur when a new tooth is added at an early
   stage (e.g., M3 at `C.i` in row 20) or when several teeth transition
   to `Ac` at once (row 23 to 24).
+- In the M3-absent sections, rows 1–23 are identical to the full
+  progressions (M3 was `NA` in those rows anyway). From row 24 on, all
+  scored teeth are at `A.c` and there is no point estimate — only the
+  completion threshold.
