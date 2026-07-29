@@ -106,7 +106,7 @@ Females |>
     ggplot(aes(x = row, y = dental_age)) +
     geom_line(linewidth = 1.5) +
     labs(x = "Row", y = "Dental Age") +
-    theme_classic()
+    theme_minimal()
 ```
 
 ![](DA_Continuity_files/figure-html/unnamed-chunk-2-1.png)
@@ -185,7 +185,7 @@ Females_no_M3 |>
     ggplot(aes(x = row, y = dental_age)) +
     geom_line(linewidth = 1.5) +
     labs(x = "Row", y = "Dental Age") +
-    theme_classic()
+    theme_minimal()
 ```
 
 ![](DA_Continuity_files/figure-html/unnamed-chunk-4-1.png)
@@ -285,7 +285,7 @@ Males |>
     ggplot(aes(x = row, y = dental_age)) +
     geom_line(linewidth = 1.5) +
     labs(x = "Row", y = "Dental Age") +
-    theme_classic()
+    theme_minimal()
 ```
 
 ![](DA_Continuity_files/figure-html/unnamed-chunk-6-1.png)
@@ -360,7 +360,7 @@ Males_no_M3 |>
     ggplot(aes(x = row, y = dental_age)) +
     geom_line(linewidth = 1.5) +
     labs(x = "Row", y = "Dental Age") +
-    theme_classic()
+    theme_minimal()
 ```
 
 ![](DA_Continuity_files/figure-html/unnamed-chunk-8-1.png)
@@ -389,7 +389,3 @@ Males_no_M3 |>
 - Small dips in dental age occur when a new tooth is added at an early
   stage (e.g., M3 at `C.i` in row 20) or when several teeth transition
   to `Ac` at once (row 23 to 24).
-- In the M3-absent sections, rows 1–23 are identical to the full
-  progressions (M3 was `NA` in those rows anyway). From row 24 on, all
-  scored teeth are at `A.c` and there is no point estimate — only the
-  completion threshold.
