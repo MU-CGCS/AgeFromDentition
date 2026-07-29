@@ -48,6 +48,7 @@
       "testthat",
       "tibble",
       "tidyr",
+      "tribble",
       "unassessable",
       "unerupted",
       "unparameterized",
