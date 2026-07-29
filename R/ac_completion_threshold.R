@@ -101,8 +101,12 @@
 #' res$binding_tooth
 #' res$per_tooth
 #'
-ac_completion_threshold <- function(sex, teeth, q = 0.025,
-                                    method = c("predictive", "plugin")) {
+ac_completion_threshold <- function(
+  sex,
+  teeth,
+  q = 0.025,
+  method = c("predictive", "plugin")
+) {
   method <- match.arg(method)
 
   if (length(sex) != 1L || is.na(sex) || !(sex %in% c("F", "M"))) {
@@ -134,17 +138,24 @@ ac_completion_threshold <- function(sex, teeth, q = 0.025,
     ))
   }
 
-  # Rows come out in AttainmentTables order rather than the order `teeth`
-  # was supplied in, so the result does not depend on how the caller
-  # happened to list the teeth.
+  # Look up the Ac attainment parameters for the requested teeth,
+  # compute the effective SD (predictive or plug-in), and derive
+  # the q-th percentile threshold for each tooth.
+  # Rows come out in AttainmentTables order rather than the order
+  # `teeth` was supplied in, so the result does not depend on how
+  # the caller happened to list the teeth.
   per_tooth <- AttainmentTables |>
     dplyr::filter(Stage == "Ac", Sex == sex, Tooth %in% teeth) |>
     dplyr::mutate(
+      # Predictive: widen the reference SD by the SE of the fitted
+      # mean, so the threshold reflects estimation uncertainty.
+      # Plug-in: use the fitted SD as-is (treats log_mu as known).
       sd_eff = if (method == "predictive") {
         sqrt(log_sd^2 + se_log_mu^2)
       } else {
         log_sd
       },
+      # q-th percentile of the log-normal: exp(mu + z_q * sigma)
       threshold = exp(log_mu + stats::qnorm(q) * sd_eff)
     ) |>
     dplyr::select(Tooth, log_mu, log_sd, se_log_mu, sd_eff, n, threshold)
@@ -161,12 +172,18 @@ ac_completion_threshold <- function(sex, teeth, q = 0.025,
     ))
   }
 
+  # The "binding" tooth is the one with the largest (latest)
+  # threshold. It determines the reported value and drives the flags.
   binding <- which.max(per_tooth$threshold)
   binding_tooth <- per_tooth$Tooth[binding]
 
+  # Flag if the binding tooth's Ac transition was estimated from
+  # few individuals or has a large standard error.
   low_precision <- per_tooth$n[binding] < 10L ||
     per_tooth$se_log_mu[binding] > 0.04
 
+  # Check whether the binding tooth's Ac transition is tied with
+  # the preceding stage (e.g., female M3 where A.5 = Ac).
   tied <- StageTies |>
     dplyr::filter(
       Sex == sex,

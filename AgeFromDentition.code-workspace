@@ -6,6 +6,7 @@
   ],
   "settings": {
     "cSpell.words": [
+      "deqn",
       "downweighted",
       "extdata",
       "fels",
@@ -36,8 +37,10 @@
       "roxygen",
       "Rproj",
       "Rscript",
+      "samp",
       "sapply",
       "scorable",
+      "seealso",
       "Šešelj",
       "stringr",
       "subsetting",

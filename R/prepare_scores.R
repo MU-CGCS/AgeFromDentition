@@ -45,11 +45,16 @@ prepare_scores <- function(x, verbose = TRUE) {
   Teeth <- c("Canine", "P3", "P4", "M1", "M2", "M3")
 
   # Check that all teeth columns are present
-  if (!all(Teeth %in% names(x))) cli::cli_abort("Teeth name mismatch in column names.")
+  if (!all(Teeth %in% names(x))) {
+    cli::cli_abort("Teeth name mismatch in column names.")
+  }
 
   means <- matrix(NA_real_, ncol = 2, nrow = 6)
   status <- character(6)
 
+  # Classify each tooth into one of four categories:
+  # estimable, terminal (Ac), missing (NA), or unparameterized
+  # (scored but no reference parameters).
   for (jj in seq_along(Teeth)) {
     tooth <- Teeth[jj]
     stage <- recode_score(x[1, tooth])
@@ -72,6 +77,8 @@ prepare_scores <- function(x, verbose = TRUE) {
       next
     }
 
+    # Look up the age-given-stage parameters. A missing or NA row
+    # means the reference table has no usable fit for this combination.
     row <- AgeTables |>
       dplyr::filter(Sex == sex, Tooth == tooth, Stage == stage)
 
@@ -95,7 +102,9 @@ prepare_scores <- function(x, verbose = TRUE) {
 
   if (verbose) {
     if (m1_dropped || is.na(x$M1)) {
-      cli::cli_inform("M1 is stage C.i or missing, dropping from age estimation.")
+      cli::cli_inform(
+        "M1 is stage C.i or missing, dropping from age estimation."
+      )
     }
 
     terminal <- Teeth[status == "terminal"]

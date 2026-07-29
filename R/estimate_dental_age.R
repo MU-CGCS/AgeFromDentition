@@ -125,7 +125,9 @@ estimate_dental_age <- function(scores, q = 0.025,
       cli::cli_warn("Estimating from only 1 tooth.")
     }
 
-    # Convert to precision, calculate relative precision
+    # Precision weighting: each tooth's variance (log_sd^2) is inverted
+    # to a precision. The weighted mean of the log-scale means is the
+    # point estimate on the log scale.
     precision <- 1 / s^2
     total_precision <- sum(precision)
     rel_precision <- precision / total_precision
@@ -136,13 +138,16 @@ estimate_dental_age <- function(scores, q = 0.025,
     # Total variance
     var_tot <- 1 / total_precision
 
-    # Variance between teeth in age means
+    # Between-tooth variance captures disagreement among teeth.
+    # When all teeth agree perfectly, this is zero.
     var_between_tooth <- dplyr::if_else(is.na(var(m)), 0, var(m))
 
     # Total variance
     vv <- var_tot + var_between_tooth
   }
 
+  # Back-transform to the age scale. exp(mu) / exp(var) is the
+  # mode of the fitted log-normal, not the mean or median.
   dental_age <- exp(age) / exp(vv)
 
   # ---- Central interval, analytic and deterministic (never sampled) ---
@@ -165,6 +170,9 @@ estimate_dental_age <- function(scores, q = 0.025,
     )
   }
 
+  # Classify the relationship between the analytic central interval
+  # and the completion threshold. Uses the central interval (not
+  # the HDI) so the code is deterministic.
   compatibility <- classify_compatibility(
     ci_lower, ci_upper, ac$threshold,
     n_terminal = length(prepared$terminal_teeth),
@@ -237,6 +245,8 @@ empty_threshold <- function(q, method) {
 # Boundaries are inclusive at the lower limit and exclusive at the upper.
 classify_compatibility <- function(ci_lower, ci_upper, threshold,
                                    n_terminal, n_estimable) {
+  # Order matters: discordant before compatible, because the
+  # boundary cases (ci_upper == threshold) fall to overlap.
   if (n_terminal == 0L) {
     return("no_terminal_information")
   }

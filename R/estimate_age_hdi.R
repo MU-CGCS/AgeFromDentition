@@ -35,12 +35,15 @@ estimate_age_hdi <- function(age_est, n = 1e5, interval = 0.5) {
     hdi_lo <- NA
     hdi_hi <- NA
   } else {
+    # Draw from the fitted log-normal and compute the HDI from samples.
     samp <- age_samples(age_est, n)
     hdi_int <- HDInterval::hdi(samp, credMass = interval)
     hdi_lo <- as.numeric(hdi_int[1])
     hdi_hi <- as.numeric(hdi_int[2])
   }
 
+  # Carry the completion threshold through so a caller can plot
+  # the interval and threshold on the same axis.
   info <- attr(age_est, "ac_info")
   threshold <- if (is.null(info)) NA_real_ else info$threshold
 
