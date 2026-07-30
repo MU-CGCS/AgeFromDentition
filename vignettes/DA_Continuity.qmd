@@ -219,36 +219,36 @@ bind_rows(
 male <- tribble(
     ~Sex , ~Canine , ~P3     , ~P4     , ~M1    , ~M2     , ~M3     ,
     "M"  , "C.oc"  , NA      , NA      , NA     , NA      , NA      ,
-    "M"  , "Cr.5"  , NA      , NA      , NA     , NA      , NA      ,
+    "M"  , "C.oc"  , NA      , NA      , NA     , NA      , NA      ,
+    "M"  , "Cr.5"  , "C.i"   , NA      , NA     , NA      , NA      ,
     "M"  , "Cr.5"  , "C.i"   , NA      , NA     , NA      , NA      ,
     "M"  , "Cr.5"  , "C.co"  , NA      , NA     , NA      , NA      ,
-    "M"  , "Cr.75" , "C.oc"  , NA      , NA     , NA      , NA      ,
-    "M"  , "Cr.75" , "C.oc"  , NA      , "Cr.c" , NA      , NA      ,
-    "M"  , "Cr.75" , "Cr.5"  , NA      , "R.i"  , NA      , NA      ,
+    "M"  , "Cr.5"  , "C.oc"  , NA      , "Cr.c" , NA      , NA      ,
+    "M"  , "Cr.75" , "C.oc"  , NA      , "R.i"  , NA      , NA      ,
     "M"  , "Cr.75" , "Cr.5"  , NA      , "R.i"  , "C.i"   , NA      ,
     "M"  , "Cr.75" , "Cr.5"  , "C.i"   , "Cl.i" , "C.i"   , NA      ,
-    "M"  , "Cr.c"  , "Cr.75" , "C.co"  , "R.25" , "C.co"  , NA      ,
-    "M"  , "Cr.c"  , "Cr.c"  , "C.oc"  , "R.25" , "C.oc"  , NA      ,
-    "M"  , "Cr.c"  , "Cr.c"  , "Cr.5"  , "R.5"  , "Cr.5"  , NA      ,
-    "M"  , "R.i"   , "Cr.c"  , "Cr.75" , "R.75" , "Cr.75" , NA      ,
-    "M"  , "R.i"   , "R.i"   , "Cr.c"  , "R.75" , "Cr.c"  , NA      ,
-    "M"  , "R.25"  , "R.i"   , "R.i"   , "R.75" , "R.i"   , NA      ,
-    "M"  , "R.25"  , "R.25"  , "R.i"   , "R.c"  , "Cl.i"  , NA      ,
-    "M"  , "R.5"   , "R.25"  , "R.25"  , "R.c"  , "R.25"  , NA      ,
-    "M"  , "R.5"   , "R.5"   , "R.25"  , "A.5"  , "R.25"  , NA      ,
-    "M"  , "R.75"  , "R.5"   , "R.5"   , "A.c"  , "R.5"   , NA      ,
-    "M"  , "R.75"  , "R.5"   , "R.5"   , "A.c"  , "R.5"   , "C.i"   ,
-    "M"  , "R.c"   , "R.75"  , "R.75"  , "A.c"  , "R.75"  , "C.co"  ,
-    "M"  , "A.5"   , "R.c"   , "R.c"   , "A.c"  , "R.c"   , "C.oc"  ,
-    "M"  , "A.c"   , "A.5"   , "A.5"   , "A.c"  , "A.5"   , "Cr.5"  ,
-    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "Cr.75" ,
-    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "Cr.c"  ,
-    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.i"   ,
+    "M"  , "Cr.75" , "Cr.5"  , "C.co"  , "R.25" , "C.co"  , NA      ,
+    "M"  , "Cr.75" , "Cr.75" , "C.oc"  , "R.25" , "C.oc"  , NA      ,
+    "M"  , "Cr.c"  , "Cr.75" , "Cr.5"  , "R.5"  , "Cr.5"  , NA      ,
+    "M"  , "Cr.c"  , "Cr.c"  , "Cr.5"  , "R.75" , "Cr.5"  , NA      ,
+    "M"  , "Cr.c"  , "Cr.c"  , "Cr.75" , "R.75" , "Cr.75" , NA      ,
+    "M"  , "R.i"   , "Cr.c"  , "Cr.c"  , "R.75" , "Cr.c"  , NA      ,
+    "M"  , "R.i"   , "R.i"   , "R.i"   , "R.c"  , "R.i"   , NA      ,
+    "M"  , "R.25"  , "R.i"   , "R.i"   , "R.c"  , "Cl.i"  , NA      ,
+    "M"  , "R.25"  , "R.25"  , "R.25"  , "R.c"  , "R.25"  , NA      ,
+    "M"  , "R.5"   , "R.25"  , "R.25"  , "A.5"  , "R.25"  , "C.i"   ,
+    "M"  , "R.5"   , "R.5"   , "R.5"   , "A.c"  , "R.5"   , "C.co"  ,
+    "M"  , "R.75"  , "R.5"   , "R.5"   , "A.c"  , "R.5"   , "C.oc"  ,
+    "M"  , "R.75"  , "R.75"  , "R.75"  , "A.c"  , "R.75"  , "Cr.5"  ,
+    "M"  , "R.c"   , "R.75"  , "R.75"  , "A.c"  , "R.75"  , "Cr.75" ,
+    "M"  , "A.5"   , "R.c"   , "R.c"   , "A.c"  , "R.c"   , "Cr.c"  ,
+    "M"  , "A.c"   , "A.5"   , "A.5"   , "A.c"  , "A.5"   , "R.i"   ,
     "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "Cl.i"  ,
     "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.25"  ,
     "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.5"   ,
     "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.75"  ,
     "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.c"   ,
+    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "A.5"   ,
     "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "A.5"   ,
 )
 ```
@@ -396,23 +396,59 @@ bind_rows(
     theme_minimal()
 ```
 
+## Sex comparison
+
+```{r}
+#| label: sex-comparison
+#| echo: false
+#| fig-width: 10
+#| fig-height: 5
+bind_rows(
+    Females |>
+        drop_na(dental_age) |>
+        mutate(Sex = "Female", M3_status = "With M3"),
+    Females_no_M3 |>
+        drop_na(dental_age) |>
+        mutate(Sex = "Female", M3_status = "Without M3"),
+    Males |>
+        drop_na(dental_age) |>
+        mutate(Sex = "Male", M3_status = "With M3"),
+    Males_no_M3 |>
+        drop_na(dental_age) |>
+        mutate(Sex = "Male", M3_status = "Without M3")
+) |>
+    ggplot(aes(x = row, y = dental_age, color = Sex)) +
+    geom_line(linewidth = 1.5) +
+    facet_wrap(~M3_status) +
+    scale_color_manual(values = c("navy", "firebrick")) +
+    labs(
+        x = "Row",
+        y = "Dental Age",
+        color = NULL
+    ) +
+    theme_minimal()
+```
+
+
 ## Notes
 
 - Rows 1--2 use only the canine. With a single tooth, the estimate
   tracks that tooth's reference age directly.
-- P3 first appears at row 3, M1 at row 6 (already at `Cr.c` because
-  it develops earliest), M2 at row 8, P4 at row 9.
-- M3 first appears at row 20. For females, late M3 stages (`R.5`
-  through `A.5`) have no published log-normal parameters and are
-  excluded from the age estimate.
-- From row 19 on, M1 reaches `A.c` and shifts from the age
-  estimate to the completion threshold. The `compatibility` column
-  shows whether the two agree.
-- Rows 24--32 have all teeth at `A.c` except M3; only M3 contributes
-  to the age estimate. For females, M3 has no parameters for `R.5`
-  through `A.5`, so the final rows produce no point estimate --- only
-  the completion threshold. For males, all M3 stages have parameters.
-- Row 32 has all teeth `A.c` except M3 at `A.5`.
+- Both sexes introduce teeth in the same order: P3 at row 3, M1
+  at row 6 (already at `Cr.c` because it develops earliest), M2
+  at row 8, P4 at row 9.
+- The male progression uses stages that lag behind the female for
+  the canine (~1 stage) and P3 (~1 stage), reflecting that males
+  develop these teeth later. M1 and P4 are minimally offset. M3
+  is introduced one row earlier for males (row 19 vs 20),
+  reflecting slightly earlier M3 development in males.
+- For females, M3 first appears at row 20; for males, at row 19.
+  For females, late M3 stages (`R.5` through `A.5`) have no
+  published log-normal parameters and are excluded from the age
+  estimate. For males, all M3 stages have parameters.
+- M1 reaches `A.c` at row 19 for females and row 20 for males,
+  shifting from the age estimate to the completion threshold. The
+  `compatibility` column shows whether the two agree.
 - Small dips in dental age occur when a new tooth is added at an
-  early stage (e.g., M3 at `C.i` in row 20) or when several teeth
-  transition to `Ac` at once (row 23 to 24).
+  early stage (e.g., M3 at `C.i`) or when several teeth transition
+  to `A.c` at once.
