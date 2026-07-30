@@ -15,7 +15,7 @@ vignette constructs fine-scale example progressions for females and
 males, starting with only the canine scored and gradually adding teeth,
 ending with all teeth at `A.c` except M3 at `A.5`.
 
-## Female progression
+## Female progression with M3
 
 ``` r
 
@@ -195,7 +195,7 @@ Females_no_M3 |>
 
 ![](DA_Continuity_files/figure-html/female-comparison-1.png)
 
-## Male progression
+## Male progression with M3
 
 ``` r
 
