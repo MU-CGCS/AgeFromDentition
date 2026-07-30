@@ -77,7 +77,8 @@ Females <- female |>
     select(-Sex, -row) |>
     mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2))) |>
     mutate(row = row_number()) |>
-    relocate(row)
+    relocate(row) |>
+    drop_na(dental_age)
 ```
 
 ``` r
@@ -86,7 +87,7 @@ Females |>
     gt() |>
     sub_missing() |>
     cols_label(
-        row = "Row",
+        row = "Sequence",
         dental_age = "Age",
         ci_lower = "Lower",
         ci_upper = "Upper",
@@ -105,7 +106,7 @@ Females |>
     drop_na(dental_age) |>
     ggplot(aes(x = row, y = dental_age)) +
     geom_line(linewidth = 1.5) +
-    labs(x = "Row", y = "Dental Age") +
+    labs(x = "Sequence", y = "Dental Age") +
     theme_minimal()
 ```
 
@@ -114,7 +115,7 @@ Females |>
 ## Female progression without M3
 
 The same progression, but M3 is never scored. Without M3, the late rows
-where all other teeth have reached `A.c` produce no point estimate —
+where all other teeth have reached A_(c) produce no point estimate —
 only a completion threshold.
 
 ``` r
@@ -162,7 +163,7 @@ Females_no_M3 |>
     gt() |>
     sub_missing() |>
     cols_label(
-        row = "Row",
+        row = "Sequence",
         dental_age = "Age",
         ci_lower = "Lower",
         ci_upper = "Upper",
@@ -184,7 +185,7 @@ Females_no_M3 |>
     drop_na(dental_age) |>
     ggplot(aes(x = row, y = dental_age)) +
     geom_line(linewidth = 1.5) +
-    labs(x = "Row", y = "Dental Age") +
+    labs(x = "Sequence", y = "Dental Age") +
     theme_minimal()
 ```
 
@@ -265,7 +266,7 @@ Males |>
     gt() |>
     sub_missing() |>
     cols_label(
-        row = "Row",
+        row = "Sequence",
         dental_age = "Age",
         ci_lower = "Lower",
         ci_upper = "Upper",
@@ -284,7 +285,7 @@ Males |>
     drop_na(dental_age) |>
     ggplot(aes(x = row, y = dental_age)) +
     geom_line(linewidth = 1.5) +
-    labs(x = "Row", y = "Dental Age") +
+    labs(x = "Sequence", y = "Dental Age") +
     theme_minimal()
 ```
 
@@ -337,7 +338,7 @@ Males_no_M3 |>
     gt() |>
     sub_missing() |>
     cols_label(
-        row = "Row",
+        row = "Sequence",
         dental_age = "Age",
         ci_lower = "Lower",
         ci_upper = "Upper",
@@ -359,7 +360,7 @@ Males_no_M3 |>
     drop_na(dental_age) |>
     ggplot(aes(x = row, y = dental_age)) +
     geom_line(linewidth = 1.5) +
-    labs(x = "Row", y = "Dental Age") +
+    labs(x = "Sequence", y = "Dental Age") +
     theme_minimal()
 ```
 
