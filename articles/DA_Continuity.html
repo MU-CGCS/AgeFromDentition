@@ -116,6 +116,7 @@
 <span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.75"</span>  ,</span>
 <span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.c"</span>   ,</span>
 <span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.5"</span>   ,</span>
+<span>    <span class="st">"F"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   ,</span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="cell">
@@ -139,8 +140,7 @@
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Sex</span>, <span class="op">-</span><span class="va">row</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dental_age</span>, <span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span><span class="va">row</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">dental_age</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span><span class="va">row</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
@@ -158,23 +158,23 @@
 <span>    <span class="fu"><a href="https://gt.rstudio.com/reference/tab_spanner.html" class="external-link">tab_spanner</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Scores"</span>, columns <span class="op">=</span> <span class="va">Canine</span><span class="op">:</span><span class="va">M3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://gt.rstudio.com/reference/tab_spanner.html" class="external-link">tab_spanner</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"95% CI"</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<div id="llwqxmiiuk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#llwqxmiiuk table {
+<div id="gqmzsavtfv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gqmzsavtfv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#llwqxmiiuk thead, #llwqxmiiuk tbody, #llwqxmiiuk tfoot, #llwqxmiiuk tr, #llwqxmiiuk td, #llwqxmiiuk th {
+#gqmzsavtfv thead, #gqmzsavtfv tbody, #gqmzsavtfv tfoot, #gqmzsavtfv tr, #gqmzsavtfv td, #gqmzsavtfv th {
   border-style: none;
 }
 
-#llwqxmiiuk p {
+#gqmzsavtfv p {
   margin: 0;
   padding: 0;
 }
 
-#llwqxmiiuk .gt_table {
+#gqmzsavtfv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -200,12 +200,12 @@
   border-left-color: #D3D3D3;
 }
 
-#llwqxmiiuk .gt_caption {
+#gqmzsavtfv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#llwqxmiiuk .gt_title {
+#gqmzsavtfv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -217,7 +217,7 @@
   border-bottom-width: 0;
 }
 
-#llwqxmiiuk .gt_subtitle {
+#gqmzsavtfv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -229,7 +229,7 @@
   border-top-width: 0;
 }
 
-#llwqxmiiuk .gt_heading {
+#gqmzsavtfv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -241,13 +241,13 @@
   border-right-color: #D3D3D3;
 }
 
-#llwqxmiiuk .gt_bottom_border {
+#gqmzsavtfv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#llwqxmiiuk .gt_col_headings {
+#gqmzsavtfv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -262,7 +262,7 @@
   border-right-color: #D3D3D3;
 }
 
-#llwqxmiiuk .gt_col_heading {
+#gqmzsavtfv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -282,7 +282,7 @@
   overflow-x: hidden;
 }
 
-#llwqxmiiuk .gt_column_spanner_outer {
+#gqmzsavtfv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -294,15 +294,15 @@
   padding-right: 4px;
 }
 
-#llwqxmiiuk .gt_column_spanner_outer:first-child {
+#gqmzsavtfv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#llwqxmiiuk .gt_column_spanner_outer:last-child {
+#gqmzsavtfv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#llwqxmiiuk .gt_column_spanner {
+#gqmzsavtfv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -314,11 +314,11 @@
   width: 100%;
 }
 
-#llwqxmiiuk .gt_spanner_row {
+#gqmzsavtfv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#llwqxmiiuk .gt_group_heading {
+#gqmzsavtfv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -344,7 +344,7 @@
   text-align: left;
 }
 
-#llwqxmiiuk .gt_empty_group_heading {
+#gqmzsavtfv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -359,15 +359,15 @@
   vertical-align: middle;
 }
 
-#llwqxmiiuk .gt_from_md > :first-child {
+#gqmzsavtfv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#llwqxmiiuk .gt_from_md > :last-child {
+#gqmzsavtfv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#llwqxmiiuk .gt_row {
+#gqmzsavtfv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -386,7 +386,7 @@
   overflow-x: hidden;
 }
 
-#llwqxmiiuk .gt_stub {
+#gqmzsavtfv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -399,7 +399,7 @@
   padding-right: 5px;
 }
 
-#llwqxmiiuk .gt_stub_row_group {
+#gqmzsavtfv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -413,15 +413,15 @@
   vertical-align: top;
 }
 
-#llwqxmiiuk .gt_row_group_first td {
+#gqmzsavtfv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#llwqxmiiuk .gt_row_group_first th {
+#gqmzsavtfv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#llwqxmiiuk .gt_summary_row {
+#gqmzsavtfv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -431,16 +431,16 @@
   padding-right: 5px;
 }
 
-#llwqxmiiuk .gt_first_summary_row {
+#gqmzsavtfv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#llwqxmiiuk .gt_first_summary_row.thick {
+#gqmzsavtfv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#llwqxmiiuk .gt_last_summary_row {
+#gqmzsavtfv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -450,7 +450,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#llwqxmiiuk .gt_grand_summary_row {
+#gqmzsavtfv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -460,7 +460,7 @@
   padding-right: 5px;
 }
 
-#llwqxmiiuk .gt_first_grand_summary_row {
+#gqmzsavtfv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -470,7 +470,7 @@
   border-top-color: #D3D3D3;
 }
 
-#llwqxmiiuk .gt_last_grand_summary_row_top {
+#gqmzsavtfv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -480,11 +480,11 @@
   border-bottom-color: #D3D3D3;
 }
 
-#llwqxmiiuk .gt_striped {
+#gqmzsavtfv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#llwqxmiiuk .gt_table_body {
+#gqmzsavtfv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -493,7 +493,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#llwqxmiiuk .gt_footnotes {
+#gqmzsavtfv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -507,7 +507,7 @@
   border-right-color: #D3D3D3;
 }
 
-#llwqxmiiuk .gt_footnote {
+#gqmzsavtfv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -516,7 +516,7 @@
   padding-right: 5px;
 }
 
-#llwqxmiiuk .gt_sourcenotes {
+#gqmzsavtfv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -530,7 +530,7 @@
   border-right-color: #D3D3D3;
 }
 
-#llwqxmiiuk .gt_sourcenote {
+#gqmzsavtfv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -538,72 +538,72 @@
   padding-right: 5px;
 }
 
-#llwqxmiiuk .gt_left {
+#gqmzsavtfv .gt_left {
   text-align: left;
 }
 
-#llwqxmiiuk .gt_center {
+#gqmzsavtfv .gt_center {
   text-align: center;
 }
 
-#llwqxmiiuk .gt_right {
+#gqmzsavtfv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#llwqxmiiuk .gt_font_normal {
+#gqmzsavtfv .gt_font_normal {
   font-weight: normal;
 }
 
-#llwqxmiiuk .gt_font_bold {
+#gqmzsavtfv .gt_font_bold {
   font-weight: bold;
 }
 
-#llwqxmiiuk .gt_font_italic {
+#gqmzsavtfv .gt_font_italic {
   font-style: italic;
 }
 
-#llwqxmiiuk .gt_super {
+#gqmzsavtfv .gt_super {
   font-size: 65%;
 }
 
-#llwqxmiiuk .gt_footnote_marks {
+#gqmzsavtfv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#llwqxmiiuk .gt_asterisk {
+#gqmzsavtfv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#llwqxmiiuk .gt_indent_1 {
+#gqmzsavtfv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#llwqxmiiuk .gt_indent_2 {
+#gqmzsavtfv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#llwqxmiiuk .gt_indent_3 {
+#gqmzsavtfv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#llwqxmiiuk .gt_indent_4 {
+#gqmzsavtfv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#llwqxmiiuk .gt_indent_5 {
+#gqmzsavtfv .gt_indent_5 {
   text-indent: 25px;
 }
 
-#llwqxmiiuk .katex-display {
+#gqmzsavtfv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#llwqxmiiuk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gqmzsavtfv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1039,6 +1039,76 @@ Scores
 <td class="gt_row gt_right" headers="n_estimable">1</td>
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">29</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.5</td>
+<td class="gt_row gt_right" headers="dental_age">14.78</td>
+<td class="gt_row gt_right" headers="ci_lower">12.19</td>
+<td class="gt_row gt_right" headers="ci_upper">18.29</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">30</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.75</td>
+<td class="gt_row gt_right" headers="dental_age">14.78</td>
+<td class="gt_row gt_right" headers="ci_lower">12.19</td>
+<td class="gt_row gt_right" headers="ci_upper">18.29</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">31</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">R.c</td>
+<td class="gt_row gt_right" headers="dental_age">14.78</td>
+<td class="gt_row gt_right" headers="ci_lower">12.19</td>
+<td class="gt_row gt_right" headers="ci_upper">18.29</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="row">32</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">A.5</td>
+<td class="gt_row gt_right" headers="dental_age">14.78</td>
+<td class="gt_row gt_right" headers="ci_lower">12.19</td>
+<td class="gt_row gt_right" headers="ci_upper">18.29</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">33</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_left" headers="M3">A.c</td>
+<td class="gt_row gt_right" headers="dental_age">17.77</td>
+<td class="gt_row gt_right" headers="ci_lower">14.11</td>
+<td class="gt_row gt_right" headers="ci_upper">23.11</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1061,11 +1131,12 @@ Scores
 </div>
 </section><section class="level2"><h2 id="female-progression-without-m3">Female progression without M3<a class="anchor" aria-label="anchor" href="#female-progression-without-m3"></a>
 </h2>
-<p>The same progression, but M3 is never scored. Without M3, the late rows where all other teeth have reached A<sub>c</sub> produce no point estimate — only a completion threshold.</p>
+<p>The same progression, but M3 is never scored. Without M3, once all five remaining teeth have reached A<sub>c</sub> (row 24 onward), the estimate is derived from the M2 A<sub>c</sub> attainment distribution rather than the age-given-stage model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">female_no_m3</span> <span class="op">&lt;-</span> <span class="va">female</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>M3 <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>M3 <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">26</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
@@ -1118,23 +1189,23 @@ Scores
 <span>        columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<div id="nbsxbeabbl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#nbsxbeabbl table {
+<div id="czmiekiamm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#czmiekiamm table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#nbsxbeabbl thead, #nbsxbeabbl tbody, #nbsxbeabbl tfoot, #nbsxbeabbl tr, #nbsxbeabbl td, #nbsxbeabbl th {
+#czmiekiamm thead, #czmiekiamm tbody, #czmiekiamm tfoot, #czmiekiamm tr, #czmiekiamm td, #czmiekiamm th {
   border-style: none;
 }
 
-#nbsxbeabbl p {
+#czmiekiamm p {
   margin: 0;
   padding: 0;
 }
 
-#nbsxbeabbl .gt_table {
+#czmiekiamm .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1160,12 +1231,12 @@ Scores
   border-left-color: #D3D3D3;
 }
 
-#nbsxbeabbl .gt_caption {
+#czmiekiamm .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#nbsxbeabbl .gt_title {
+#czmiekiamm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1177,7 +1248,7 @@ Scores
   border-bottom-width: 0;
 }
 
-#nbsxbeabbl .gt_subtitle {
+#czmiekiamm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1189,7 +1260,7 @@ Scores
   border-top-width: 0;
 }
 
-#nbsxbeabbl .gt_heading {
+#czmiekiamm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1201,13 +1272,13 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#nbsxbeabbl .gt_bottom_border {
+#czmiekiamm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nbsxbeabbl .gt_col_headings {
+#czmiekiamm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1222,7 +1293,7 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#nbsxbeabbl .gt_col_heading {
+#czmiekiamm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1242,7 +1313,7 @@ Scores
   overflow-x: hidden;
 }
 
-#nbsxbeabbl .gt_column_spanner_outer {
+#czmiekiamm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1254,15 +1325,15 @@ Scores
   padding-right: 4px;
 }
 
-#nbsxbeabbl .gt_column_spanner_outer:first-child {
+#czmiekiamm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nbsxbeabbl .gt_column_spanner_outer:last-child {
+#czmiekiamm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nbsxbeabbl .gt_column_spanner {
+#czmiekiamm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1274,11 +1345,11 @@ Scores
   width: 100%;
 }
 
-#nbsxbeabbl .gt_spanner_row {
+#czmiekiamm .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#nbsxbeabbl .gt_group_heading {
+#czmiekiamm .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1304,7 +1375,7 @@ Scores
   text-align: left;
 }
 
-#nbsxbeabbl .gt_empty_group_heading {
+#czmiekiamm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1319,15 +1390,15 @@ Scores
   vertical-align: middle;
 }
 
-#nbsxbeabbl .gt_from_md > :first-child {
+#czmiekiamm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nbsxbeabbl .gt_from_md > :last-child {
+#czmiekiamm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nbsxbeabbl .gt_row {
+#czmiekiamm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1346,7 +1417,7 @@ Scores
   overflow-x: hidden;
 }
 
-#nbsxbeabbl .gt_stub {
+#czmiekiamm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1359,7 +1430,7 @@ Scores
   padding-right: 5px;
 }
 
-#nbsxbeabbl .gt_stub_row_group {
+#czmiekiamm .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1373,15 +1444,15 @@ Scores
   vertical-align: top;
 }
 
-#nbsxbeabbl .gt_row_group_first td {
+#czmiekiamm .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nbsxbeabbl .gt_row_group_first th {
+#czmiekiamm .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#nbsxbeabbl .gt_summary_row {
+#czmiekiamm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1391,16 +1462,16 @@ Scores
   padding-right: 5px;
 }
 
-#nbsxbeabbl .gt_first_summary_row {
+#czmiekiamm .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nbsxbeabbl .gt_first_summary_row.thick {
+#czmiekiamm .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nbsxbeabbl .gt_last_summary_row {
+#czmiekiamm .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1410,7 +1481,7 @@ Scores
   border-bottom-color: #D3D3D3;
 }
 
-#nbsxbeabbl .gt_grand_summary_row {
+#czmiekiamm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1420,7 +1491,7 @@ Scores
   padding-right: 5px;
 }
 
-#nbsxbeabbl .gt_first_grand_summary_row {
+#czmiekiamm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1430,7 +1501,7 @@ Scores
   border-top-color: #D3D3D3;
 }
 
-#nbsxbeabbl .gt_last_grand_summary_row_top {
+#czmiekiamm .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1440,11 +1511,11 @@ Scores
   border-bottom-color: #D3D3D3;
 }
 
-#nbsxbeabbl .gt_striped {
+#czmiekiamm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nbsxbeabbl .gt_table_body {
+#czmiekiamm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1453,7 +1524,7 @@ Scores
   border-bottom-color: #D3D3D3;
 }
 
-#nbsxbeabbl .gt_footnotes {
+#czmiekiamm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1467,7 +1538,7 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#nbsxbeabbl .gt_footnote {
+#czmiekiamm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1476,7 +1547,7 @@ Scores
   padding-right: 5px;
 }
 
-#nbsxbeabbl .gt_sourcenotes {
+#czmiekiamm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1490,7 +1561,7 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#nbsxbeabbl .gt_sourcenote {
+#czmiekiamm .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1498,72 +1569,72 @@ Scores
   padding-right: 5px;
 }
 
-#nbsxbeabbl .gt_left {
+#czmiekiamm .gt_left {
   text-align: left;
 }
 
-#nbsxbeabbl .gt_center {
+#czmiekiamm .gt_center {
   text-align: center;
 }
 
-#nbsxbeabbl .gt_right {
+#czmiekiamm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nbsxbeabbl .gt_font_normal {
+#czmiekiamm .gt_font_normal {
   font-weight: normal;
 }
 
-#nbsxbeabbl .gt_font_bold {
+#czmiekiamm .gt_font_bold {
   font-weight: bold;
 }
 
-#nbsxbeabbl .gt_font_italic {
+#czmiekiamm .gt_font_italic {
   font-style: italic;
 }
 
-#nbsxbeabbl .gt_super {
+#czmiekiamm .gt_super {
   font-size: 65%;
 }
 
-#nbsxbeabbl .gt_footnote_marks {
+#czmiekiamm .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#nbsxbeabbl .gt_asterisk {
+#czmiekiamm .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nbsxbeabbl .gt_indent_1 {
+#czmiekiamm .gt_indent_1 {
   text-indent: 5px;
 }
 
-#nbsxbeabbl .gt_indent_2 {
+#czmiekiamm .gt_indent_2 {
   text-indent: 10px;
 }
 
-#nbsxbeabbl .gt_indent_3 {
+#czmiekiamm .gt_indent_3 {
   text-indent: 15px;
 }
 
-#nbsxbeabbl .gt_indent_4 {
+#czmiekiamm .gt_indent_4 {
   text-indent: 20px;
 }
 
-#nbsxbeabbl .gt_indent_5 {
+#czmiekiamm .gt_indent_5 {
   text-indent: 25px;
 }
 
-#nbsxbeabbl .katex-display {
+#czmiekiamm .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#nbsxbeabbl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#czmiekiamm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1937,11 +2008,11 @@ Scores
 <td class="gt_row gt_left" headers="M1">A.c</td>
 <td class="gt_row gt_left" headers="M2">A.c</td>
 <td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
+<td class="gt_row gt_right" headers="dental_age">14.78</td>
+<td class="gt_row gt_right" headers="ci_lower">12.19</td>
+<td class="gt_row gt_right" headers="ci_upper">18.29</td>
 <td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_right" headers="row">25</td>
@@ -1951,11 +2022,11 @@ Scores
 <td class="gt_row gt_left" headers="M1">A.c</td>
 <td class="gt_row gt_left" headers="M2">A.c</td>
 <td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
+<td class="gt_row gt_right" headers="dental_age">14.78</td>
+<td class="gt_row gt_right" headers="ci_lower">12.19</td>
+<td class="gt_row gt_right" headers="ci_upper">18.29</td>
 <td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_right" headers="row">26</td>
@@ -1965,95 +2036,11 @@ Scores
 <td class="gt_row gt_left" headers="M1">A.c</td>
 <td class="gt_row gt_left" headers="M2">A.c</td>
 <td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
+<td class="gt_row gt_right" headers="dental_age">14.78</td>
+<td class="gt_row gt_right" headers="ci_lower">12.19</td>
+<td class="gt_row gt_right" headers="ci_upper">18.29</td>
 <td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="row">27</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="row">28</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="row">29</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="row">30</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="row">31</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="row">32</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
+<td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 </tbody>
 </table>
@@ -2092,8 +2079,6 @@ Scores
 <code class="sourceCode R"><span><span class="va">male</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>    <span class="op">~</span><span class="va">Sex</span> , <span class="op">~</span><span class="va">Canine</span> , <span class="op">~</span><span class="va">P3</span>     , <span class="op">~</span><span class="va">P4</span>     , <span class="op">~</span><span class="va">M1</span>    , <span class="op">~</span><span class="va">M2</span>     , <span class="op">~</span><span class="va">M3</span>     ,</span>
 <span>    <span class="st">"M"</span>  , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
-<span>    <span class="st">"M"</span>  , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
-<span>    <span class="st">"M"</span>  , <span class="st">"Cr.5"</span>  , <span class="st">"C.i"</span>   , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
 <span>    <span class="st">"M"</span>  , <span class="st">"Cr.5"</span>  , <span class="st">"C.i"</span>   , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
 <span>    <span class="st">"M"</span>  , <span class="st">"Cr.5"</span>  , <span class="st">"C.co"</span>  , <span class="cn">NA</span>      , <span class="cn">NA</span>     , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
 <span>    <span class="st">"M"</span>  , <span class="st">"Cr.5"</span>  , <span class="st">"C.oc"</span>  , <span class="cn">NA</span>      , <span class="st">"Cr.c"</span> , <span class="cn">NA</span>      , <span class="cn">NA</span>      ,</span>
@@ -2122,7 +2107,7 @@ Scores
 <span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.75"</span>  ,</span>
 <span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"R.c"</span>   ,</span>
 <span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.5"</span>   ,</span>
-<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.5"</span>   ,</span>
+<span>    <span class="st">"M"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>  , <span class="st">"A.c"</span>   , <span class="st">"A.c"</span>   ,</span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="cell">
@@ -2164,23 +2149,23 @@ Scores
 <span>    <span class="fu"><a href="https://gt.rstudio.com/reference/tab_spanner.html" class="external-link">tab_spanner</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Scores"</span>, columns <span class="op">=</span> <span class="va">Canine</span><span class="op">:</span><span class="va">M3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://gt.rstudio.com/reference/tab_spanner.html" class="external-link">tab_spanner</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"95% CI"</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<div id="sdwyruojoc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#sdwyruojoc table {
+<div id="vjgxfqjoit" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vjgxfqjoit table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#sdwyruojoc thead, #sdwyruojoc tbody, #sdwyruojoc tfoot, #sdwyruojoc tr, #sdwyruojoc td, #sdwyruojoc th {
+#vjgxfqjoit thead, #vjgxfqjoit tbody, #vjgxfqjoit tfoot, #vjgxfqjoit tr, #vjgxfqjoit td, #vjgxfqjoit th {
   border-style: none;
 }
 
-#sdwyruojoc p {
+#vjgxfqjoit p {
   margin: 0;
   padding: 0;
 }
 
-#sdwyruojoc .gt_table {
+#vjgxfqjoit .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2206,12 +2191,12 @@ Scores
   border-left-color: #D3D3D3;
 }
 
-#sdwyruojoc .gt_caption {
+#vjgxfqjoit .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#sdwyruojoc .gt_title {
+#vjgxfqjoit .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2223,7 +2208,7 @@ Scores
   border-bottom-width: 0;
 }
 
-#sdwyruojoc .gt_subtitle {
+#vjgxfqjoit .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2235,7 +2220,7 @@ Scores
   border-top-width: 0;
 }
 
-#sdwyruojoc .gt_heading {
+#vjgxfqjoit .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2247,13 +2232,13 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#sdwyruojoc .gt_bottom_border {
+#vjgxfqjoit .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#sdwyruojoc .gt_col_headings {
+#vjgxfqjoit .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2268,7 +2253,7 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#sdwyruojoc .gt_col_heading {
+#vjgxfqjoit .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2288,7 +2273,7 @@ Scores
   overflow-x: hidden;
 }
 
-#sdwyruojoc .gt_column_spanner_outer {
+#vjgxfqjoit .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2300,15 +2285,15 @@ Scores
   padding-right: 4px;
 }
 
-#sdwyruojoc .gt_column_spanner_outer:first-child {
+#vjgxfqjoit .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#sdwyruojoc .gt_column_spanner_outer:last-child {
+#vjgxfqjoit .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#sdwyruojoc .gt_column_spanner {
+#vjgxfqjoit .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2320,11 +2305,11 @@ Scores
   width: 100%;
 }
 
-#sdwyruojoc .gt_spanner_row {
+#vjgxfqjoit .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#sdwyruojoc .gt_group_heading {
+#vjgxfqjoit .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2350,7 +2335,7 @@ Scores
   text-align: left;
 }
 
-#sdwyruojoc .gt_empty_group_heading {
+#vjgxfqjoit .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2365,15 +2350,15 @@ Scores
   vertical-align: middle;
 }
 
-#sdwyruojoc .gt_from_md > :first-child {
+#vjgxfqjoit .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#sdwyruojoc .gt_from_md > :last-child {
+#vjgxfqjoit .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#sdwyruojoc .gt_row {
+#vjgxfqjoit .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2392,7 +2377,7 @@ Scores
   overflow-x: hidden;
 }
 
-#sdwyruojoc .gt_stub {
+#vjgxfqjoit .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2405,7 +2390,7 @@ Scores
   padding-right: 5px;
 }
 
-#sdwyruojoc .gt_stub_row_group {
+#vjgxfqjoit .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2419,15 +2404,15 @@ Scores
   vertical-align: top;
 }
 
-#sdwyruojoc .gt_row_group_first td {
+#vjgxfqjoit .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#sdwyruojoc .gt_row_group_first th {
+#vjgxfqjoit .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#sdwyruojoc .gt_summary_row {
+#vjgxfqjoit .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2437,16 +2422,16 @@ Scores
   padding-right: 5px;
 }
 
-#sdwyruojoc .gt_first_summary_row {
+#vjgxfqjoit .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#sdwyruojoc .gt_first_summary_row.thick {
+#vjgxfqjoit .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#sdwyruojoc .gt_last_summary_row {
+#vjgxfqjoit .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2456,7 +2441,7 @@ Scores
   border-bottom-color: #D3D3D3;
 }
 
-#sdwyruojoc .gt_grand_summary_row {
+#vjgxfqjoit .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2466,7 +2451,7 @@ Scores
   padding-right: 5px;
 }
 
-#sdwyruojoc .gt_first_grand_summary_row {
+#vjgxfqjoit .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2476,7 +2461,7 @@ Scores
   border-top-color: #D3D3D3;
 }
 
-#sdwyruojoc .gt_last_grand_summary_row_top {
+#vjgxfqjoit .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2486,11 +2471,11 @@ Scores
   border-bottom-color: #D3D3D3;
 }
 
-#sdwyruojoc .gt_striped {
+#vjgxfqjoit .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#sdwyruojoc .gt_table_body {
+#vjgxfqjoit .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2499,7 +2484,7 @@ Scores
   border-bottom-color: #D3D3D3;
 }
 
-#sdwyruojoc .gt_footnotes {
+#vjgxfqjoit .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2513,7 +2498,7 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#sdwyruojoc .gt_footnote {
+#vjgxfqjoit .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2522,7 +2507,7 @@ Scores
   padding-right: 5px;
 }
 
-#sdwyruojoc .gt_sourcenotes {
+#vjgxfqjoit .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2536,7 +2521,7 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#sdwyruojoc .gt_sourcenote {
+#vjgxfqjoit .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2544,72 +2529,72 @@ Scores
   padding-right: 5px;
 }
 
-#sdwyruojoc .gt_left {
+#vjgxfqjoit .gt_left {
   text-align: left;
 }
 
-#sdwyruojoc .gt_center {
+#vjgxfqjoit .gt_center {
   text-align: center;
 }
 
-#sdwyruojoc .gt_right {
+#vjgxfqjoit .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#sdwyruojoc .gt_font_normal {
+#vjgxfqjoit .gt_font_normal {
   font-weight: normal;
 }
 
-#sdwyruojoc .gt_font_bold {
+#vjgxfqjoit .gt_font_bold {
   font-weight: bold;
 }
 
-#sdwyruojoc .gt_font_italic {
+#vjgxfqjoit .gt_font_italic {
   font-style: italic;
 }
 
-#sdwyruojoc .gt_super {
+#vjgxfqjoit .gt_super {
   font-size: 65%;
 }
 
-#sdwyruojoc .gt_footnote_marks {
+#vjgxfqjoit .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#sdwyruojoc .gt_asterisk {
+#vjgxfqjoit .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#sdwyruojoc .gt_indent_1 {
+#vjgxfqjoit .gt_indent_1 {
   text-indent: 5px;
 }
 
-#sdwyruojoc .gt_indent_2 {
+#vjgxfqjoit .gt_indent_2 {
   text-indent: 10px;
 }
 
-#sdwyruojoc .gt_indent_3 {
+#vjgxfqjoit .gt_indent_3 {
   text-indent: 15px;
 }
 
-#sdwyruojoc .gt_indent_4 {
+#vjgxfqjoit .gt_indent_4 {
   text-indent: 20px;
 }
 
-#sdwyruojoc .gt_indent_5 {
+#vjgxfqjoit .gt_indent_5 {
   text-indent: 25px;
 }
 
-#sdwyruojoc .katex-display {
+#vjgxfqjoit .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#sdwyruojoc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#vjgxfqjoit div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2669,48 +2654,20 @@ Scores
 </tr>
 <tr class="even">
 <td class="gt_row gt_right" headers="row">2</td>
-<td class="gt_row gt_left" headers="Canine">C.oc</td>
-<td class="gt_row gt_left" headers="P3">—</td>
+<td class="gt_row gt_left" headers="Canine">Cr.5</td>
+<td class="gt_row gt_left" headers="P3">C.i</td>
 <td class="gt_row gt_left" headers="P4">—</td>
 <td class="gt_row gt_left" headers="M1">—</td>
 <td class="gt_row gt_left" headers="M2">—</td>
 <td class="gt_row gt_left" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">1.97</td>
-<td class="gt_row gt_right" headers="ci_lower">1.49</td>
-<td class="gt_row gt_right" headers="ci_upper">2.71</td>
-<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_right" headers="dental_age">2.58</td>
+<td class="gt_row gt_right" headers="ci_lower">2.08</td>
+<td class="gt_row gt_right" headers="ci_upper">3.31</td>
+<td class="gt_row gt_right" headers="n_estimable">2</td>
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_right" headers="row">3</td>
-<td class="gt_row gt_left" headers="Canine">Cr.5</td>
-<td class="gt_row gt_left" headers="P3">C.i</td>
-<td class="gt_row gt_left" headers="P4">—</td>
-<td class="gt_row gt_left" headers="M1">—</td>
-<td class="gt_row gt_left" headers="M2">—</td>
-<td class="gt_row gt_left" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">2.58</td>
-<td class="gt_row gt_right" headers="ci_lower">2.08</td>
-<td class="gt_row gt_right" headers="ci_upper">3.31</td>
-<td class="gt_row gt_right" headers="n_estimable">2</td>
-<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="row">4</td>
-<td class="gt_row gt_left" headers="Canine">Cr.5</td>
-<td class="gt_row gt_left" headers="P3">C.i</td>
-<td class="gt_row gt_left" headers="P4">—</td>
-<td class="gt_row gt_left" headers="M1">—</td>
-<td class="gt_row gt_left" headers="M2">—</td>
-<td class="gt_row gt_left" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">2.58</td>
-<td class="gt_row gt_right" headers="ci_lower">2.08</td>
-<td class="gt_row gt_right" headers="ci_upper">3.31</td>
-<td class="gt_row gt_right" headers="n_estimable">2</td>
-<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="row">5</td>
 <td class="gt_row gt_left" headers="Canine">Cr.5</td>
 <td class="gt_row gt_left" headers="P3">C.co</td>
 <td class="gt_row gt_left" headers="P4">—</td>
@@ -2724,7 +2681,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">6</td>
+<td class="gt_row gt_right" headers="row">4</td>
 <td class="gt_row gt_left" headers="Canine">Cr.5</td>
 <td class="gt_row gt_left" headers="P3">C.oc</td>
 <td class="gt_row gt_left" headers="P4">—</td>
@@ -2738,7 +2695,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">7</td>
+<td class="gt_row gt_right" headers="row">5</td>
 <td class="gt_row gt_left" headers="Canine">Cr.75</td>
 <td class="gt_row gt_left" headers="P3">C.oc</td>
 <td class="gt_row gt_left" headers="P4">—</td>
@@ -2752,7 +2709,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">8</td>
+<td class="gt_row gt_right" headers="row">6</td>
 <td class="gt_row gt_left" headers="Canine">Cr.75</td>
 <td class="gt_row gt_left" headers="P3">Cr.5</td>
 <td class="gt_row gt_left" headers="P4">—</td>
@@ -2766,7 +2723,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">9</td>
+<td class="gt_row gt_right" headers="row">7</td>
 <td class="gt_row gt_left" headers="Canine">Cr.75</td>
 <td class="gt_row gt_left" headers="P3">Cr.5</td>
 <td class="gt_row gt_left" headers="P4">C.i</td>
@@ -2780,7 +2737,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">10</td>
+<td class="gt_row gt_right" headers="row">8</td>
 <td class="gt_row gt_left" headers="Canine">Cr.75</td>
 <td class="gt_row gt_left" headers="P3">Cr.5</td>
 <td class="gt_row gt_left" headers="P4">C.co</td>
@@ -2794,7 +2751,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">11</td>
+<td class="gt_row gt_right" headers="row">9</td>
 <td class="gt_row gt_left" headers="Canine">Cr.75</td>
 <td class="gt_row gt_left" headers="P3">Cr.75</td>
 <td class="gt_row gt_left" headers="P4">C.oc</td>
@@ -2808,7 +2765,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">12</td>
+<td class="gt_row gt_right" headers="row">10</td>
 <td class="gt_row gt_left" headers="Canine">Cr.c</td>
 <td class="gt_row gt_left" headers="P3">Cr.75</td>
 <td class="gt_row gt_left" headers="P4">Cr.5</td>
@@ -2822,7 +2779,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">13</td>
+<td class="gt_row gt_right" headers="row">11</td>
 <td class="gt_row gt_left" headers="Canine">Cr.c</td>
 <td class="gt_row gt_left" headers="P3">Cr.c</td>
 <td class="gt_row gt_left" headers="P4">Cr.5</td>
@@ -2836,7 +2793,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">14</td>
+<td class="gt_row gt_right" headers="row">12</td>
 <td class="gt_row gt_left" headers="Canine">Cr.c</td>
 <td class="gt_row gt_left" headers="P3">Cr.c</td>
 <td class="gt_row gt_left" headers="P4">Cr.75</td>
@@ -2850,7 +2807,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">15</td>
+<td class="gt_row gt_right" headers="row">13</td>
 <td class="gt_row gt_left" headers="Canine">R.i</td>
 <td class="gt_row gt_left" headers="P3">Cr.c</td>
 <td class="gt_row gt_left" headers="P4">Cr.c</td>
@@ -2864,7 +2821,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">16</td>
+<td class="gt_row gt_right" headers="row">14</td>
 <td class="gt_row gt_left" headers="Canine">R.i</td>
 <td class="gt_row gt_left" headers="P3">R.i</td>
 <td class="gt_row gt_left" headers="P4">R.i</td>
@@ -2878,7 +2835,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">17</td>
+<td class="gt_row gt_right" headers="row">15</td>
 <td class="gt_row gt_left" headers="Canine">R.25</td>
 <td class="gt_row gt_left" headers="P3">R.i</td>
 <td class="gt_row gt_left" headers="P4">R.i</td>
@@ -2892,7 +2849,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">18</td>
+<td class="gt_row gt_right" headers="row">16</td>
 <td class="gt_row gt_left" headers="Canine">R.25</td>
 <td class="gt_row gt_left" headers="P3">R.25</td>
 <td class="gt_row gt_left" headers="P4">R.25</td>
@@ -2906,7 +2863,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">19</td>
+<td class="gt_row gt_right" headers="row">17</td>
 <td class="gt_row gt_left" headers="Canine">R.5</td>
 <td class="gt_row gt_left" headers="P3">R.25</td>
 <td class="gt_row gt_left" headers="P4">R.25</td>
@@ -2920,7 +2877,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">20</td>
+<td class="gt_row gt_right" headers="row">18</td>
 <td class="gt_row gt_left" headers="Canine">R.5</td>
 <td class="gt_row gt_left" headers="P3">R.5</td>
 <td class="gt_row gt_left" headers="P4">R.5</td>
@@ -2934,7 +2891,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">21</td>
+<td class="gt_row gt_right" headers="row">19</td>
 <td class="gt_row gt_left" headers="Canine">R.75</td>
 <td class="gt_row gt_left" headers="P3">R.5</td>
 <td class="gt_row gt_left" headers="P4">R.5</td>
@@ -2948,7 +2905,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">22</td>
+<td class="gt_row gt_right" headers="row">20</td>
 <td class="gt_row gt_left" headers="Canine">R.75</td>
 <td class="gt_row gt_left" headers="P3">R.75</td>
 <td class="gt_row gt_left" headers="P4">R.75</td>
@@ -2962,7 +2919,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">23</td>
+<td class="gt_row gt_right" headers="row">21</td>
 <td class="gt_row gt_left" headers="Canine">R.c</td>
 <td class="gt_row gt_left" headers="P3">R.75</td>
 <td class="gt_row gt_left" headers="P4">R.75</td>
@@ -2976,7 +2933,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">24</td>
+<td class="gt_row gt_right" headers="row">22</td>
 <td class="gt_row gt_left" headers="Canine">A.5</td>
 <td class="gt_row gt_left" headers="P3">R.c</td>
 <td class="gt_row gt_left" headers="P4">R.c</td>
@@ -2990,7 +2947,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">25</td>
+<td class="gt_row gt_right" headers="row">23</td>
 <td class="gt_row gt_left" headers="Canine">A.c</td>
 <td class="gt_row gt_left" headers="P3">A.5</td>
 <td class="gt_row gt_left" headers="P4">A.5</td>
@@ -3004,7 +2961,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">26</td>
+<td class="gt_row gt_right" headers="row">24</td>
 <td class="gt_row gt_left" headers="Canine">A.c</td>
 <td class="gt_row gt_left" headers="P3">A.c</td>
 <td class="gt_row gt_left" headers="P4">A.c</td>
@@ -3018,7 +2975,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">27</td>
+<td class="gt_row gt_right" headers="row">25</td>
 <td class="gt_row gt_left" headers="Canine">A.c</td>
 <td class="gt_row gt_left" headers="P3">A.c</td>
 <td class="gt_row gt_left" headers="P4">A.c</td>
@@ -3032,7 +2989,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">28</td>
+<td class="gt_row gt_right" headers="row">26</td>
 <td class="gt_row gt_left" headers="Canine">A.c</td>
 <td class="gt_row gt_left" headers="P3">A.c</td>
 <td class="gt_row gt_left" headers="P4">A.c</td>
@@ -3046,7 +3003,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">29</td>
+<td class="gt_row gt_right" headers="row">27</td>
 <td class="gt_row gt_left" headers="Canine">A.c</td>
 <td class="gt_row gt_left" headers="P3">A.c</td>
 <td class="gt_row gt_left" headers="P4">A.c</td>
@@ -3060,7 +3017,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">30</td>
+<td class="gt_row gt_right" headers="row">28</td>
 <td class="gt_row gt_left" headers="Canine">A.c</td>
 <td class="gt_row gt_left" headers="P3">A.c</td>
 <td class="gt_row gt_left" headers="P4">A.c</td>
@@ -3074,7 +3031,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">31</td>
+<td class="gt_row gt_right" headers="row">29</td>
 <td class="gt_row gt_left" headers="Canine">A.c</td>
 <td class="gt_row gt_left" headers="P3">A.c</td>
 <td class="gt_row gt_left" headers="P4">A.c</td>
@@ -3088,17 +3045,17 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">32</td>
+<td class="gt_row gt_right" headers="row">30</td>
 <td class="gt_row gt_left" headers="Canine">A.c</td>
 <td class="gt_row gt_left" headers="P3">A.c</td>
 <td class="gt_row gt_left" headers="P4">A.c</td>
 <td class="gt_row gt_left" headers="M1">A.c</td>
 <td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_left" headers="M3">A.5</td>
-<td class="gt_row gt_right" headers="dental_age">17.32</td>
-<td class="gt_row gt_right" headers="ci_lower">14.75</td>
-<td class="gt_row gt_right" headers="ci_upper">20.65</td>
-<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_left" headers="M3">A.c</td>
+<td class="gt_row gt_right" headers="dental_age">18.21</td>
+<td class="gt_row gt_right" headers="ci_lower">14.69</td>
+<td class="gt_row gt_right" headers="ci_upper">23.20</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 </tbody>
@@ -3126,7 +3083,8 @@ Scores
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">male_no_m3</span> <span class="op">&lt;-</span> <span class="va">male</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>M3 <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>M3 <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">26</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="downlit sourceCode r">
@@ -3179,23 +3137,23 @@ Scores
 <span>        columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ci_lower</span>, <span class="va">ci_upper</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<div id="kisoxsfoya" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kisoxsfoya table {
+<div id="mogkgpyntn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mogkgpyntn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#kisoxsfoya thead, #kisoxsfoya tbody, #kisoxsfoya tfoot, #kisoxsfoya tr, #kisoxsfoya td, #kisoxsfoya th {
+#mogkgpyntn thead, #mogkgpyntn tbody, #mogkgpyntn tfoot, #mogkgpyntn tr, #mogkgpyntn td, #mogkgpyntn th {
   border-style: none;
 }
 
-#kisoxsfoya p {
+#mogkgpyntn p {
   margin: 0;
   padding: 0;
 }
 
-#kisoxsfoya .gt_table {
+#mogkgpyntn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3221,12 +3179,12 @@ Scores
   border-left-color: #D3D3D3;
 }
 
-#kisoxsfoya .gt_caption {
+#mogkgpyntn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#kisoxsfoya .gt_title {
+#mogkgpyntn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3238,7 +3196,7 @@ Scores
   border-bottom-width: 0;
 }
 
-#kisoxsfoya .gt_subtitle {
+#mogkgpyntn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3250,7 +3208,7 @@ Scores
   border-top-width: 0;
 }
 
-#kisoxsfoya .gt_heading {
+#mogkgpyntn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3262,13 +3220,13 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#kisoxsfoya .gt_bottom_border {
+#mogkgpyntn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kisoxsfoya .gt_col_headings {
+#mogkgpyntn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3283,7 +3241,7 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#kisoxsfoya .gt_col_heading {
+#mogkgpyntn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3303,7 +3261,7 @@ Scores
   overflow-x: hidden;
 }
 
-#kisoxsfoya .gt_column_spanner_outer {
+#mogkgpyntn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3315,15 +3273,15 @@ Scores
   padding-right: 4px;
 }
 
-#kisoxsfoya .gt_column_spanner_outer:first-child {
+#mogkgpyntn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kisoxsfoya .gt_column_spanner_outer:last-child {
+#mogkgpyntn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kisoxsfoya .gt_column_spanner {
+#mogkgpyntn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3335,11 +3293,11 @@ Scores
   width: 100%;
 }
 
-#kisoxsfoya .gt_spanner_row {
+#mogkgpyntn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#kisoxsfoya .gt_group_heading {
+#mogkgpyntn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3365,7 +3323,7 @@ Scores
   text-align: left;
 }
 
-#kisoxsfoya .gt_empty_group_heading {
+#mogkgpyntn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3380,15 +3338,15 @@ Scores
   vertical-align: middle;
 }
 
-#kisoxsfoya .gt_from_md > :first-child {
+#mogkgpyntn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kisoxsfoya .gt_from_md > :last-child {
+#mogkgpyntn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kisoxsfoya .gt_row {
+#mogkgpyntn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3407,7 +3365,7 @@ Scores
   overflow-x: hidden;
 }
 
-#kisoxsfoya .gt_stub {
+#mogkgpyntn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3420,7 +3378,7 @@ Scores
   padding-right: 5px;
 }
 
-#kisoxsfoya .gt_stub_row_group {
+#mogkgpyntn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3434,15 +3392,15 @@ Scores
   vertical-align: top;
 }
 
-#kisoxsfoya .gt_row_group_first td {
+#mogkgpyntn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#kisoxsfoya .gt_row_group_first th {
+#mogkgpyntn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#kisoxsfoya .gt_summary_row {
+#mogkgpyntn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3452,16 +3410,16 @@ Scores
   padding-right: 5px;
 }
 
-#kisoxsfoya .gt_first_summary_row {
+#mogkgpyntn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#kisoxsfoya .gt_first_summary_row.thick {
+#mogkgpyntn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#kisoxsfoya .gt_last_summary_row {
+#mogkgpyntn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3471,7 +3429,7 @@ Scores
   border-bottom-color: #D3D3D3;
 }
 
-#kisoxsfoya .gt_grand_summary_row {
+#mogkgpyntn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3481,7 +3439,7 @@ Scores
   padding-right: 5px;
 }
 
-#kisoxsfoya .gt_first_grand_summary_row {
+#mogkgpyntn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3491,7 +3449,7 @@ Scores
   border-top-color: #D3D3D3;
 }
 
-#kisoxsfoya .gt_last_grand_summary_row_top {
+#mogkgpyntn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3501,11 +3459,11 @@ Scores
   border-bottom-color: #D3D3D3;
 }
 
-#kisoxsfoya .gt_striped {
+#mogkgpyntn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kisoxsfoya .gt_table_body {
+#mogkgpyntn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3514,7 +3472,7 @@ Scores
   border-bottom-color: #D3D3D3;
 }
 
-#kisoxsfoya .gt_footnotes {
+#mogkgpyntn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3528,7 +3486,7 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#kisoxsfoya .gt_footnote {
+#mogkgpyntn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3537,7 +3495,7 @@ Scores
   padding-right: 5px;
 }
 
-#kisoxsfoya .gt_sourcenotes {
+#mogkgpyntn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3551,7 +3509,7 @@ Scores
   border-right-color: #D3D3D3;
 }
 
-#kisoxsfoya .gt_sourcenote {
+#mogkgpyntn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3559,72 +3517,72 @@ Scores
   padding-right: 5px;
 }
 
-#kisoxsfoya .gt_left {
+#mogkgpyntn .gt_left {
   text-align: left;
 }
 
-#kisoxsfoya .gt_center {
+#mogkgpyntn .gt_center {
   text-align: center;
 }
 
-#kisoxsfoya .gt_right {
+#mogkgpyntn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kisoxsfoya .gt_font_normal {
+#mogkgpyntn .gt_font_normal {
   font-weight: normal;
 }
 
-#kisoxsfoya .gt_font_bold {
+#mogkgpyntn .gt_font_bold {
   font-weight: bold;
 }
 
-#kisoxsfoya .gt_font_italic {
+#mogkgpyntn .gt_font_italic {
   font-style: italic;
 }
 
-#kisoxsfoya .gt_super {
+#mogkgpyntn .gt_super {
   font-size: 65%;
 }
 
-#kisoxsfoya .gt_footnote_marks {
+#mogkgpyntn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#kisoxsfoya .gt_asterisk {
+#mogkgpyntn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#kisoxsfoya .gt_indent_1 {
+#mogkgpyntn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#kisoxsfoya .gt_indent_2 {
+#mogkgpyntn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#kisoxsfoya .gt_indent_3 {
+#mogkgpyntn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#kisoxsfoya .gt_indent_4 {
+#mogkgpyntn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#kisoxsfoya .gt_indent_5 {
+#mogkgpyntn .gt_indent_5 {
   text-indent: 25px;
 }
 
-#kisoxsfoya .katex-display {
+#mogkgpyntn .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#kisoxsfoya div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mogkgpyntn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3684,48 +3642,20 @@ Scores
 </tr>
 <tr class="even">
 <td class="gt_row gt_right" headers="row">2</td>
-<td class="gt_row gt_left" headers="Canine">C.oc</td>
-<td class="gt_row gt_left" headers="P3">—</td>
+<td class="gt_row gt_left" headers="Canine">Cr.5</td>
+<td class="gt_row gt_left" headers="P3">C.i</td>
 <td class="gt_row gt_left" headers="P4">—</td>
 <td class="gt_row gt_left" headers="M1">—</td>
 <td class="gt_row gt_left" headers="M2">—</td>
 <td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">1.97</td>
-<td class="gt_row gt_right" headers="ci_lower">1.49</td>
-<td class="gt_row gt_right" headers="ci_upper">2.71</td>
-<td class="gt_row gt_right" headers="n_estimable">1</td>
+<td class="gt_row gt_right" headers="dental_age">2.58</td>
+<td class="gt_row gt_right" headers="ci_lower">2.08</td>
+<td class="gt_row gt_right" headers="ci_upper">3.31</td>
+<td class="gt_row gt_right" headers="n_estimable">2</td>
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_right" headers="row">3</td>
-<td class="gt_row gt_left" headers="Canine">Cr.5</td>
-<td class="gt_row gt_left" headers="P3">C.i</td>
-<td class="gt_row gt_left" headers="P4">—</td>
-<td class="gt_row gt_left" headers="M1">—</td>
-<td class="gt_row gt_left" headers="M2">—</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">2.58</td>
-<td class="gt_row gt_right" headers="ci_lower">2.08</td>
-<td class="gt_row gt_right" headers="ci_upper">3.31</td>
-<td class="gt_row gt_right" headers="n_estimable">2</td>
-<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="row">4</td>
-<td class="gt_row gt_left" headers="Canine">Cr.5</td>
-<td class="gt_row gt_left" headers="P3">C.i</td>
-<td class="gt_row gt_left" headers="P4">—</td>
-<td class="gt_row gt_left" headers="M1">—</td>
-<td class="gt_row gt_left" headers="M2">—</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">2.58</td>
-<td class="gt_row gt_right" headers="ci_lower">2.08</td>
-<td class="gt_row gt_right" headers="ci_upper">3.31</td>
-<td class="gt_row gt_right" headers="n_estimable">2</td>
-<td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="row">5</td>
 <td class="gt_row gt_left" headers="Canine">Cr.5</td>
 <td class="gt_row gt_left" headers="P3">C.co</td>
 <td class="gt_row gt_left" headers="P4">—</td>
@@ -3739,7 +3669,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">6</td>
+<td class="gt_row gt_right" headers="row">4</td>
 <td class="gt_row gt_left" headers="Canine">Cr.5</td>
 <td class="gt_row gt_left" headers="P3">C.oc</td>
 <td class="gt_row gt_left" headers="P4">—</td>
@@ -3753,7 +3683,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">7</td>
+<td class="gt_row gt_right" headers="row">5</td>
 <td class="gt_row gt_left" headers="Canine">Cr.75</td>
 <td class="gt_row gt_left" headers="P3">C.oc</td>
 <td class="gt_row gt_left" headers="P4">—</td>
@@ -3767,7 +3697,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">8</td>
+<td class="gt_row gt_right" headers="row">6</td>
 <td class="gt_row gt_left" headers="Canine">Cr.75</td>
 <td class="gt_row gt_left" headers="P3">Cr.5</td>
 <td class="gt_row gt_left" headers="P4">—</td>
@@ -3781,7 +3711,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">9</td>
+<td class="gt_row gt_right" headers="row">7</td>
 <td class="gt_row gt_left" headers="Canine">Cr.75</td>
 <td class="gt_row gt_left" headers="P3">Cr.5</td>
 <td class="gt_row gt_left" headers="P4">C.i</td>
@@ -3795,7 +3725,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">10</td>
+<td class="gt_row gt_right" headers="row">8</td>
 <td class="gt_row gt_left" headers="Canine">Cr.75</td>
 <td class="gt_row gt_left" headers="P3">Cr.5</td>
 <td class="gt_row gt_left" headers="P4">C.co</td>
@@ -3809,7 +3739,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">11</td>
+<td class="gt_row gt_right" headers="row">9</td>
 <td class="gt_row gt_left" headers="Canine">Cr.75</td>
 <td class="gt_row gt_left" headers="P3">Cr.75</td>
 <td class="gt_row gt_left" headers="P4">C.oc</td>
@@ -3823,7 +3753,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">12</td>
+<td class="gt_row gt_right" headers="row">10</td>
 <td class="gt_row gt_left" headers="Canine">Cr.c</td>
 <td class="gt_row gt_left" headers="P3">Cr.75</td>
 <td class="gt_row gt_left" headers="P4">Cr.5</td>
@@ -3837,7 +3767,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">13</td>
+<td class="gt_row gt_right" headers="row">11</td>
 <td class="gt_row gt_left" headers="Canine">Cr.c</td>
 <td class="gt_row gt_left" headers="P3">Cr.c</td>
 <td class="gt_row gt_left" headers="P4">Cr.5</td>
@@ -3851,7 +3781,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">14</td>
+<td class="gt_row gt_right" headers="row">12</td>
 <td class="gt_row gt_left" headers="Canine">Cr.c</td>
 <td class="gt_row gt_left" headers="P3">Cr.c</td>
 <td class="gt_row gt_left" headers="P4">Cr.75</td>
@@ -3865,7 +3795,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">15</td>
+<td class="gt_row gt_right" headers="row">13</td>
 <td class="gt_row gt_left" headers="Canine">R.i</td>
 <td class="gt_row gt_left" headers="P3">Cr.c</td>
 <td class="gt_row gt_left" headers="P4">Cr.c</td>
@@ -3879,7 +3809,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">16</td>
+<td class="gt_row gt_right" headers="row">14</td>
 <td class="gt_row gt_left" headers="Canine">R.i</td>
 <td class="gt_row gt_left" headers="P3">R.i</td>
 <td class="gt_row gt_left" headers="P4">R.i</td>
@@ -3893,7 +3823,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">17</td>
+<td class="gt_row gt_right" headers="row">15</td>
 <td class="gt_row gt_left" headers="Canine">R.25</td>
 <td class="gt_row gt_left" headers="P3">R.i</td>
 <td class="gt_row gt_left" headers="P4">R.i</td>
@@ -3907,7 +3837,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">18</td>
+<td class="gt_row gt_right" headers="row">16</td>
 <td class="gt_row gt_left" headers="Canine">R.25</td>
 <td class="gt_row gt_left" headers="P3">R.25</td>
 <td class="gt_row gt_left" headers="P4">R.25</td>
@@ -3921,7 +3851,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">19</td>
+<td class="gt_row gt_right" headers="row">17</td>
 <td class="gt_row gt_left" headers="Canine">R.5</td>
 <td class="gt_row gt_left" headers="P3">R.25</td>
 <td class="gt_row gt_left" headers="P4">R.25</td>
@@ -3935,7 +3865,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">no_terminal_information</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">20</td>
+<td class="gt_row gt_right" headers="row">18</td>
 <td class="gt_row gt_left" headers="Canine">R.5</td>
 <td class="gt_row gt_left" headers="P3">R.5</td>
 <td class="gt_row gt_left" headers="P4">R.5</td>
@@ -3949,7 +3879,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">21</td>
+<td class="gt_row gt_right" headers="row">19</td>
 <td class="gt_row gt_left" headers="Canine">R.75</td>
 <td class="gt_row gt_left" headers="P3">R.5</td>
 <td class="gt_row gt_left" headers="P4">R.5</td>
@@ -3963,7 +3893,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">22</td>
+<td class="gt_row gt_right" headers="row">20</td>
 <td class="gt_row gt_left" headers="Canine">R.75</td>
 <td class="gt_row gt_left" headers="P3">R.75</td>
 <td class="gt_row gt_left" headers="P4">R.75</td>
@@ -3977,7 +3907,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">23</td>
+<td class="gt_row gt_right" headers="row">21</td>
 <td class="gt_row gt_left" headers="Canine">R.c</td>
 <td class="gt_row gt_left" headers="P3">R.75</td>
 <td class="gt_row gt_left" headers="P4">R.75</td>
@@ -3991,7 +3921,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="row">24</td>
+<td class="gt_row gt_right" headers="row">22</td>
 <td class="gt_row gt_left" headers="Canine">A.5</td>
 <td class="gt_row gt_left" headers="P3">R.c</td>
 <td class="gt_row gt_left" headers="P4">R.c</td>
@@ -4005,7 +3935,7 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="row">25</td>
+<td class="gt_row gt_right" headers="row">23</td>
 <td class="gt_row gt_left" headers="Canine">A.c</td>
 <td class="gt_row gt_left" headers="P3">A.5</td>
 <td class="gt_row gt_left" headers="P4">A.5</td>
@@ -4019,6 +3949,34 @@ Scores
 <td class="gt_row gt_left" headers="compatibility">compatible</td>
 </tr>
 <tr class="even">
+<td class="gt_row gt_right" headers="row">24</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_center" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">14.78</td>
+<td class="gt_row gt_right" headers="ci_lower">11.73</td>
+<td class="gt_row gt_right" headers="ci_upper">19.23</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
+<td class="gt_row gt_left" headers="compatibility">overlap</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="row">25</td>
+<td class="gt_row gt_left" headers="Canine">A.c</td>
+<td class="gt_row gt_left" headers="P3">A.c</td>
+<td class="gt_row gt_left" headers="P4">A.c</td>
+<td class="gt_row gt_left" headers="M1">A.c</td>
+<td class="gt_row gt_left" headers="M2">A.c</td>
+<td class="gt_row gt_center" headers="M3">—</td>
+<td class="gt_row gt_right" headers="dental_age">14.78</td>
+<td class="gt_row gt_right" headers="ci_lower">11.73</td>
+<td class="gt_row gt_right" headers="ci_upper">19.23</td>
+<td class="gt_row gt_right" headers="n_estimable">0</td>
+<td class="gt_row gt_left" headers="compatibility">overlap</td>
+</tr>
+<tr class="even">
 <td class="gt_row gt_right" headers="row">26</td>
 <td class="gt_row gt_left" headers="Canine">A.c</td>
 <td class="gt_row gt_left" headers="P3">A.c</td>
@@ -4026,95 +3984,11 @@ Scores
 <td class="gt_row gt_left" headers="M1">A.c</td>
 <td class="gt_row gt_left" headers="M2">A.c</td>
 <td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
+<td class="gt_row gt_right" headers="dental_age">14.78</td>
+<td class="gt_row gt_right" headers="ci_lower">11.73</td>
+<td class="gt_row gt_right" headers="ci_upper">19.23</td>
 <td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="row">27</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="row">28</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="row">29</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="row">30</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="row">31</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="row">32</td>
-<td class="gt_row gt_left" headers="Canine">A.c</td>
-<td class="gt_row gt_left" headers="P3">A.c</td>
-<td class="gt_row gt_left" headers="P4">A.c</td>
-<td class="gt_row gt_left" headers="M1">A.c</td>
-<td class="gt_row gt_left" headers="M2">A.c</td>
-<td class="gt_row gt_center" headers="M3">—</td>
-<td class="gt_row gt_right" headers="dental_age">—</td>
-<td class="gt_row gt_right" headers="ci_lower">—</td>
-<td class="gt_row gt_right" headers="ci_upper">—</td>
-<td class="gt_row gt_right" headers="n_estimable">0</td>
-<td class="gt_row gt_left" headers="compatibility">completion_threshold_only</td>
+<td class="gt_row gt_left" headers="compatibility">overlap</td>
 </tr>
 </tbody>
 </table>
@@ -4159,11 +4033,20 @@ Scores
 </section><section class="level2"><h2 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
 </h2>
 <ul>
-<li>Rows 1–2 use only the canine. With a single tooth, the estimate tracks that tooth’s reference age directly.</li>
-<li>Both sexes introduce teeth in the same order: P3 at row 3, M1 at row 6 (already at <code>Cr.c</code> because it develops earliest), M2 at row 8, P4 at row 9.</li>
-<li>The male progression uses stages that lag behind the female for the canine (~1 stage) and P3 (~1 stage), reflecting that males develop these teeth later. M1 and P4 are minimally offset. M3 is introduced one row earlier for males (row 19 vs 20), reflecting slightly earlier M3 development in males.</li>
-<li>For females, M3 first appears at row 20; for males, at row 19. For females, late M3 stages (<code>R.5</code> through <code>A.5</code>) have no published log-normal parameters and are excluded from the age estimate. For males, all M3 stages have parameters.</li>
-<li>M1 reaches <code>A.c</code> at row 19 for females and row 20 for males, shifting from the age estimate to the completion threshold. The <code>compatibility</code> column shows whether the two agree.</li>
+<li>For females, rows 1–2 use only the canine; for males, only row 1 (P3 is introduced at row 2 for males). With a single tooth, the estimate tracks that tooth’s reference age directly.</li>
+<li>Both sexes introduce additional teeth in the same order (P3, then M1, M2, P4), but at different rows because of sex differences in developmental timing:
+<ul>
+<li>
+<strong>Female:</strong> P3 at row 3 (<code>C.i</code>), M1 at row 6 (<code>R.i</code> — already starting root formation), M2 at row 8 (<code>C.i</code>), P4 at row 9 (<code>C.i</code>).</li>
+<li>
+<strong>Male:</strong> P3 at row 2 (<code>C.i</code>), M1 at row 4 (<code>Cr.c</code> — crown just complete, reflecting M1’s early development), M2 at row 6 (<code>C.i</code>), P4 at row 7 (<code>C.i</code>).</li>
+</ul>
+</li>
+<li>The male progression uses stages that lag behind the female for the canine (~1 stage) and P3 (~1 stage), because males develop these teeth later. M1 and P4 are minimally offset.</li>
+<li>For females, M3 first appears at row 20 (<code>C.oc</code>); for males, at row 17 (<code>C.i</code>) — three rows earlier and at an earlier crown stage, reflecting slightly earlier M3 development in males.</li>
+<li>For females, late M3 stages (<code>R.5</code> through <code>A.5</code>) have no published log-normal parameters and are excluded from the age estimate. For males, all M3 stages have parameters.</li>
+<li>M1 reaches <code>A.c</code> at row 19 for females and row 18 for males. The <code>compatibility</code> column shows whether the age estimate and completion threshold agree.</li>
+<li>Once all five non-M3 teeth have reached <code>A.c</code> (row 24 for both sexes), the estimate switches from the age-given-stage model to the M2 A<sub>c</sub> attainment distribution and remains fixed — all subsequent rows without M3 are identical. The without-M3 progressions are shown through row 26 only; rows 27 onward are omitted as redundant. For females with M3 scored, the switch is delayed: M3 remains estimable through row 28; the M2 A<sub>c</sub> estimate takes over at row 29 when M3 enters its unparameterized stages (<code>R.5</code> through <code>A.5</code>). For males with M3, M3 is estimable through the final row and the switch never occurs.</li>
 <li>Small dips in dental age occur when a new tooth is added at an early stage (e.g., M3 at <code>C.i</code>) or when several teeth transition to <code>A.c</code> at once.</li>
 </ul></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

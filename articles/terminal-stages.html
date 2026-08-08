@@ -96,10 +96,11 @@
 <p><strong>What it is not</strong>: It is not a lower confidence limit for the individual being assessed. It describes the reference sample, not the person. It is also not a minimum age. Individuals below the threshold exist in the reference sample (2.5% by default).</p>
 </section><section class="level2"><h2 id="the-all-ac-case">The all-A<sub>c</sub> case<a class="anchor" aria-label="anchor" href="#the-all-ac-case"></a>
 </h2>
-<p>When every scored tooth has completed, there is no point estimate:</p>
+<p>When every scored tooth is at A<sub>c</sub>, there is no age-given-stage estimate. However, if M2 or M3 is among the completed teeth, their late completion ages are informative: the M2 or M3 A<sub>c</sub> attainment distribution is used as the point estimate (M3 takes precedence when both are scored). The central 95% interval’s lower bound equals the completion threshold by construction.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="co"># Five teeth at Ac, M3 unscored: M2 attainment distribution used</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>    Sex <span class="op">=</span> <span class="st">"F"</span>,</span>
 <span>    Canine <span class="op">=</span> <span class="st">"A.c"</span>,</span>
 <span>    P3 <span class="op">=</span> <span class="st">"A.c"</span>,</span>
@@ -111,32 +112,58 @@
 <span></span>
 <span><span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">x</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Dental age: no finite point estimate.
+<pre><code>Dental age: 14.78 years (mode of the M2 Ac attainment distribution).
+Central 95% interval: 12.19 to 18.29 years.
 All scored teeth are at terminal stage Ac (Canine, P3, P4, M1, M2).
+Estimated from the M2 Ac attainment distribution, not the age-given-stage model.
 Reference completion threshold: 12.19 years - the 2.5th percentile of the sex-specific predictive distribution for attaining Ac in M2 (q = 0.025, method = "predictive").
 This is a descriptive completion threshold for the reference sample, not a lower confidence limit for this individual.
+Compatibility: compatible - the interval lies at or above the completion threshold.
 Not scored: M3.</code></pre>
 </div>
 </div>
-<p>The threshold still exists, drawn from the five scored teeth:</p>
+<p>When M3 is also scored at A<sub>c</sub>, the M3 attainment distribution is used instead:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/ac_info.html">ac_info</a></span><span class="op">(</span><span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">x</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">threshold</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 12.19381</code></pre>
-</div>
-</div>
-<p>but this is based on M2. An unscored M3 is not treated as completed. Scoring it <code>A.c</code> adds a sixth tooth to the threshold calculation, which changes the binding tooth to M3:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span></span>
 <span><span class="va">y</span><span class="op">$</span><span class="va">M3</span> <span class="op">&lt;-</span> <span class="st">"A.c"</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/ac_info.html">ac_info</a></span><span class="op">(</span><span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">y</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">threshold</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">y</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 14.10746</code></pre>
+<pre><code>Dental age: 17.77 years (mode of the M3 Ac attainment distribution).
+Central 95% interval: 14.11 to 23.11 years.
+All scored teeth are at terminal stage Ac (Canine, P3, P4, M1, M2, M3).
+Estimated from the M3 Ac attainment distribution, not the age-given-stage model.
+Reference completion threshold: 14.11 years - the 2.5th percentile of the sex-specific predictive distribution for attaining Ac in M3 (q = 0.025, method = "predictive").
+This is a descriptive completion threshold for the reference sample, not a lower confidence limit for this individual.
+Threshold unstable: it rests on 1 individual (se = 0.0638); the M3 Ac transition is tied with A.5 in the fitted model, so Ac provides no distinction from A.5 for this sex.
+Compatibility: compatible - the interval lies at or above the completion threshold.</code></pre>
 </div>
 </div>
+<p>For females, the M3 A<sub>c</sub> transition carries <code>low_precision</code> and <code>tied_transition</code> flags, which appear in the printed report.</p>
+<p>When only the early teeth (Canine through M1) are complete and M2 is not scored, no point estimate is returned:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    Sex <span class="op">=</span> <span class="st">"F"</span>,</span>
+<span>    Canine <span class="op">=</span> <span class="st">"A.c"</span>,</span>
+<span>    P3 <span class="op">=</span> <span class="st">"A.c"</span>,</span>
+<span>    P4 <span class="op">=</span> <span class="st">"A.c"</span>,</span>
+<span>    M1 <span class="op">=</span> <span class="st">"A.c"</span>,</span>
+<span>    M2 <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    M3 <span class="op">=</span> <span class="cn">NA</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/estimate_dental_age.html">estimate_dental_age</a></span><span class="op">(</span><span class="va">z</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dental age: no finite point estimate.
+All scored teeth are at terminal stage Ac (Canine, P3, P4, M1).
+Reference completion threshold: 11.67 years - the 2.5th percentile of the sex-specific predictive distribution for attaining Ac in P4 (q = 0.025, method = "predictive").
+This is a descriptive completion threshold for the reference sample, not a lower confidence limit for this individual.
+Not scored: M2, M3.</code></pre>
+</div>
+</div>
+<p>An unscored M3 is never treated as completed, and an unscored M2 does not trigger the Ac-derived estimate.</p>
 </section><section class="level2"><h2 id="predictive-interval-vs--known-mean-plug-in">Predictive interval vs. known mean (“plug-in”)<a class="anchor" aria-label="anchor" href="#predictive-interval-vs--known-mean-plug-in"></a>
 </h2>
 <p>By default the threshold is computed predictively, widening the reference standard deviation by the standard error of the fitted mean:</p>
@@ -205,6 +232,10 @@ M3         M3  14.107460 14.595947     -0.488</code></pre>
 </h2>
 <p>When some teeth are still developing and others have completed, you get an estimate, a threshold, and a code relating them:</p>
 <table class="table caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead><tr class="header">
 <th style="text-align: left;">Code</th>
 <th style="text-align: left;">Condition</th>
@@ -217,7 +248,7 @@ M3         M3  14.107460 14.595947     -0.488</code></pre>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>completion_threshold_only</code></td>
-<td style="text-align: left;">teeth at <code>A.c</code>, none estimable</td>
+<td style="text-align: left;">teeth at <code>A.c</code>, none estimable, and no M2/M3 among the terminal teeth to derive from</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>compatible</code></td>

@@ -134,10 +134,12 @@ x <- data.frame(Sex = "F", Canine = "Ac", P3 = "Ac", P4 = "Ac",
 estimate_dental_age(x)
 #> 5 teeth at terminal stage Ac (Canine, P3, P4, M1, M2); excluded from the age
 #> estimate and used for the completion threshold.
-#> Warning: No age estimate.
-#> Dental age: no finite point estimate.
+#> Dental age: 14.78 years (mode of the M2 Ac attainment distribution).
+#> Central 95% interval: 12.19 to 18.29 years.
 #> All scored teeth are at terminal stage Ac (Canine, P3, P4, M1, M2).
+#> Estimated from the M2 Ac attainment distribution, not the age-given-stage model.
 #> Reference completion threshold: 12.19 years - the 2.5th percentile of the sex-specific predictive distribution for attaining Ac in M2 (q = 0.025, method = "predictive").
 #> This is a descriptive completion threshold for the reference sample, not a lower confidence limit for this individual.
+#> Compatibility: compatible - the interval lies at or above the completion threshold.
 #> Not scored: M3.
 ```

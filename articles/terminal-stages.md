@@ -65,10 +65,16 @@ exist in the reference sample (2.5% by default).
 
 ## The all-A_(c) case
 
-When every scored tooth has completed, there is no point estimate:
+When every scored tooth is at A_(c), there is no age-given-stage
+estimate. However, if M2 or M3 is among the completed teeth, their late
+completion ages are informative: the M2 or M3 A_(c) attainment
+distribution is used as the point estimate (M3 takes precedence when
+both are scored). The central 95% interval’s lower bound equals the
+completion threshold by construction.
 
 ``` r
 
+# Five teeth at Ac, M3 unscored: M2 attainment distribution used
 x <- data.frame(
     Sex = "F",
     Canine = "A.c",
@@ -82,34 +88,64 @@ x <- data.frame(
 estimate_dental_age(x, verbose = FALSE)
 ```
 
-    Dental age: no finite point estimate.
+    Dental age: 14.78 years (mode of the M2 Ac attainment distribution).
+    Central 95% interval: 12.19 to 18.29 years.
     All scored teeth are at terminal stage Ac (Canine, P3, P4, M1, M2).
+    Estimated from the M2 Ac attainment distribution, not the age-given-stage model.
     Reference completion threshold: 12.19 years - the 2.5th percentile of the sex-specific predictive distribution for attaining Ac in M2 (q = 0.025, method = "predictive").
     This is a descriptive completion threshold for the reference sample, not a lower confidence limit for this individual.
+    Compatibility: compatible - the interval lies at or above the completion threshold.
     Not scored: M3.
 
-The threshold still exists, drawn from the five scored teeth:
-
-``` r
-
-ac_info(estimate_dental_age(x, verbose = FALSE))$threshold
-```
-
-    [1] 12.19381
-
-but this is based on M2. An unscored M3 is not treated as completed.
-Scoring it `A.c` adds a sixth tooth to the threshold calculation, which
-changes the binding tooth to M3:
+When M3 is also scored at A_(c), the M3 attainment distribution is used
+instead:
 
 ``` r
 
 y <- x
 y$M3 <- "A.c"
 
-ac_info(estimate_dental_age(y, verbose = FALSE))$threshold
+estimate_dental_age(y, verbose = FALSE)
 ```
 
-    [1] 14.10746
+    Dental age: 17.77 years (mode of the M3 Ac attainment distribution).
+    Central 95% interval: 14.11 to 23.11 years.
+    All scored teeth are at terminal stage Ac (Canine, P3, P4, M1, M2, M3).
+    Estimated from the M3 Ac attainment distribution, not the age-given-stage model.
+    Reference completion threshold: 14.11 years - the 2.5th percentile of the sex-specific predictive distribution for attaining Ac in M3 (q = 0.025, method = "predictive").
+    This is a descriptive completion threshold for the reference sample, not a lower confidence limit for this individual.
+    Threshold unstable: it rests on 1 individual (se = 0.0638); the M3 Ac transition is tied with A.5 in the fitted model, so Ac provides no distinction from A.5 for this sex.
+    Compatibility: compatible - the interval lies at or above the completion threshold.
+
+For females, the M3 A_(c) transition carries `low_precision` and
+`tied_transition` flags, which appear in the printed report.
+
+When only the early teeth (Canine through M1) are complete and M2 is not
+scored, no point estimate is returned:
+
+``` r
+
+z <- data.frame(
+    Sex = "F",
+    Canine = "A.c",
+    P3 = "A.c",
+    P4 = "A.c",
+    M1 = "A.c",
+    M2 = NA,
+    M3 = NA
+)
+
+estimate_dental_age(z, verbose = FALSE)
+```
+
+    Dental age: no finite point estimate.
+    All scored teeth are at terminal stage Ac (Canine, P3, P4, M1).
+    Reference completion threshold: 11.67 years - the 2.5th percentile of the sex-specific predictive distribution for attaining Ac in P4 (q = 0.025, method = "predictive").
+    This is a descriptive completion threshold for the reference sample, not a lower confidence limit for this individual.
+    Not scored: M2, M3.
+
+An unscored M3 is never treated as completed, and an unscored M2 does
+not trigger the Ac-derived estimate.
 
 ## Predictive interval vs. known mean (“plug-in”)
 
@@ -201,13 +237,13 @@ Neither flag causes the tooth to be dropped.
 When some teeth are still developing and others have completed, you get
 an estimate, a threshold, and a code relating them:
 
-| Code                        | Condition                           |
-|:----------------------------|:------------------------------------|
-| `no_terminal_information`   | no tooth at `A.c`                   |
-| `completion_threshold_only` | teeth at `A.c`, none estimable      |
-| `compatible`                | `ci_lower >= threshold`             |
-| `overlap`                   | threshold falls inside the interval |
-| `discordant`                | `ci_upper < threshold`              |
+| Code | Condition |
+|:---|:---|
+| `no_terminal_information` | no tooth at `A.c` |
+| `completion_threshold_only` | teeth at `A.c`, none estimable, and no M2/M3 among the terminal teeth to derive from |
+| `compatible` | `ci_lower >= threshold` |
+| `overlap` | threshold falls inside the interval |
+| `discordant` | `ci_upper < threshold` |
 
 The interval is an equal-tailed **central 95%** interval, computed
 analytically. It is not an HDI and not from MCMC.
