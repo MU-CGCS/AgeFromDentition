@@ -44,9 +44,15 @@ The threshold value says that 2.5% of the female reference sample had M2 at stag
 
 ## The all-A~c~ case
 
-When every scored tooth has completed, there is no point estimate:
+When every scored tooth is at A~c~, there is no age-given-stage
+estimate. However, if M2 or M3 is among the completed teeth, their
+late completion ages are informative: the M2 or M3 A~c~ attainment
+distribution is used as the point estimate (M3 takes precedence when
+both are scored). The central 95% interval's lower bound equals the
+completion threshold by construction.
 
 ```{r}
+# Five teeth at Ac, M3 unscored: M2 attainment distribution used
 x <- data.frame(
     Sex = "F",
     Canine = "A.c",
@@ -60,20 +66,38 @@ x <- data.frame(
 estimate_dental_age(x, verbose = FALSE)
 ```
 
-The threshold still exists, drawn from the five scored teeth:
-
-```{r}
-ac_info(estimate_dental_age(x, verbose = FALSE))$threshold
-```
-
-but this is based on M2. An unscored M3 is not treated as completed. Scoring it `A.c` adds a sixth tooth to the threshold calculation, which changes the binding tooth to M3:
+When M3 is also scored at A~c~, the M3 attainment distribution is
+used instead:
 
 ```{r}
 y <- x
 y$M3 <- "A.c"
 
-ac_info(estimate_dental_age(y, verbose = FALSE))$threshold
+estimate_dental_age(y, verbose = FALSE)
 ```
+
+For females, the M3 A~c~ transition carries `low_precision` and
+`tied_transition` flags, which appear in the printed report.
+
+When only the early teeth (Canine through M1) are complete and M2 is
+not scored, no point estimate is returned:
+
+```{r}
+z <- data.frame(
+    Sex = "F",
+    Canine = "A.c",
+    P3 = "A.c",
+    P4 = "A.c",
+    M1 = "A.c",
+    M2 = NA,
+    M3 = NA
+)
+
+estimate_dental_age(z, verbose = FALSE)
+```
+
+An unscored M3 is never treated as completed, and an unscored M2 does
+not trigger the Ac-derived estimate.
 
 ## Predictive interval vs. known mean ("plug-in")
 
@@ -141,7 +165,7 @@ estimate, a threshold, and a code relating them:
 | Code | Condition |
 | :-- | :-- |
 | `no_terminal_information` | no tooth at `A.c` |
-| `completion_threshold_only` | teeth at `A.c`, none estimable |
+| `completion_threshold_only` | teeth at `A.c`, none estimable, and no M2/M3 among the terminal teeth to derive from |
 | `compatible` | `ci_lower >= threshold` |
 | `overlap` | threshold falls inside the interval |
 | `discordant` | `ci_upper < threshold` |

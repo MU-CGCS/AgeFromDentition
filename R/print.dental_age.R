@@ -120,6 +120,29 @@ render_dental_age <- function(dental_age, ci_lower, ci_upper, info) {
         "No tooth supplied usable reference parameters."
       )
     }
+  } else if (isTRUE(info$ac_derived)) {
+    lines <- c(
+      lines,
+      glue::glue(
+        "Dental age: {format(round(dental_age, 2), nsmall = 2)} years ",
+        "(mode of the {info$ac_derived_tooth} Ac attainment distribution)."
+      ),
+      glue::glue(
+        "Central {info$ci_level * 100}% interval: ",
+        "{format(round(ci_lower, 2), nsmall = 2)} to ",
+        "{format(round(ci_upper, 2), nsmall = 2)} years."
+      ),
+      glue::glue(
+        "All scored teeth are at terminal stage Ac ",
+        "({format_teeth(info$terminal_teeth)})."
+      ),
+      glue::glue(
+        "Estimated from the {info$ac_derived_tooth} Ac attainment ",
+        "distribution, not the age-given-stage model."
+      ),
+      threshold_lines(info),
+      compatibility_line(info)
+    )
   } else {
     lines <- c(
       lines,

@@ -120,9 +120,6 @@ estimate_dental_age <- function(
   if (n_estimable == 0L) {
     age <- NA_real_
     vv <- NA_real_
-    if (verbose) {
-      cli::cli_warn("No age estimate.")
-    }
   } else {
     if (n_estimable == 1L && verbose) {
       cli::cli_warn("Estimating from only 1 tooth.")
@@ -176,6 +173,49 @@ estimate_dental_age <- function(
     )
   }
 
+  # Ac-derived estimate: when all scored teeth are terminal and M2 or M3
+  # is among the terminal teeth, use the latest-completing one's Ac
+  # attainment distribution as the point estimate. M3 > M2 by log_mu;
+  # the selection is by tooth identity, not by threshold rank.
+  ac_derived <- FALSE
+  ac_derived_tooth <- if ("M3" %in% prepared$terminal_teeth) {
+    "M3"
+  } else if ("M2" %in% prepared$terminal_teeth) {
+    "M2"
+  } else {
+    NA_character_
+  }
+
+  if (
+    n_estimable == 0L &&
+      !is.null(prepared$sex) &&
+      !is.na(ac_derived_tooth)
+  ) {
+    params <- AttainmentTables[
+      AttainmentTables$Sex == prepared$sex &
+        AttainmentTables$Tooth == ac_derived_tooth &
+        AttainmentTables$Stage == "Ac",
+    ]
+    if (nrow(params) == 1L) {
+      sd_eff_ac <- if (method == "predictive") {
+        sqrt(params$log_sd^2 + params$se_log_mu^2)
+      } else {
+        params$log_sd
+      }
+      age <- params$log_mu
+      vv <- sd_eff_ac^2
+      dental_age <- exp(age) / exp(vv)
+      ac_tail <- (1 - ci_level) / 2
+      ci_lower <- stats::qlnorm(ac_tail, age, sqrt(vv))
+      ci_upper <- stats::qlnorm(1 - ac_tail, age, sqrt(vv))
+      ac_derived <- TRUE
+    }
+  }
+
+  if (n_estimable == 0L && !ac_derived && verbose) {
+    cli::cli_warn("No age estimate.")
+  }
+
   # Classify the relationship between the analytic central interval
   # and the completion threshold. Uses the central interval (not
   # the HDI).
@@ -184,7 +224,8 @@ estimate_dental_age <- function(
     ci_upper,
     ac$threshold,
     n_terminal = length(prepared$terminal_teeth),
-    n_estimable = n_estimable
+    n_estimable = n_estimable,
+    ac_derived = ac_derived
   )
 
   if (compatibility == "discordant") {
@@ -208,7 +249,9 @@ estimate_dental_age <- function(
       sex = prepared$sex,
       ci_level = ci_level,
       ci_type = "central",
-      compatibility = compatibility
+      compatibility = compatibility,
+      ac_derived = ac_derived,
+      ac_derived_tooth = ac_derived_tooth
     )
   )
 
@@ -259,14 +302,15 @@ classify_compatibility <- function(
   ci_upper,
   threshold,
   n_terminal,
-  n_estimable
+  n_estimable,
+  ac_derived = FALSE
 ) {
   # Order matters: discordant before compatible, because the
   # boundary cases (ci_upper == threshold) fall to overlap.
   if (n_terminal == 0L) {
     return("no_terminal_information")
   }
-  if (n_estimable == 0L) {
+  if (n_estimable == 0L && !ac_derived) {
     return("completion_threshold_only")
   }
   if (is.na(threshold) || is.na(ci_lower) || is.na(ci_upper)) {

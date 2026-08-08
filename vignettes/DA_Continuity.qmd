@@ -61,6 +61,7 @@ female <- tribble(
     "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.75"  ,
     "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.c"   ,
     "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "A.5"   ,
+    "F"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "A.c"   ,
 )
 ```
 
@@ -85,8 +86,7 @@ Females <- female |>
     select(-Sex, -row) |>
     mutate(across(c(dental_age, ci_lower, ci_upper), \(x) round(x, 2))) |>
     mutate(row = row_number()) |>
-    relocate(row) |>
-    drop_na(dental_age)
+    relocate(row)
 ```
 
 ```{r}
@@ -116,14 +116,16 @@ Females |>
 
 ## Female progression without M3
 
-The same progression, but M3 is never scored. Without M3, the late
-rows where all other teeth have reached A~c~ produce no point
-estimate — only a completion threshold.
+The same progression, but M3 is never scored. Without M3, once all
+five remaining teeth have reached A~c~ (row 24 onward), the estimate
+is derived from the M2 A~c~ attainment distribution rather than the
+age-given-stage model.
 
 ```{r}
 #| label: female-no-m3-data
 female_no_m3 <- female |>
-    mutate(M3 = NA)
+    mutate(M3 = NA) |>
+    slice(1:26)
 ```
 
 ```{r}
@@ -220,8 +222,6 @@ bind_rows(
 male <- tribble(
     ~Sex , ~Canine , ~P3     , ~P4     , ~M1    , ~M2     , ~M3     ,
     "M"  , "C.oc"  , NA      , NA      , NA     , NA      , NA      ,
-    "M"  , "C.oc"  , NA      , NA      , NA     , NA      , NA      ,
-    "M"  , "Cr.5"  , "C.i"   , NA      , NA     , NA      , NA      ,
     "M"  , "Cr.5"  , "C.i"   , NA      , NA     , NA      , NA      ,
     "M"  , "Cr.5"  , "C.co"  , NA      , NA     , NA      , NA      ,
     "M"  , "Cr.5"  , "C.oc"  , NA      , "Cr.c" , NA      , NA      ,
@@ -250,7 +250,7 @@ male <- tribble(
     "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.75"  ,
     "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "R.c"   ,
     "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "A.5"   ,
-    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "A.5"   ,
+    "M"  , "A.c"   , "A.c"   , "A.c"   , "A.c"  , "A.c"   , "A.c"   ,
 )
 ```
 
@@ -308,7 +308,8 @@ Males |>
 ```{r}
 #| label: male-no-m3-data
 male_no_m3 <- male |>
-    mutate(M3 = NA)
+    mutate(M3 = NA) |>
+    slice(1:26)
 ```
 
 ```{r}
@@ -433,23 +434,40 @@ bind_rows(
 
 ## Notes
 
-- Rows 1--2 use only the canine. With a single tooth, the estimate
-  tracks that tooth's reference age directly.
-- Both sexes introduce teeth in the same order: P3 at row 3, M1
-  at row 6 (already at `Cr.c` because it develops earliest), M2
-  at row 8, P4 at row 9.
+- For females, rows 1--2 use only the canine; for males, only row 1
+  (P3 is introduced at row 2 for males). With a single tooth, the
+  estimate tracks that tooth's reference age directly.
+- Both sexes introduce additional teeth in the same order (P3, then
+  M1, M2, P4), but at different rows because of sex differences in
+  developmental timing:
+  - **Female:** P3 at row 3 (`C.i`), M1 at row 6 (`R.i` — already
+    starting root formation), M2 at row 8 (`C.i`), P4 at row 9
+    (`C.i`).
+  - **Male:** P3 at row 2 (`C.i`), M1 at row 4 (`Cr.c` — crown just
+    complete, reflecting M1's early development), M2 at row 6
+    (`C.i`), P4 at row 7 (`C.i`).
 - The male progression uses stages that lag behind the female for
-  the canine (~1 stage) and P3 (~1 stage), reflecting that males
-  develop these teeth later. M1 and P4 are minimally offset. M3
-  is introduced one row earlier for males (row 19 vs 20),
+  the canine (~1 stage) and P3 (~1 stage), because males
+  develop these teeth later. M1 and P4 are minimally offset.
+- For females, M3 first appears at row 20 (`C.oc`); for males, at
+  row 17 (`C.i`) — three rows earlier and at an earlier crown stage,
   reflecting slightly earlier M3 development in males.
-- For females, M3 first appears at row 20; for males, at row 19.
-  For females, late M3 stages (`R.5` through `A.5`) have no
+- For females, late M3 stages (`R.5` through `A.5`) have no
   published log-normal parameters and are excluded from the age
   estimate. For males, all M3 stages have parameters.
-- M1 reaches `A.c` at row 19 for females and row 20 for males,
-  shifting from the age estimate to the completion threshold. The
-  `compatibility` column shows whether the two agree.
+- M1 reaches `A.c` at row 19 for females and row 18 for males. The
+  `compatibility` column shows whether the age estimate and completion
+  threshold agree.
+- Once all five non-M3 teeth have reached `A.c` (row 24 for both
+  sexes), the estimate switches from the age-given-stage model to the
+  M2 A~c~ attainment distribution and remains fixed — all subsequent
+  rows without M3 are identical. The without-M3 progressions are
+  shown through row 26 only; rows 27 onward are omitted as redundant.
+  For females with M3 scored, the switch is delayed: M3 remains
+  estimable through row 28; the M2 A~c~ estimate takes over at row
+  29 when M3 enters its unparameterized stages (`R.5` through `A.5`).
+  For males with M3, M3 is estimable through the final row and the
+  switch never occurs.
 - Small dips in dental age occur when a new tooth is added at an
   early stage (e.g., M3 at `C.i`) or when several teeth transition
   to `A.c` at once.
