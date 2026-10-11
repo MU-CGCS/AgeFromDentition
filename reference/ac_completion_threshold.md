@@ -21,7 +21,8 @@ ac_completion_threshold(
 
 - sex:
 
-  character, `"F"` or `"M"`.
+  character, `"F"`, `"Female"`, `"FEMALE"`, `"M"`, `"Male"`, or
+  `"MALE"`.
 
 - teeth:
 

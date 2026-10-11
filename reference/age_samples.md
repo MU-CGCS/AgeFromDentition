@@ -24,14 +24,14 @@ n samples, or `n` `NA`s when the estimate has no finite value
 
 ## Details
 
-This function is **stochastic**: it draws from the fitted log-normal and
-is not seeded, so results vary between runs. Call
+This function draws from the fitted log-normal and does not internally
+set a seed, so results vary between runs. Call
 [`set.seed()`](https://rdrr.io/r/base/Random.html) first if you need
 reproducible output.
 
 When `age_est` has no point estimate – every scored tooth at terminal
-stage `"Ac"`, for instance – there is no distribution to draw from and
-`n` `NA`s are returned.
+stage `"Ac"` – there is no distribution to draw from and `n` `NA`s are
+returned.
 
 ## See also
 

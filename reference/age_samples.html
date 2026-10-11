@@ -64,12 +64,12 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function is <strong>stochastic</strong>: it draws from the fitted log-normal and
-is not seeded, so results vary between runs. Call <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code> first if
+    <p>This function  draws from the fitted log-normal and does not internally
+set a seed, so results vary between runs. Call <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code> first if
 you need reproducible output.</p>
 <p>When <code>age_est</code> has no point estimate – every scored tooth at terminal
-stage <code>"Ac"</code>, for instance – there is no distribution to draw from and
-<code>n</code> <code>NA</code>s are returned.</p>
+stage <code>"Ac"</code> – there is no distribution to draw from and <code>n</code> <code>NA</code>s are
+returned.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

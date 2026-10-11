@@ -17,8 +17,7 @@ estimate_age_hdi(age_est, n = 1e+05, interval = 0.5)
 
 - n:
 
-  numeric number of samples to produce. Defaults to 1e5 for speed.
-  Increase this number for investigating the tails of the distribution.
+  numeric number of samples to produce. Defaults to 1e5.
 
 - interval:
 
@@ -31,17 +30,9 @@ completion threshold from `age_est` if it had one
 
 ## Details
 
-This is a genuine highest-density interval, obtained by sampling. It is
-therefore **stochastic and unseeded**: two calls on the same input give
-slightly different bounds. Call
+This is a genuine highest-density interval, obtained by sampling. Call
 [`set.seed()`](https://rdrr.io/r/base/Random.html) first for
 reproducible output, and raise `n` when the tails matter.
-
-Because of that, it is never used to decide whether an estimate is
-compatible with a completion threshold.
-[`estimate_dental_age()`](https://mu-cgcs.github.io/AgeFromDentition/reference/estimate_dental_age.md)
-computes its own equal-tailed central interval analytically for that
-purpose, so the compatibility code cannot vary between runs.
 
 `completion_threshold` is carried through unchanged so that a caller
 plotting the interval can draw the threshold on the same axis.

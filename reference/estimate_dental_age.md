@@ -3,7 +3,7 @@
 Estimate dental age from a set of scored teeth, following the method
 described in Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing of
 Development of the Permanent Mandibular Dentition: New Reference Values
-from the Fels Longitudinal Study. Anat Rec 302:1733-1753.
+from the Fels Longitudinal Study. *Anat Rec* 302:1733-1753.
 
 ## Usage
 
@@ -47,38 +47,34 @@ estimate_dental_age(
 ## Value
 
 A named numeric vector of length 5 with class `dental_age`: `log_age`,
-`log_total_var`, `dental_age`, `ci_lower`, `ci_upper`. All five are
-`NA_real_` when no tooth supplies a usable estimate. Terminal-stage
-information is attached as an attribute; retrieve it with
+`log_total_var`, `dental_age`, `ci_lower`, `ci_upper`. All five are `NA`
+when no tooth supplies a usable estimate. Terminal-stage information is
+attached as an attribute; retrieve it with
 [`ac_info()`](https://mu-cgcs.github.io/AgeFromDentition/reference/ac_info.md).
 
 ## Details
 
-Teeth at the terminal stage `"Ac"` are excluded from the estimate and
+Teeth at the terminal stage `"A.c"` are excluded from the estimate and
 reported separately as a completion threshold. See Details.
 
 ## Terminal stages
 
-A tooth at `"Ac"` has completed, which says only that the individual is
+A tooth at `"A.c"` has completed, which says only that the individual is
 older than the completion age. It carries no finite age in stage and is
-therefore excluded from the weighted estimate. Instead, the `Ac` teeth
+therefore excluded from the weighted estimate. Instead, the `A.c` teeth
 produce a **reference completion threshold** via
 [`ac_completion_threshold()`](https://mu-cgcs.github.io/AgeFromDentition/reference/ac_completion_threshold.md),
 reported alongside the estimate.
 
-When every scored tooth is at `"Ac"`, there is no point estimate at all
-and the threshold is the only result. The numeric fields are `NA_real_`.
-Returning a fixed age in that situation – 18, say – would impose a
-hidden prior and map very different completion patterns onto one number.
+When every scored tooth is at `"A.c"`, there is no point estimate at all
+and the threshold is the only result.
 
 ## The interval
 
 `ci_lower` and `ci_upper` are an equal-tailed **central 95% interval**,
-computed analytically with
+computed with
 [`stats::qlnorm()`](https://rdrr.io/r/stats/Lognormal.html). It is not a
-highest-density interval: equal-tailed log-normal quantiles are not a
-highest-density region, because the log-normal is asymmetric on the age
-scale. For an HDI, use
+highest-density interval. For an HDI, use
 [`estimate_age_hdi()`](https://mu-cgcs.github.io/AgeFromDentition/reference/estimate_age_hdi.md),
 which is a separate, Monte Carlo, function.
 
@@ -109,8 +105,8 @@ it is deterministic and reproducible.
 
 `discordant` does not necessarily indicate a scoring error. The
 age-given-stage estimator and the attainment threshold come from related
-but different models, combined here deliberately approximately, so
-disagreement can also reflect reference-sample variation.
+but different models, combined approximately, so disagreement can also
+reflect reference-sample variation.
 
 ## See also
 

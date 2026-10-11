@@ -20,11 +20,8 @@ string of recoded stage score
 
 ## Details
 
-`"Ac"` (apex closure) passes through unchanged rather than becoming
-`NA`. It is a terminal stage, not a missing observation; see
-[`score_to_stage()`](https://mu-cgcs.github.io/AgeFromDentition/reference/score_to_stage.md).
-
-`"zero"` does become `NA`.
+`"zero"` becomes `NA`, because this is the "zero" stage, which
+represents an open-ended lower bound.
 
 ## Examples
 
