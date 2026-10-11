@@ -33,6 +33,7 @@ prepare_scores <- function(x, verbose = TRUE) {
   x <- as.data.frame(x) # Need data.frame for proper subsetting below
 
   sex <- x[1, "Sex"]
+  sex <- switch(tolower(sex), "female" = "F", "male" = "M", sex)
   if (!(sex %in% c("F", "M"))) {
     cli::cli_abort("{.arg Sex} must be {.val F} or {.val M}.")
   }

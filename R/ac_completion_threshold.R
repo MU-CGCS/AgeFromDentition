@@ -6,7 +6,8 @@
 #' reports the alternative — a descriptive percentile of the reference
 #' distribution of age at completion.
 #'
-#' @param sex character, `"F"` or `"M"`.
+#' @param sex character, `"F"`, `"Female"`, `"FEMALE"`, `"M"`, `"Male"`, or
+#'   `"MALE"`.
 #' @param teeth character vector of tooth names observed at stage `Ac`. May
 #'   be length 0, in which case the threshold is `NA`.
 #' @param q lower-tail probability, in `(0, 0.5)`. Defaults to `0.025`.
@@ -109,6 +110,9 @@ ac_completion_threshold <- function(
 ) {
   method <- match.arg(method)
 
+  if (length(sex) == 1L && !is.na(sex)) {
+    sex <- switch(tolower(sex), "female" = "F", "male" = "M", sex)
+  }
   if (length(sex) != 1L || is.na(sex) || !(sex %in% c("F", "M"))) {
     cli::cli_abort(
       "{.arg sex} must be a single value, either {.val F} or {.val M}."

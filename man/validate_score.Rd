@@ -27,12 +27,11 @@ The vocabulary comes from \link{AttainmentTables}, which is the only reference
 dataset covering all fourteen stages: \link{AgeTables} omits \code{"Ac"} because
 apex closure is terminal and has no finite age in stage.
 
-Supplying \code{tooth} matters more than it looks. Not every stage exists for
+Supplying \code{tooth} in important. Not every stage exists for
 every tooth: the single-rooted teeth (Canine, P3, P4) have no \code{"Cl.i"}
 (root cleft initiation). Checked against the global vocabulary alone,
 \code{"Cl.i"} on a canine is accepted, matches no reference row, and the tooth
-is then silently dropped from the age estimate. The tooth-aware check
-catches it instead.
+is then silently dropped from the age estimate.
 }
 \seealso{
 \code{\link[=score_to_stage]{score_to_stage()}}, \code{\link[=recode_score]{recode_score()}}

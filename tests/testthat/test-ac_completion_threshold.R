@@ -179,6 +179,21 @@ test_that("flags never cause a tooth to be dropped", {
   expect_gt(with_m3$threshold, without_m3$threshold)
 })
 
+test_that("sex accepts full names and mixed case", {
+  for (sex_full in c("Female", "FEMALE")) {
+    expect_equal(
+      ac_completion_threshold(sex_full, "M2")$threshold,
+      ac_completion_threshold("F", "M2")$threshold
+    )
+  }
+  for (sex_full in c("Male", "MALE")) {
+    expect_equal(
+      ac_completion_threshold(sex_full, "M2")$threshold,
+      ac_completion_threshold("M", "M2")$threshold
+    )
+  }
+})
+
 test_that("invalid arguments are rejected", {
   expect_error(ac_completion_threshold("X", "M2"), "either")
   expect_error(ac_completion_threshold(c("F", "M"), "M2"), "single value")

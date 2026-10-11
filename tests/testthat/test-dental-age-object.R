@@ -172,6 +172,25 @@ test_that("get_means_for_scores returns a dental_scores object", {
   )
 })
 
+test_that("prepare_scores normalizes full sex names to F/M", {
+  row_f <- ExampleScores[1, ]
+  row_f$Sex <- "M"
+  for (sex_full in c("Male", "MALE")) {
+    row_full <- row_f
+    row_full$Sex <- sex_full
+    prepared <- prepare_scores(row_full, verbose = FALSE)
+    expect_equal(prepared$sex, "M")
+  }
+  row_female <- ExampleScores[1, ]
+  row_female$Sex <- "F"
+  for (sex_full in c("Female", "FEMALE")) {
+    row_full <- row_female
+    row_full$Sex <- sex_full
+    prepared <- prepare_scores(row_full, verbose = FALSE)
+    expect_equal(prepared$sex, "F")
+  }
+})
+
 test_that("prepare_scores returns a classed structured object", {
   prepared <- prepare_scores(ExampleScores[1, ], verbose = FALSE)
 

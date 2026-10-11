@@ -12,7 +12,8 @@ ac_completion_threshold(
 )
 }
 \arguments{
-\item{sex}{character, \code{"F"} or \code{"M"}.}
+\item{sex}{character, \code{"F"}, \code{"Female"}, \code{"FEMALE"}, \code{"M"}, \code{"Male"}, or
+\code{"MALE"}.}
 
 \item{teeth}{character vector of tooth names observed at stage \code{Ac}. May
 be length 0, in which case the threshold is \code{NA}.}

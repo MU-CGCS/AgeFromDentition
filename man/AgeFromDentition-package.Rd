@@ -6,7 +6,16 @@
 \alias{AgeFromDentition-package}
 \title{AgeFromDentition: Estimate Dental Age}
 \description{
-Estimate dental age given a set of dental scores for six teeth following the method of Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing of Development of the Permanent Mandibular Dentition: New Reference Values from the Fels Longitudinal Study. Anat Rec 302:1733–1753.
+Estimate dental age given a set of dental scores for six teeth following the method of Šešelj M, Sherwood RJ, Konigsberg LW. 2019. Timing of Development of the Permanent Mandibular Dentition: New Reference Values from the Fels Longitudinal Study. Anat Rec 302:1733-1753.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://mu-cgcs.github.io/AgeFromDentition/}
+  \item \url{https://github.com/MU-CGCS/AgeFromDentition}
+  \item Report bugs at \url{https://github.com/MU-CGCS/AgeFromDentition/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: Kevin Middleton \email{middletonk@missouri.edu} (\href{https://orcid.org/0000-0003-4704-1064}{ORCID})

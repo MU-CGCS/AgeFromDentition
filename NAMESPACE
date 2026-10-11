@@ -9,13 +9,17 @@ export(estimate_dental_age)
 export(get_means_for_scores)
 export(recode_score)
 export(score_to_stage)
-importFrom(dplyr,case_when)
-importFrom(dplyr,filter)
-importFrom(dplyr,if_else)
-importFrom(dplyr,mutate)
-importFrom(dplyr,select)
-importFrom(stats,qlnorm)
-importFrom(stats,qnorm)
-importFrom(stats,rlnorm)
-importFrom(stats,var)
+importFrom(dplyr,
+  case_when,
+  filter,
+  if_else,
+  mutate,
+  select
+)
+importFrom(stats,
+  qlnorm,
+  qnorm,
+  rlnorm,
+  var
+)
 importFrom(utils,data)
